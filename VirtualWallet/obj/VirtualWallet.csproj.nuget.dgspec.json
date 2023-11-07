@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\VirtualWallet.csproj": {}
+    "C:\\Users\\Juan\\Documents\\GIT\\MSM-NET-T2\\VirtualWallet\\VirtualWallet.csproj": {}
   },
   "projects": {
-    "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\VirtualWallet.csproj": {
+    "C:\\Users\\Juan\\Documents\\GIT\\MSM-NET-T2\\VirtualWallet\\VirtualWallet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\VirtualWallet.csproj",
+        "projectUniqueName": "C:\\Users\\Juan\\Documents\\GIT\\MSM-NET-T2\\VirtualWallet\\VirtualWallet.csproj",
         "projectName": "VirtualWallet",
-        "projectPath": "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\VirtualWallet.csproj",
+        "projectPath": "C:\\Users\\Juan\\Documents\\GIT\\MSM-NET-T2\\VirtualWallet\\VirtualWallet.csproj",
         "packagesPath": "C:\\Users\\Juan\\.nuget\\packages\\",
-        "outputPath": "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\obj\\",
+        "outputPath": "C:\\Users\\Juan\\Documents\\GIT\\MSM-NET-T2\\VirtualWallet\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Juan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

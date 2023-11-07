@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "xPN9nVj0v0w2x0JJWSEZxw/W7M0gMTtyvTVJVzqA1fE=",
+  "Source": "VirtualWallet",
+  "BasePath": "_content/VirtualWallet",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
