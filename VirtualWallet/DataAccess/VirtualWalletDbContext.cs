@@ -20,7 +20,7 @@ public class VirtualWalletDbContext : DbContext
     {
         // Especificar al modelo que las tablas van en singular 
         modelBuilder.Entity<Role>().ToTable("Role");
-        //modelBuilder.Entity<User>().ToTable("Role");
+        //modelBuilder.Entity<User>().ToTable("User");
         modelBuilder.Entity<Account>().ToTable("Account");
         //modelBuilder.Entity<FixedTermDeposit>().ToTable("Account");
         
