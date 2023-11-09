@@ -9,27 +9,28 @@ namespace VirtualWallet.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int transactionId { get; set; }
 
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal amount { get; set; }
+        [Column(TypeName = "decimal(10, 2)")]
+        public decimal Amount { get; set; }
 
         [MaxLength(255)]
-        public string concept { get; set; }
+        public string Concept { get; set; }
 
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
 
         [MaxLength(255)]
-        public string type { get; set; } //Topuop, payment
+        public string Type { get; set; } //Topuop, payment
 
-        [ForeignKey("Account")]
-        public int accountId { get; set; } //FK a Account
+        public int AccountId { get; set; } //FK a Account
+        [ForeignKey("AccountId")]
         public Account Account { get; set; }
 
-        [ForeignKey("User")]
-        public int userId { get; set; }  //FK a Users
+        public int UserId { get; set; }  //FK a Users
+        [ForeignKey("UserId")]    
         public User User { get; set; }
 
-        [ForeignKey("ToAccount")]
-        public int? toAccountId { get; set; } //FK a Account
+        public int? ToAccountId { get; set; } //FK a Account
+        [ForeignKey("ToAccountId")]
+
         public Account ToAccount { get; set; }
     }
 }
