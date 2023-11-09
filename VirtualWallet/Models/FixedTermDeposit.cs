@@ -8,14 +8,14 @@ namespace VirtualWallet.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        [ForeignKey("User")]
-        public int userId { get; set; }
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
         public User User { get; set; }
 
-        [ForeignKey("Account")]
-        public int accountId { get; set; }
+        public int AccountId { get; set; }
+        [ForeignKey("AccountId")]
         public Account Account { get; set; }
 
         [Column(TypeName = "decimal(10, 2)")]
