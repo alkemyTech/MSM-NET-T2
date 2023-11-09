@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\VirtualWallet.csproj": {}
+    "/home/abi/Escritorio/Alkemy .NET/MSM-NET-T2/VirtualWallet/VirtualWallet.csproj": {}
   },
   "projects": {
-    "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\VirtualWallet.csproj": {
+    "/home/abi/Escritorio/Alkemy .NET/MSM-NET-T2/VirtualWallet/VirtualWallet.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\VirtualWallet.csproj",
+        "projectUniqueName": "/home/abi/Escritorio/Alkemy .NET/MSM-NET-T2/VirtualWallet/VirtualWallet.csproj",
         "projectName": "VirtualWallet",
-        "projectPath": "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\VirtualWallet.csproj",
-        "packagesPath": "C:\\Users\\Juan\\.nuget\\packages\\",
-        "outputPath": "C:\\Alkemy\\VirtualWallet\\VirtualWallet\\obj\\",
+        "projectPath": "/home/abi/Escritorio/Alkemy .NET/MSM-NET-T2/VirtualWallet/VirtualWallet.csproj",
+        "packagesPath": "/home/abi/.nuget/packages/",
+        "outputPath": "/home/abi/Escritorio/Alkemy .NET/MSM-NET-T2/VirtualWallet/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Juan\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/abi/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,6 +37,30 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.InMemory": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -58,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.403/RuntimeIdentifierGraph.json"
         }
       }
     }
