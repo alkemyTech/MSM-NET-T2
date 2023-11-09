@@ -4,9 +4,9 @@ using VirtualWallet.Repository.Interfaces;
 
 namespace VirtualWallet.Controllers;
 
-/*[ApiController] 
+[ApiController] 
 [Route("api/[Controller]")]
-public class RoleController 
+public class RoleController : ControllerBase
 { 
     private readonly IRoleRepository _roleRepository;
     
@@ -61,4 +61,4 @@ public class RoleController
         await _roleRepository.DeleteRole(id);
         return NoContent();
     } 
-}*/  
+} 
