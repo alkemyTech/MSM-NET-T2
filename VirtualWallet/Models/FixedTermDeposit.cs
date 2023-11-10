@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Security.Principal;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VirtualWallet.Models
 {
@@ -19,16 +18,16 @@ namespace VirtualWallet.Models
         public Account Account { get; set; }
 
         [Column(TypeName = "decimal(10, 2)")]
-        public decimal amount { get; set; }
+        public decimal Amount { get; set; }
 
-        public DateTime creationDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public DateTime closingDate { get; set; }
+        public DateTime ClosingDate { get; set; }
 
         [Column(TypeName = "decimal(10, 2)")]
-        public decimal nominalRate { get; set; }
+        public decimal NominalRate { get; set; }
 
         [MaxLength(255)]
-        public string state { get; set; }
+        public string State { get; set; }
     }
 }
