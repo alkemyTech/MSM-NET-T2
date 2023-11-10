@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +42,10 @@ namespace VirtualWallet.Repository
 
         public async Task Delete(int transaction_id)
         {
-            var _transaction = _dbContext.Transactions.FirstOrDefaultAsync(t => t.transactionId == transaction_id);
+
+            var _transaction = _dbContext.Transactions.FirstOrDefaultAsync(t => t.transactionId == transaction_id); 
+            var _transaction = _dbContext.Transactions.FirstOrDefault(t => t.transactionId == transaction_id);
+
 
             if (_transaction != null)
             {

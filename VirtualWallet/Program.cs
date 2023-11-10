@@ -37,6 +37,9 @@ builder.Services.AddScoped<ICatalogueService, CatalogueService>();
 builder.Services.AddScoped<ITransactionsRepository, TransactionRepository>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
+builder.Services.AddScoped<IFixedTermRepository, FixedTermRepository>();
+builder.Services.AddScoped<IFixedTermService, FixedTermService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

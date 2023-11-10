@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,16 +21,19 @@ namespace VirtualWallet.Models
         [MaxLength(255)]
         public string Type { get; set; } //Topuop, payment
 
-        [ForeignKey("Account")]
         public int AccountId { get; set; } //FK a Account
+        [ForeignKey("AccountId")]
         public Account Account { get; set; }
 
-        [ForeignKey("User")]
         public int UserId { get; set; }  //FK a Users
-        //public User User { get; set; }
 
-        [ForeignKey("ToAccount")]
+        //public User User { get; set; }
+        [ForeignKey("UserId")]
+        //public User User { get; set; }
+        
         public int? ToAccountId { get; set; } //FK a Account
+        [ForeignKey("ToAccountId")]
+
         public Account ToAccount { get; set; }
     }
 }

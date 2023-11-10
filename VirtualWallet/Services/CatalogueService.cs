@@ -1,55 +1,46 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Services.Interfaces;
+using VirtualWallet.Repository.Interfaces;
 
+    
 namespace VirtualWallet.Services
 {
     public class CatalogueService : ICatalogueService
     {
-        private readonly VirtualWalletDbContext _dbContext;
+        private readonly ICatalogueRepository _catalogueRepository;
 
-        public CatalogueService(VirtualWalletDbContext dbContext)
+        public CatalogueService(ICatalogueRepository catalogueRepository)
         {
-            _dbContext = dbContext;
+            _catalogueRepository = catalogueRepository;
         }
 
         public async Task<IEnumerable<Catalogue>> getAllCataloguesAsync()
         {
-            var catalogues = await _dbContext.Catalogues.ToListAsync();
+            return await _catalogueRepository.getAll();
 
-            return catalogues;
         }
 
 
         public async Task<Catalogue> getCatalogueAsync(int id)
         {
-            return await _dbContext.Catalogues.FirstOrDefaultAsync(c => c.Id == id);
+            return await _catalogueRepository.getById(id);
         }
 
         public async Task addCatalogueAsync(Catalogue catalogue)
         {
-            _dbContext.Catalogues.Add(catalogue);
-            await _dbContext.SaveChangesAsync();
+            await _catalogueRepository.Insert(catalogue);
         }
 
         public async Task updateCatalogueAsync(Catalogue catalogue)
         {
-            _dbContext.Catalogues.Update(catalogue);
-            await _dbContext.SaveChangesAsync();
+            await _catalogueRepository.Update(catalogue);
         }
 
         public async Task deleteCatalogueAsync(int id)
         {
-            var catalogue = await getCatalogueAsync(id);
-
-            if (catalogue != null)
-            {
-                _dbContext.Catalogues.Remove(catalogue);
-                await _dbContext.SaveChangesAsync();
-            }
+            await _catalogueRepository.Delete(id);
         }
     }
 }

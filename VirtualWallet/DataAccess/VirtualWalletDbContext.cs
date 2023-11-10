@@ -16,7 +16,7 @@ public class VirtualWalletDbContext : DbContext
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Catalogue> Catalogues { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
-    //public DbSet<FixedTermDeposit> FixedTermDeposits { get; set; } 
+    public DbSet<FixedTermDeposit> FixedTermDeposits { get; set; } 
     
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,8 +26,7 @@ public class VirtualWalletDbContext : DbContext
         //modelBuilder.Entity<User>().ToTable("User");
         modelBuilder.Entity<Account>().ToTable("Account");
         modelBuilder.Entity<Catalogue>().ToTable("Catalogue");
-        
-        //modelBuilder.Entity<FixedTermDeposit>().ToTable("FixedTermDeposit");
+        modelBuilder.Entity<FixedTermDeposit>().ToTable("FixedTermDeposit");
         
         // Seed Role
         modelBuilder.Entity<Role>().HasData(
@@ -36,6 +35,7 @@ public class VirtualWalletDbContext : DbContext
         );
         
         // Seed User
+        
         
         // Seed Account
         modelBuilder.Entity<Account>().HasData(

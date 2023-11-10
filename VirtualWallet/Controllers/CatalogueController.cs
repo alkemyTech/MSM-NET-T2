@@ -6,7 +6,7 @@ using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
-    public class CatalogueController : Controller
+    public class CatalogueController : ControllerBase
     {
         private readonly CatalogueService _catalogueService;
 
@@ -64,7 +64,7 @@ namespace VirtualWallet.Controllers
             _catalogue.ProductDescription = catalogue.ProductDescription;
             _catalogue.Image = catalogue.Image;
             _catalogue.Points = catalogue.Points;
-           
+
             await _catalogueService.updateCatalogueAsync(_catalogue);
 
             return Ok();
