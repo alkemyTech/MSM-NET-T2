@@ -1,4 +1,7 @@
-﻿using VirtualWallet.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using VirtualWallet.DataAccess;
+using VirtualWallet.Models;
+
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
@@ -18,8 +21,7 @@ namespace VirtualWallet.Services
             return await _transactionRepository.getAll();
 
         }
-
-
+        
         public async Task<Transaction> getTransactionAsync(int id)
         {
             return await _transactionRepository.getById(id);

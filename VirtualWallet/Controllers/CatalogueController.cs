@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
-    public class CatalogueController : Controller
+    public class CatalogueController : ControllerBase
     {
         private readonly CatalogueService _catalogueService;
 

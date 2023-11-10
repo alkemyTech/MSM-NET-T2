@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace VirtualWallet.Models
 {
@@ -25,9 +26,11 @@ namespace VirtualWallet.Models
         public Account Account { get; set; }
 
         public int UserId { get; set; }  //FK a Users
-        [ForeignKey("UserId")]
-        public User User { get; set; }
 
+        //public User User { get; set; }
+        [ForeignKey("UserId")]
+        //public User User { get; set; }
+        
         public int? ToAccountId { get; set; } //FK a Account
         [ForeignKey("ToAccountId")]
 

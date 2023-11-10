@@ -1,15 +1,12 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using VirtualWallet.Models;
 
-namespace VirtualWallet.Repository.Interfaces;
+namespace VirtualWallet.Services.Interfaces;
 
-public interface IAccountRepository
+public interface IAccountService
 {
     Task<IEnumerable<Account>> GetAllAccounts();
     Task<Account> GetAccountById(int id);
     Task AddAccount(Account account);
     Task UpdateAccount(Account account);
-    Task DeleteAccount(int id);
-
+    Task DeleteAccount(int id);   
 }

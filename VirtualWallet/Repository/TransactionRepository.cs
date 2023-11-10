@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
@@ -39,7 +42,10 @@ namespace VirtualWallet.Repository
 
         public async Task Delete(int transaction_id)
         {
+
+            var _transaction = _dbContext.Transactions.FirstOrDefaultAsync(t => t.transactionId == transaction_id); 
             var _transaction = _dbContext.Transactions.FirstOrDefault(t => t.transactionId == transaction_id);
+
 
             if (_transaction != null)
             {
