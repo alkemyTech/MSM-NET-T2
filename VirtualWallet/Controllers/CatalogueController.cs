@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class CatalogueController : Controller
     {
         private readonly CatalogueService _catalogueService;
@@ -51,9 +52,9 @@ namespace VirtualWallet.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Put(int catalogue_id, Catalogue catalogue)
+        public async Task<IActionResult> Put(int id, Catalogue catalogue)
         {
-            var _catalogue = await _catalogueService.getCatalogueAsync(catalogue_id);
+            var _catalogue = await _catalogueService.getCatalogueAsync(id);
 
             if (_catalogue == null)
             {
@@ -63,7 +64,7 @@ namespace VirtualWallet.Controllers
             _catalogue.ProductDescription = catalogue.ProductDescription;
             _catalogue.Image = catalogue.Image;
             _catalogue.Points = catalogue.Points;
-           
+
             await _catalogueService.updateCatalogueAsync(_catalogue);
 
             return Ok();

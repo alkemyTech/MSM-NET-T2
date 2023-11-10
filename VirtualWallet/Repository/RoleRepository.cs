@@ -6,7 +6,7 @@ using VirtualWallet.Repository.Interfaces;
 namespace VirtualWallet.Repository;
 
 public class RoleRepository : IRoleRepository
-{       
+{
     private readonly VirtualWalletDbContext _dbContext;
 
     public RoleRepository(VirtualWalletDbContext dbContext)
@@ -19,12 +19,12 @@ public class RoleRepository : IRoleRepository
         return await _dbContext.Roles
             .ToListAsync();
     }
-    
+
     public async Task<Role> GetRoleById(int id)
     {
         return await _dbContext.Roles.FirstOrDefaultAsync(r => r.Id == id);
     }
-    
+
     public async Task AddRole(Role role)
     {
         _dbContext.Roles.Add(role);
@@ -45,5 +45,5 @@ public class RoleRepository : IRoleRepository
             _dbContext.Roles.Remove(role);
             await _dbContext.SaveChangesAsync();
         }
-    }    
+    }
 }

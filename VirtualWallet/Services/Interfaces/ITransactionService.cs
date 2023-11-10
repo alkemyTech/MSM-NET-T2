@@ -1,10 +1,11 @@
 ﻿using VirtualWallet.Models;
+using VirtualWallet.Models.DTO;
 
 namespace VirtualWallet.Services.Interfaces
 {
     public interface ITransactionService
     {
-        Task<IEnumerable<Transaction>> getAllTransactionsAsync();
+        Task<IEnumerable<TransactionDTO>> getAllTransactionsAsync();
 
         Task<Transaction> getTransactionAsync(int codTransaction);
 

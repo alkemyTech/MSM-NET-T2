@@ -1,4 +1,5 @@
-﻿using VirtualWallet.DataAccess;
+﻿using Microsoft.EntityFrameworkCore;
+using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
 

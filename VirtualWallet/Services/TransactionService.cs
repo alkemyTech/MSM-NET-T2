@@ -1,53 +1,61 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VirtualWallet.DataAccess;
-using VirtualWallet.Models;
+﻿using VirtualWallet.Models;
+using VirtualWallet.Models.DTO;
+using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Services
 {
     public class TransactionService : ITransactionService
     {
-        private readonly VirtualWalletDbContext _dbContext;
+        private readonly ITransactionsRepository _transactionRepository;
 
-        public TransactionService(VirtualWalletDbContext dbContext)
+        public TransactionService(ITransactionsRepository transactionRepository)
         {
-            _dbContext = dbContext;
+            _transactionRepository = transactionRepository;
         }
 
-        public async Task<IEnumerable<Transaction>> getAllTransactionsAsync()
+        public async Task<IEnumerable<TransactionDTO>> getAllTransactionsAsync()
         {
-            var transactions = _dbContext.Transactions.ToList();
+            var transactions = await _transactionRepository.getAll();
 
-            return transactions;
+
+            var transactionDTOs = transactions.Select(transaction => new TransactionDTO
+            {
+                transactionId = transaction.transactionId,
+                Amount = transaction.Amount,
+                Concept = transaction.Concept,
+                Date = transaction.Date,
+                Type = transaction.Type,
+                AccountId = transaction.AccountId,
+                UserId = transaction.UserId,
+                ToAccountId = transaction.ToAccountId
+        });
+
+            return transactionDTOs;
+
         }
 
 
-        public async Task<Transaction> getTransactionAsync(int transaction_id)
+        public async Task<Transaction> getTransactionAsync(int id)
         {
-            return await _dbContext.Transactions.FirstOrDefaultAsync(t => t.transactionId == transaction_id);
+            var transaction =  await _transactionRepository.getById(id);
+
+            return transaction;
         }
 
         public async Task addTransactionAsync(Transaction transaction)
         {
-            _dbContext.Transactions.Add(transaction);
-            await _dbContext.SaveChangesAsync();
+            await _transactionRepository.Insert(transaction);
         }
 
         public async Task updateTransactionAsync(Transaction transaction)
         {
-            _dbContext.Transactions.Update(transaction);
-            await _dbContext.SaveChangesAsync();
+            await _transactionRepository.Update(transaction);
         }
 
-        public async Task deleteTransactionAsync(int transaction_id)
+        public async Task deleteTransactionAsync(int id)
         {
-            var transaction = await getTransactionAsync(transaction_id);
-
-            if (transaction != null)
-            {
-                _dbContext.Transactions.Remove(transaction);
-                await _dbContext.SaveChangesAsync();
-            }
+            await _transactionRepository.Delete(id);
         }
     }
 }
