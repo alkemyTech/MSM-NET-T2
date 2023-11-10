@@ -1,53 +1,43 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VirtualWallet.DataAccess;
-using VirtualWallet.Models;
+﻿using VirtualWallet.Models;
+using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Services
 {
     public class FixedTermService : IFixedTermService
     {
-        private readonly VirtualWalletDbContext _dbContext;
+        private readonly IFixedTermRepository _fixedTermRepository;
 
-        public FixedTermService(VirtualWalletDbContext dbContext)
+        public FixedTermService(IFixedTermRepository fixedTermRepository)
         {
-            _dbContext = dbContext;
+            _fixedTermRepository = fixedTermRepository;
         }
 
         public async Task<IEnumerable<FixedTermDeposit>> getAllFixedTermsAsync()
         {
-            var fixedTerms = await _dbContext.FixedTermDeposits.ToListAsync();
+            return await _fixedTermRepository.getAll();
 
-            return fixedTerms;
         }
 
 
         public async Task<FixedTermDeposit> getFixedTermAsync(int id)
         {
-            return await _dbContext.FixedTermDeposits.FirstOrDefaultAsync(c => c.Id == id);
+            return await _fixedTermRepository.getById(id);
         }
 
-        public async Task addFixedTermAsync(FixedTermDeposit catalogue)
+        public async Task addFixedTermAsync(FixedTermDeposit fixedTerm)
         {
-            _dbContext.FixedTermDeposits.Add(catalogue);
-            await _dbContext.SaveChangesAsync();
+            await _fixedTermRepository.Insert(fixedTerm);
         }
 
-        public async Task updateFixedTermAsync(FixedTermDeposit catalogue)
+        public async Task updateFixedTermAsync(FixedTermDeposit fixedTerm)
         {
-            _dbContext.FixedTermDeposits.Update(catalogue);
-            await _dbContext.SaveChangesAsync();
+            await _fixedTermRepository.Update(fixedTerm);
         }
 
         public async Task deleteFixedTermAsync(int id)
         {
-            var fixedTerm = await getFixedTermAsync(id);
-
-            if (fixedTerm != null)
-            {
-                _dbContext.FixedTermDeposits.Remove(fixedTerm);
-                await _dbContext.SaveChangesAsync();
-            }
+            await _fixedTermRepository.Delete(id);
         }
     }
 }
