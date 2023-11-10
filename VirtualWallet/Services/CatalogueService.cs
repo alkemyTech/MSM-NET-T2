@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
+using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Services
 {
-    public class CatalogueService
+    public class CatalogueService : ICatalogueService
     {
         private readonly VirtualWalletDbContext _dbContext;
 
