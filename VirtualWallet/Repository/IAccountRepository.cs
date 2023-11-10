@@ -1,5 +1,7 @@
 using VirtualWallet.Models;
 
+namespace VirtualWallet.Repository.Interfaces;
+
 public interface IAccountRepository
 {
     Task<IEnumerable<Account>> GetAllAccounts();
