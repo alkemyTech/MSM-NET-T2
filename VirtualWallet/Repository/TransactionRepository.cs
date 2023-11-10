@@ -1,13 +1,15 @@
-﻿using VirtualWallet.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using VirtualWallet.DataAccess;
+using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
 
 namespace VirtualWallet.Repository
 {
     public class TransactionRepository : ITransactionsRepository
     {
-        private readonly ApiContext _dbContext;
+        private readonly VirtualWalletDbContext _dbContext;
 
-        public TransactionRepository(ApiContext dbContext)
+        public TransactionRepository(VirtualWalletDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -19,7 +21,7 @@ namespace VirtualWallet.Repository
 
         public async Task<Transaction> getById(int transaction_id)
         {
-            return await _dbContext.Transactions.FirstOrDefaultAsync(t => t.transaction_id == transaction_id);
+            return await _dbContext.Transactions.FirstOrDefaultAsync(t => t.transactionId == transaction_id);
 
         }
 
@@ -37,7 +39,7 @@ namespace VirtualWallet.Repository
 
         public async Task Delete(int transaction_id)
         {
-            var _transaction = _dbContext.Transactions.FirstOrDefault(t => t.transaction_id == transaction_id);
+            var _transaction = _dbContext.Transactions.FirstOrDefault(t => t.transactionId == transaction_id);
 
             if (_transaction != null)
             {
