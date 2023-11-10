@@ -26,10 +26,10 @@ builder.Services.AddDbContext<VirtualWalletDbContext>(options =>
 
 // Scoped Repo - Services
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-//builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-//builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 builder.Services.AddScoped<ICatalogueRepository, CatalogueRepository>();
 builder.Services.AddScoped<ICatalogueService, CatalogueService>();

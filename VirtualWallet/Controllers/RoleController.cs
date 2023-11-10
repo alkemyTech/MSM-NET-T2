@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
+using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers;
 
@@ -9,18 +10,18 @@ namespace VirtualWallet.Controllers;
 [Route("api/[Controller]")]
 public class RoleController : ControllerBase
 { 
-    private readonly IRoleRepository _roleRepository;
+    private readonly IRoleService _roleService;
     
-    public RoleController(IRoleRepository roleRepository)
+    public RoleController(IRoleService roleService)
     { 
-        _roleRepository = roleRepository;
+        _roleService = roleService;
     }
     
     // GET: api/roles
     [HttpGet] 
     public async Task<IActionResult> Get() 
     { 
-        var roles = await _roleRepository.GetAllRoles();
+        var roles = await _roleService.GetAllRoles();
         return Ok(roles);
     }
     
@@ -28,7 +29,7 @@ public class RoleController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        var role = await _roleRepository.GetRoleById(id);
+        var role = await _roleService.GetRoleById(id);
         if (role == null) return NotFound();
         return Ok(role);
     }
@@ -37,7 +38,7 @@ public class RoleController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(Role role)
     {
-        await _roleRepository.AddRole(role);
+        await _roleService.AddRole(role);
         return CreatedAtAction(nameof(Get), new { id = role.Id }, role);
     }
     
@@ -45,11 +46,11 @@ public class RoleController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Role updatedRole)
     {
-        var role = await _roleRepository.GetRoleById(id);
+        var role = await _roleService.GetRoleById(id);
         if (role == null) return NotFound();
         role.Name = updatedRole.Name;
         role.Description = updatedRole.Description;
-        await _roleRepository.UpdateRole(role);
+        await _roleService.UpdateRole(role);
         return NoContent();
     }
 
@@ -57,9 +58,9 @@ public class RoleController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var role = await _roleRepository.GetRoleById(id);
+        var role = await _roleService.GetRoleById(id);
         if (role == null) return NotFound();
-        await _roleRepository.DeleteRole(id);
+        await _roleService.DeleteRole(id);
         return NoContent();
     } 
 } 

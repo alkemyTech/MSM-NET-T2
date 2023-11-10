@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
+using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers;
 
@@ -9,18 +10,18 @@ namespace VirtualWallet.Controllers;
 [Route("api/[controller]")]
 public class AccountController : ControllerBase
 {
-    private readonly IAccountRepository _accountRepository;
+    private readonly IAccountService _accountService;
 
-    public AccountController(IAccountRepository accountRepository)
+    public AccountController(IAccountService accountService)
     {
-        _accountRepository = accountRepository;
+        _accountService = accountService;
     }
 
     // GET: api/accounts
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var accounts = await _accountRepository.GetAllAccounts();
+        var accounts = await _accountService.GetAllAccounts();
         return Ok(accounts);
     }
 
@@ -28,7 +29,7 @@ public class AccountController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id)
     {
-        var account = await _accountRepository.GetAccountById(id);
+        var account = await _accountService.GetAccountById(id);
         if (account == null) return NotFound();
         return Ok(account);
     }
@@ -37,7 +38,7 @@ public class AccountController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(Account account)
     {
-        await _accountRepository.AddAccount(account);
+        await _accountService.AddAccount(account);
         return CreatedAtAction(nameof(Get), new { id = account.Id }, account);
     }
 
@@ -45,12 +46,12 @@ public class AccountController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Account updatedAccount)
     {
-        var account = await _accountRepository.GetAccountById(id);
+        var account = await _accountService.GetAccountById(id);
         if (account == null) return NotFound();
         account.CreationDate = updatedAccount.CreationDate;
         account.Money = updatedAccount.Money;
         account.IsBlocked = updatedAccount.IsBlocked;
-        await _accountRepository.UpdateAccount(account);
+        await _accountService.UpdateAccount(account);
         return NoContent();
     }
     
@@ -58,9 +59,9 @@ public class AccountController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var account = await _accountRepository.GetAccountById(id);
+        var account = await _accountService.GetAccountById(id);
         if (account == null) return NotFound();
-        await _accountRepository.DeleteAccount(id);
+        await _accountService.DeleteAccount(id);
         return NoContent();
     }
 }

@@ -25,7 +25,9 @@ public class VirtualWalletDbContext : DbContext
         modelBuilder.Entity<Role>().ToTable("Role");
         //modelBuilder.Entity<User>().ToTable("User");
         modelBuilder.Entity<Account>().ToTable("Account");
-        //modelBuilder.Entity<FixedTermDeposit>().ToTable("Account");
+        modelBuilder.Entity<Catalogue>().ToTable("Catalogue");
+        
+        //modelBuilder.Entity<FixedTermDeposit>().ToTable("FixedTermDeposit");
         
         // Seed Role
         modelBuilder.Entity<Role>().HasData(
