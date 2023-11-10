@@ -7,7 +7,7 @@ namespace VirtualWallet.Controllers
 {
     public class TransactionController : ControllerBase
     {
-        private readonly TransactionService  _transactionService;
+        private readonly TransactionService _transactionService;
 
         public TransactionController(TransactionService transactionService)
         {
@@ -61,14 +61,27 @@ namespace VirtualWallet.Controllers
                 return NotFound();
             }
 
-            _transaction.transactionId = transaction.transactionId;
-            _transaction.Amount = transaction.Amount;
-            _transaction.Concept = transaction.Concept;
-            _transaction.Date = transaction.Date;
-            _transaction.Type = transaction.Type;
-            _transaction.AccountId = transaction.AccountId;
-            _transaction.UserId = transaction.UserId;
-            _transaction.ToAccountId = transaction.ToAccountId;
+            if (_transaction.ToAccountId == null)
+            {
+                _transaction.transactionId = transaction.transactionId;
+                _transaction.Amount = transaction.Amount;
+                _transaction.Concept = transaction.Concept;
+                _transaction.Date = transaction.Date;
+                _transaction.Type = transaction.Type;
+                _transaction.AccountId = transaction.AccountId;
+                _transaction.UserId = transaction.UserId;
+            }
+            else
+            {
+                _transaction.transactionId = transaction.transactionId;
+                _transaction.Amount = transaction.Amount;
+                _transaction.Concept = transaction.Concept;
+                _transaction.Date = transaction.Date;
+                _transaction.Type = transaction.Type;
+                _transaction.AccountId = transaction.AccountId;
+                _transaction.UserId = transaction.UserId;
+                _transaction.ToAccountId = transaction.ToAccountId;
+            }
 
 
             await _transactionService.updateTransactionAsync(_transaction);

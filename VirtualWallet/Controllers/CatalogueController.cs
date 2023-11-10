@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Services;
 
@@ -63,7 +62,7 @@ namespace VirtualWallet.Controllers
             _catalogue.ProductDescription = catalogue.ProductDescription;
             _catalogue.Image = catalogue.Image;
             _catalogue.Points = catalogue.Points;
-           
+
             await _catalogueService.updateCatalogueAsync(_catalogue);
 
             return Ok();
