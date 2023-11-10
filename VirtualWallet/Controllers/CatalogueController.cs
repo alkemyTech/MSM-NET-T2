@@ -6,6 +6,8 @@ using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
+    [ApiController] 
+    [Route("api/[Controller]")]
     public class CatalogueController : ControllerBase
     {
         private readonly CatalogueService _catalogueService;
@@ -27,8 +29,8 @@ namespace VirtualWallet.Controllers
             }
 
             return Ok(catalogues);
-
         }
+        
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetById(int id)

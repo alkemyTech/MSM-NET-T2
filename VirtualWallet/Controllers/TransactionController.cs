@@ -6,6 +6,8 @@ using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
+    [ApiController] 
+    [Route("api/[Controller]")]
     public class TransactionController : ControllerBase
     {
         private readonly TransactionService _transactionService;

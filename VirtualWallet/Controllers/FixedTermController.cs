@@ -4,6 +4,8 @@ using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
+    [ApiController] 
+    [Route("api/[Controller]")]
     public class FixedTermController : ControllerBase
     {
         private readonly FixedTermService _fixedTermService;
