@@ -1,7 +1,13 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Repository;
 using VirtualWallet.Repository.Interfaces;
+using VirtualWallet.Services;
+using VirtualWallet.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +26,16 @@ builder.Services.AddDbContext<VirtualWalletDbContext>(options =>
 
 // Scoped Repo - Services
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+//builder.Services.AddScoped<IAccountService, AccountService>();
 
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+//builder.Services.AddScoped<IRoleService, RoleService>();
+
+builder.Services.AddScoped<ICatalogueRepository, CatalogueRepository>();
+builder.Services.AddScoped<ICatalogueService, CatalogueService>();
+
+builder.Services.AddScoped<ITransactionsRepository, TransactionRepository>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 var app = builder.Build();
 

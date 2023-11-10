@@ -1,6 +1,7 @@
 # .gitignore
 .vs/
 .idea/
+.idea
 .git/
 .github/
 VirtualWallet/bin/

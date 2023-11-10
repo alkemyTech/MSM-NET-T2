@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using VirtualWallet.Models;
 
@@ -11,8 +12,10 @@ public class VirtualWalletDbContext : DbContext
     }  
     
     public DbSet<Role> Roles { get; set; }
-    //public DbSet<User> Users { get; set; } 
+    //public DbSet<User> Users { get; set; }
     public DbSet<Account> Accounts { get; set; }
+    public DbSet<Catalogue> Catalogues { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
     //public DbSet<FixedTermDeposit> FixedTermDeposits { get; set; } 
     
     
@@ -20,7 +23,7 @@ public class VirtualWalletDbContext : DbContext
     {
         // Especificar al modelo que las tablas van en singular 
         modelBuilder.Entity<Role>().ToTable("Role");
-        //modelBuilder.Entity<User>().ToTable("Role");
+        //modelBuilder.Entity<User>().ToTable("User");
         modelBuilder.Entity<Account>().ToTable("Account");
         //modelBuilder.Entity<FixedTermDeposit>().ToTable("Account");
         
