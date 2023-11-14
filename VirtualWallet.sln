@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtualWallet", "VirtualWallet\VirtualWallet.csproj", "{A8FE67D3-EAF1-44D2-80AE-BC8649660C35}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A8FE67D3-EAF1-44D2-80AE-BC8649660C35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8FE67D3-EAF1-44D2-80AE-BC8649660C35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8FE67D3-EAF1-44D2-80AE-BC8649660C35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8FE67D3-EAF1-44D2-80AE-BC8649660C35}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA6AB2A6-B287-49AE-A2B5-B8BD95E12E76}
+	EndGlobalSection
+EndGlobal

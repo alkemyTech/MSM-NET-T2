@@ -1,0 +1,7 @@
+# .gitignore
+.vs/
+.idea/
+.git/
+.github/
+VirtualWallet/bin/
+VirtualWallet/obj/
