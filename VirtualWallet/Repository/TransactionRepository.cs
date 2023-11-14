@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
+using VirtualWallet.Models.DTO;
 using VirtualWallet.Repository.Interfaces;
 
 namespace VirtualWallet.Repository
@@ -25,6 +23,7 @@ namespace VirtualWallet.Repository
         public async Task<Transaction> getById(int transaction_id)
         {
             return await _dbContext.Transactions.FirstOrDefaultAsync(t => t.transactionId == transaction_id);
+
         }
 
         public async Task Insert(Transaction transaction)
@@ -41,13 +40,14 @@ namespace VirtualWallet.Repository
 
         public async Task Delete(int transaction_id)
         {
-            var _transaction = _dbContext.Transactions.FirstOrDefaultAsync(t => t.transactionId == transaction_id); 
+            var _transaction = _dbContext.Transactions.FirstOrDefault(t => t.transactionId == transaction_id);
 
-            /*if (_transaction != null)
+            if (_transaction != null)
             {
                 _dbContext.Transactions.Remove(_transaction);
                 await _dbContext.SaveChangesAsync();
-            }*/
+            }
+
         }
     }
 }

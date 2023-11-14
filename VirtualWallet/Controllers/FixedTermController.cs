@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
+using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
-    [ApiController] 
-    [Route("api/[Controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class FixedTermController : ControllerBase
     {
         private readonly FixedTermService _fixedTermService;
@@ -44,16 +45,28 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(FixedTermDeposit fixedTerm)
+        public async Task<IActionResult> Post(FixedTermDepositDTO fixedTerm)
         {
-            await _fixedTermService.addFixedTermAsync(fixedTerm);
+            var _fixedTerm = new FixedTermDeposit
+            {
+                Id = fixedTerm.Id,
+                UserId = fixedTerm.UserId,
+                AccountId = fixedTerm.AccountId,
+                Amount = fixedTerm.Amount,
+                CreationDate = fixedTerm.CreationDate,
+                ClosingDate = fixedTerm.ClosingDate,
+                NominalRate = fixedTerm.NominalRate,
+                State = fixedTerm.State
+            };
+
+            await _fixedTermService.addFixedTermAsync(_fixedTerm);
 
             return CreatedAtAction("Get", new { id = fixedTerm.Id }, fixedTerm);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Put(int id, FixedTermDeposit fixedTerm)
+        public async Task<IActionResult> Put(int id, FixedTermDepositDTO fixedTerm)
         {
             var _fixedTerm = await _fixedTermService.getFixedTermAsync(id);
 

@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VirtualWallet.DataAccess;
-using VirtualWallet.Models;
-using VirtualWallet.Services.Interfaces;
+﻿using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
+using VirtualWallet.Services.Interfaces;
 
-    
+
 namespace VirtualWallet.Services
 {
     public class CatalogueService : ICatalogueService

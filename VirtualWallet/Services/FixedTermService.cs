@@ -1,4 +1,6 @@
 ﻿using VirtualWallet.Models;
+using VirtualWallet.Models.DTO;
+using VirtualWallet.Repository;
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
@@ -13,10 +15,26 @@ namespace VirtualWallet.Services
             _fixedTermRepository = fixedTermRepository;
         }
 
-        public async Task<IEnumerable<FixedTermDeposit>> getAllFixedTermsAsync()
+        public async Task<IEnumerable<FixedTermDepositDTO>> getAllFixedTermsAsync()
         {
-            return await _fixedTermRepository.getAll();
+           
+            var fixedTerms = await _fixedTermRepository.getAll();
 
+
+            var fixedTermsDTOs = fixedTerms.Select(fixedTerm => new FixedTermDepositDTO
+            {
+                Id = fixedTerm.Id,
+                UserId = fixedTerm.UserId,
+                AccountId = fixedTerm.AccountId,
+                Amount = fixedTerm.Amount,
+                CreationDate = fixedTerm.CreationDate,
+                ClosingDate = fixedTerm.ClosingDate,
+                NominalRate = fixedTerm.NominalRate,
+                State = fixedTerm.State
+
+            });
+
+            return fixedTermsDTOs;
         }
 
 
