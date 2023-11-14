@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
+using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class TransactionController : ControllerBase
     {
         private readonly TransactionService _transactionService;
@@ -43,19 +45,31 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Post(Transaction transaction)
+        public async Task<IActionResult> Post(TransactionDTO transactionDTO)
         {
-            await _transactionService.addTransactionAsync(transaction);
+            var _transactionDTO = new Transaction
+            {
+                transactionId = transactionDTO.transactionId,
+                Amount = transactionDTO.Amount,
+                Concept = transactionDTO.Concept,
+                Date = transactionDTO.Date,
+                Type = transactionDTO.Type,
+                AccountId = transactionDTO.AccountId,
+                UserId = transactionDTO.UserId,
+                ToAccountId = transactionDTO.ToAccountId
+            };
 
-            return CreatedAtAction("Get", new { id = transaction.transactionId }, transaction);
+            await _transactionService.addTransactionAsync(_transactionDTO);
+
+            return CreatedAtAction("Get", new { id = _transactionDTO.transactionId }, _transactionDTO);
         }
 
         [HttpPut]
         [Route("{transaction_id}")]
-        public async Task<IActionResult> Put(int transaction_id, Transaction transaction)
+        public async Task<IActionResult> Put(int transaction_id, TransactionDTO transaction)
         {
             var _transaction = await _transactionService.getTransactionAsync(transaction_id);
+
 
             if (_transaction == null)
             {
@@ -64,7 +78,6 @@ namespace VirtualWallet.Controllers
 
             if (_transaction.ToAccountId == null)
             {
-                _transaction.transactionId = transaction.transactionId;
                 _transaction.Amount = transaction.Amount;
                 _transaction.Concept = transaction.Concept;
                 _transaction.Date = transaction.Date;
@@ -74,7 +87,6 @@ namespace VirtualWallet.Controllers
             }
             else
             {
-                _transaction.transactionId = transaction.transactionId;
                 _transaction.Amount = transaction.Amount;
                 _transaction.Concept = transaction.Concept;
                 _transaction.Date = transaction.Date;

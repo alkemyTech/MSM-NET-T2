@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
-using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers;

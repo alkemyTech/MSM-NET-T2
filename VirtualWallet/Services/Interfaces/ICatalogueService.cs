@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using VirtualWallet.Models;
+﻿using VirtualWallet.Models;
 
 namespace VirtualWallet.Services.Interfaces
 {

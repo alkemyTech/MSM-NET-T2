@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
-using VirtualWallet.Repository.Interfaces;
+using VirtualWallet.Models.DTO;
 using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers;
@@ -36,15 +35,22 @@ public class AccountController : ControllerBase
 
     // POST: api/accounts
     [HttpPost]
-    public async Task<IActionResult> Post(Account account)
+    public async Task<IActionResult> Post(AccountDTO account)
     {
-        await _accountService.AddAccount(account);
+        var _account = new Account
+        {
+            CreationDate = DateTime.Now,
+            Money = account.Money,
+            IsBlocked = account.IsBlocked,
+            UserId = account.UserId
+        };
+        await _accountService.AddAccount(_account);
         return CreatedAtAction(nameof(Get), new { id = account.Id }, account);
     }
 
     // PUT: api/accounts/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Account updatedAccount)
+    public async Task<IActionResult> Put(int id, AccountDTO updatedAccount)
     {
         var account = await _accountService.GetAccountById(id);
         if (account == null) return NotFound();
@@ -54,7 +60,7 @@ public class AccountController : ControllerBase
         await _accountService.UpdateAccount(account);
         return NoContent();
     }
-    
+
     // DELETE: api/accounts/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)

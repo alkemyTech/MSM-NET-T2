@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VirtualWallet.DataAccess;
 
@@ -11,9 +12,11 @@ using VirtualWallet.DataAccess;
 namespace VirtualWallet.Migrations
 {
     [DbContext(typeof(VirtualWalletDbContext))]
-    partial class VirtualWalletDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231114004509_VirtualWallet")]
+    partial class VirtualWallet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

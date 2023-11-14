@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VirtualWallet.DataAccess;
-using VirtualWallet.Models;
-
+﻿using VirtualWallet.Models;
+using VirtualWallet.Models.DTO;
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
@@ -16,15 +14,33 @@ namespace VirtualWallet.Services
             _transactionRepository = transactionRepository;
         }
 
-        public async Task<IEnumerable<Transaction>> getAllTransactionsAsync()
+        public async Task<IEnumerable<TransactionDTO>> getAllTransactionsAsync()
         {
-            return await _transactionRepository.getAll();
+            var transactions = await _transactionRepository.getAll();
+
+
+            var transactionDTOs = transactions.Select(transaction => new TransactionDTO
+            {
+                transactionId = transaction.transactionId,
+                Amount = transaction.Amount,
+                Concept = transaction.Concept,
+                Date = transaction.Date,
+                Type = transaction.Type,
+                AccountId = transaction.AccountId,
+                UserId = transaction.UserId,
+                ToAccountId = transaction.ToAccountId
+        });
+
+            return transactionDTOs;
 
         }
-        
+
+
         public async Task<Transaction> getTransactionAsync(int id)
         {
-            return await _transactionRepository.getById(id);
+            var transaction =  await _transactionRepository.getById(id);
+
+            return transaction;
         }
 
         public async Task addTransactionAsync(Transaction transaction)
