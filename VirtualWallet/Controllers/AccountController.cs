@@ -28,7 +28,7 @@ public class AccountController : ControllerBase
     
     // GET: api/accounts
     [HttpGet]
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Get()
     {
         //var accounts = await _accountService.GetAllAccounts();
@@ -44,7 +44,7 @@ public class AccountController : ControllerBase
     // GET: api/accounts/{id}
     [HttpGet]
     [Route("{id}")]
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetById(int id)
     {
         //var account = await _accountService.GetAccountById(id);
@@ -59,24 +59,9 @@ public class AccountController : ControllerBase
 
     // POST: api/accounts
     [HttpPost]
-    [Authorize(Roles="Regular")]
+    [Authorize(Roles = "Regular")]
     public async Task<IActionResult> Post(AccountDTO accountDto)
     {
-        // Verificar campos para agregar una cuenta
-        if (accountDto ==  null)
-        {
-            return BadRequest("La cuenta no posee datos válidos");
-        }
-
-        if (accountDto.Id == 0 ||
-            accountDto.CreationDate == DateTime.MinValue ||
-            accountDto.Money <= 0 ||
-            accountDto.UserId == 0 
-            )
-        {
-            return BadRequest("La cuenta no pudo ser creada: uno o más errores encontrados");
-        }
-        
         var _account = new Account
         {
             Id = accountDto.Id,
@@ -95,30 +80,31 @@ public class AccountController : ControllerBase
     // POST api/accounts/{id}
     [HttpPost]
     [Route("{id}")]
-    //[Authorize(Roles = "Regular")]
-    public async Task<IActionResult> Post(int id, int monto)
+    [Authorize]
+    public async Task<IActionResult> Post(int id, int amount)
     {
         // Realizar un depósito en la cuenta
         var accounts = await _unitOfWork.AccountRepo.GetById(id);
         var user = await _unitOfWork.UserRepo.GetById(id);
         
-        var userId = User.FindFirstValue("Id");
+        var userId = "2";
 
         if (accounts == null)
         {
             return NotFound();
         }
+        //var newUser = User.GetUserId();
         
         // Comparación de el UserId que llega con el UserId de la Account
         if (userId.Equals(accounts.Id.ToString()))
         {
             // Realizar el depósito
-            var deposit = accounts.Money += monto;
+            var deposit = accounts.Money += amount;
             
             // Registrar la transacción
             var newTransaction = new Transaction
             { 
-                Amount = monto,
+                Amount = deposit,
                 Concept = "Depósito", 
                 Date = DateTime.Now, 
                 Type = "topup", 
@@ -129,7 +115,7 @@ public class AccountController : ControllerBase
             await _unitOfWork.TransactionRepo.Insert(newTransaction);
             
             // Calcular los puntos
-            var points = (int)Math.Round(monto * 0.02);
+            var points = (int)Math.Round(amount * 0.02);
             user.Points += points;
             
           await _unitOfWork.SaveChangesAsync();  
@@ -137,7 +123,6 @@ public class AccountController : ControllerBase
 
         return Ok();
     }
-    
     
     // PUT: api/accounts/{id}
     [HttpPut]

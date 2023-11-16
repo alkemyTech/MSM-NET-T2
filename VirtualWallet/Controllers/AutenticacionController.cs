@@ -36,8 +36,9 @@ namespace VirtualWallet.Controllers
                 var keyBytes = Encoding.UTF8.GetBytes(secretKey);
                 var claims = new ClaimsIdentity();
 
-                claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.Password.ToString()));
                 claims.AddClaim(new Claim("Id", users.Id.ToString()));
+                //claims.AddClaim(new Claim(ClaimTypes.Email, users.Email));
+                claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.Password));
                 claims.AddClaim(new Claim(ClaimTypes.Role, users.Role_Id == 1 ? "Admin" : "Regular"));
                 
                 
