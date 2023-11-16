@@ -37,8 +37,10 @@ namespace VirtualWallet.Controllers
                 var claims = new ClaimsIdentity();
 
                 claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.Password.ToString()));
+                claims.AddClaim(new Claim("Id", users.Id.ToString()));
                 claims.AddClaim(new Claim(ClaimTypes.Role, users.Role_Id == 1 ? "Admin" : "Regular"));
-
+                
+                
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = claims,

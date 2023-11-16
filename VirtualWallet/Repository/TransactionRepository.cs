@@ -29,13 +29,13 @@ namespace VirtualWallet.Repository
         public async Task Insert(Transaction transaction)
         {
             _dbContext.Transactions.Add(transaction);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task Update(Transaction transaction)
         {
             _dbContext.Transactions.Update(transaction);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int transaction_id)
@@ -45,7 +45,7 @@ namespace VirtualWallet.Repository
             if (_transaction != null)
             {
                 _dbContext.Transactions.Remove(_transaction);
-                await _dbContext.SaveChangesAsync();
+                //await _dbContext.SaveChangesAsync();
             }
 
         }

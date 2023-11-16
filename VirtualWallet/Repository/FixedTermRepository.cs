@@ -8,7 +8,6 @@ namespace VirtualWallet.Repository
     public class FixedTermRepository : IFixedTermRepository
     {
         private readonly VirtualWalletDbContext _dbContext;
-
         public FixedTermRepository(VirtualWalletDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -28,13 +27,13 @@ namespace VirtualWallet.Repository
         public async Task Insert(FixedTermDeposit fixedTerm)
         {
             _dbContext.FixedTermDeposits.Add(fixedTerm);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task Update(FixedTermDeposit fixedTerm)
         {
             _dbContext.FixedTermDeposits.Update(fixedTerm);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
@@ -44,7 +43,7 @@ namespace VirtualWallet.Repository
             if (fixedTerm != null)
             {
                 _dbContext.FixedTermDeposits.Remove(fixedTerm);
-                await _dbContext.SaveChangesAsync();
+                //await _dbContext.SaveChangesAsync();
             }
 
         }

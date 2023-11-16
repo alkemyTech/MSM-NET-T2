@@ -96,7 +96,7 @@ builder.Services.AddScoped<IFixedTermService, FixedTermService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-//builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped<UnitOfWork>();
 
 var app = builder.Build();
 

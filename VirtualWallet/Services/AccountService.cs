@@ -13,28 +13,28 @@ public class AccountService : IAccountService
          _accountRepository = accountRepository;
     }
     
-    public async Task<IEnumerable<Account>> GetAllAccounts()
+    public async Task<IEnumerable<Account>> GetAll()
     {
-        return await _accountRepository.GetAllAccounts();
+        return await _accountRepository.GetAll();
     }
     
-     public async Task<Account> GetAccountById(int id)
+     public async Task<Account> GetById(int id)
     {
-        return await _accountRepository.GetAccountById(id);
+        return await _accountRepository.GetById(id);
     }
 
-    public async Task AddAccount(Account account)
+    public async Task Insert(Account account)
     {
-        await _accountRepository.AddAccount(account);
+        await _accountRepository.Insert(account);
     }
 
-    public async Task UpdateAccount(Account account)
+    public async Task Update(Account account)
     {
-        await _accountRepository.UpdateAccount(account);
+        await _accountRepository.Update(account);
     }
 
-    public async Task DeleteAccount(int id)
+    public async Task Delete(int id)
     {
-        await _accountRepository.DeleteAccount(id);
+        await _accountRepository.Delete(id);
     }    
 }

@@ -28,13 +28,13 @@ public class RoleRepository : IRoleRepository
     public async Task AddRole(Role role)
     {
         _dbContext.Roles.Add(role);
-        await _dbContext.SaveChangesAsync();
+        //await _dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateRole(Role role)
     {
         _dbContext.Roles.Update(role);
-        await _dbContext.SaveChangesAsync();
+        //await _dbContext.SaveChangesAsync();
     }
 
     public async Task DeleteRole(int id)
@@ -43,7 +43,7 @@ public class RoleRepository : IRoleRepository
         if (role != null)
         {
             _dbContext.Roles.Remove(role);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();
         }
     }    
 }
