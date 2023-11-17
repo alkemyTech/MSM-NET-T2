@@ -127,14 +127,13 @@ public class AccountController : ControllerBase
     [HttpPost]
     [Route("Transfer/{id}")]
     //[Authorize(Roles = "Regular")]
-    public async Task<IActionResult> Transfer(int id, int amount)
+    public async Task<IActionResult> Transfer(int id, int toAccount, int amount)
     {
         // Endpoint -> Realizar transferencia
         var account = await _unitOfWork.AccountRepo.GetById(id);
+        var transferId = await _unitOfWork.AccountRepo.GetById(toAccount);
         var user = await _unitOfWork.UserRepo.GetById(id);
-        var transaction = await _unitOfWork.TransactionRepo.getById(id);
-        //var userId = User.FindFirstValue("Id");
-        var transferId = id;
+        //var userId = User.FindFirstValue("Id")
         
         var userId = "3";
         
@@ -150,13 +149,16 @@ public class AccountController : ControllerBase
         }
         
         // Comparación del UserId que llega con el UserId de la Account
-         if (userId.Equals(transferId.ToString()))
+         if (userId.Equals(account.Id.ToString()))
         {
             // Realizar la transferencia
             var transfer = account.Money -= amount;
-            var receive = account.Money += transfer;
+            account.Money -= transfer;
+            
+            var receive = transferId.Money += amount;
+            transferId.Money += amount;
                 
-            // Registrar la transacción
+            // Registrar la transacción de la cuenta emisora
             var newTransaction = new Transaction
             { 
                 Amount = transfer,
@@ -165,7 +167,7 @@ public class AccountController : ControllerBase
                 Type = "payment", 
                 AccountId = int.Parse(userId), 
                 UserId = int.Parse(userId),
-                ToAccountId = transferId
+                ToAccountId = transferId.Id
             };
             await _unitOfWork.TransactionRepo.Insert(newTransaction);
             
@@ -176,12 +178,12 @@ public class AccountController : ControllerBase
                 Concept = "Transferencia de terceros",
                 Date = DateTime.Now,
                 Type = "payment",
-                AccountId = account.Id,
-                UserId = account.UserId
+                AccountId = transferId.Id,
+                UserId = transferId.UserId
             };
             await _unitOfWork.TransactionRepo.Insert(toAccountTransaction);
             
-            // Calcular los puntos
+            // Calcular los puntos de la cuenta emisora
             var points = (int)Math.Round(amount * 0.03);
             user.Points += points;
 
@@ -195,7 +197,6 @@ public class AccountController : ControllerBase
     [HttpPut]
     [Route("{id}")]
     [Authorize(Roles = "Admin")]
-    
     public async Task<IActionResult> Put(int id, AccountDTO account)
     {
         //var account = await _accountService.GetAccountById(id);

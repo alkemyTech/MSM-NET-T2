@@ -31,13 +31,11 @@ public class AccountRepository : IAccountRepository
     public async Task Insert(Account account)
     {
         _dbContext.Accounts.Add(account);
-        //await _dbContext.SaveChangesAsync();
     }
 
     public async Task Update(Account account)
     {
         _dbContext.Accounts.Update(account);
-        //await _dbContext.SaveChangesAsync();
     }
 
     public async Task Delete(int id)
@@ -46,7 +44,6 @@ public class AccountRepository : IAccountRepository
         if (account != null)
         {
             _dbContext.Accounts.Remove(account);
-            //await _dbContext.SaveChangesAsync();
         }
     }
 }
