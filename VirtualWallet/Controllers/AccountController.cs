@@ -12,7 +12,6 @@ namespace VirtualWallet.Controllers;
 [Route("api/[controller]")]
 public class AccountController : ControllerBase
 {
-    // Cambiamos el service por el UnitOfWork
     /*private readonly IAccountService _accountService;
     
     public AccountController(IAccountService accountService)
@@ -80,14 +79,14 @@ public class AccountController : ControllerBase
     // POST api/accounts/Deposit/{id}
     [HttpPost]
     [Route("Deposit/{id}")]
-    //[Authorize(Roles = "Regular")]
+    [Authorize(Roles = "Regular")]
     public async Task<IActionResult> Deposit(int id, int amount)
     {
         // Endpoint -> Realizar depósito
         var account = await _unitOfWork.AccountRepo.GetById(id);
         var user = await _unitOfWork.UserRepo.GetById(id);
-        //var userId = User.FindFirstValue("Id");
-        var userId = "2";
+        var userId = User.FindFirstValue("Id");
+        //var userId = "2";
         
         // Verificar la cuenta
         if (account == null)
@@ -126,16 +125,16 @@ public class AccountController : ControllerBase
     // POST api/accounts/Transfer/{id}
     [HttpPost]
     [Route("Transfer/{id}")]
-    //[Authorize(Roles = "Regular")]
+    [Authorize(Roles = "Regular")]
     public async Task<IActionResult> Transfer(int id, int toAccount, int amount)
     {
         // Endpoint -> Realizar transferencia
         var account = await _unitOfWork.AccountRepo.GetById(id);
         var transferId = await _unitOfWork.AccountRepo.GetById(toAccount);
         var user = await _unitOfWork.UserRepo.GetById(id);
-        //var userId = User.FindFirstValue("Id")
+        var userId = User.FindFirstValue("Id");
         
-        var userId = "3";
+        //var userId = "3";
         
         // Verificar ambas cuentas
           if (account == null || transferId == null)

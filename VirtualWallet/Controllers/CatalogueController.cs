@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class CatalogueController : Controller
+    public class CatalogueController : ControllerBase
     {
         private readonly CatalogueService _catalogueService;
 
