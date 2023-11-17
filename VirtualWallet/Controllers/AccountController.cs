@@ -76,30 +76,29 @@ public class AccountController : ControllerBase
         await _unitOfWork.SaveChangesAsync();
         return CreatedAtAction("Get", new { id = accountDto.Id }, accountDto);
     }
-
-    // POST api/accounts/{id}
+    
+    // POST api/accounts/Deposit/{id}
     [HttpPost]
-    [Route("{id}")]
-    [Authorize]
-    public async Task<IActionResult> Post(int id, int amount)
+    [Route("Deposit/{id}")]
+    //[Authorize(Roles = "Regular")]
+    public async Task<IActionResult> Deposit(int id, int amount)
     {
-        // Realizar un depósito en la cuenta
-        var accounts = await _unitOfWork.AccountRepo.GetById(id);
+        // Endpoint -> Realizar depósito
+        var account = await _unitOfWork.AccountRepo.GetById(id);
         var user = await _unitOfWork.UserRepo.GetById(id);
-        
+        //var userId = User.FindFirstValue("Id");
         var userId = "2";
-
-        if (accounts == null)
-        {
-            return NotFound();
-        }
-        //var newUser = User.GetUserId();
         
-        // Comparación de el UserId que llega con el UserId de la Account
-        if (userId.Equals(accounts.Id.ToString()))
+        // Verificar la cuenta
+        if (account == null)
+        {
+            return NotFound("No se encuentra / No existe la cuenta solicitada.");
+        }
+        // Comparación del UserId que llega con el UserId de la Account
+        if (userId.Equals(account.Id.ToString()))
         {
             // Realizar el depósito
-            var deposit = accounts.Money += amount;
+            var deposit = account.Money += amount;
             
             // Registrar la transacción
             var newTransaction = new Transaction
@@ -118,15 +117,85 @@ public class AccountController : ControllerBase
             var points = (int)Math.Round(amount * 0.02);
             user.Points += points;
             
-          await _unitOfWork.SaveChangesAsync();  
+          await _unitOfWork.SaveChangesAsync();
         }
-
-        return Ok();
+        
+        return Ok("Depósito exitoso");
     }
     
+    // POST api/accounts/Transfer/{id}
+    [HttpPost]
+    [Route("Transfer/{id}")]
+    //[Authorize(Roles = "Regular")]
+    public async Task<IActionResult> Transfer(int id, int amount)
+    {
+        // Endpoint -> Realizar transferencia
+        var account = await _unitOfWork.AccountRepo.GetById(id);
+        var user = await _unitOfWork.UserRepo.GetById(id);
+        var transaction = await _unitOfWork.TransactionRepo.getById(id);
+        //var userId = User.FindFirstValue("Id");
+        var transferId = id;
+        
+        var userId = "3";
+        
+        // Verificar ambas cuentas
+          if (account == null || transferId == null)
+        {
+            return NotFound("Una o ambas cuentas no fueron encontradas.");
+        }
+        // Verificar que la cuenta origen tenga saldo suficiente
+        if (account.Money < amount)
+        {
+            return BadRequest("Saldo insuficiente para realizar la transferencia");
+        }
+        
+        // Comparación del UserId que llega con el UserId de la Account
+         if (userId.Equals(transferId.ToString()))
+        {
+            // Realizar la transferencia
+            var transfer = account.Money -= amount;
+            var receive = account.Money += transfer;
+                
+            // Registrar la transacción
+            var newTransaction = new Transaction
+            { 
+                Amount = transfer,
+                Concept = "Transferencia a cuenta de terceros", 
+                Date = DateTime.Now, 
+                Type = "payment", 
+                AccountId = int.Parse(userId), 
+                UserId = int.Parse(userId),
+                ToAccountId = transferId
+            };
+            await _unitOfWork.TransactionRepo.Insert(newTransaction);
+            
+            // Registrar la transacción en la cuenta destino
+            var toAccountTransaction = new Transaction
+            {
+                Amount = receive,
+                Concept = "Transferencia de terceros",
+                Date = DateTime.Now,
+                Type = "payment",
+                AccountId = account.Id,
+                UserId = account.UserId
+            };
+            await _unitOfWork.TransactionRepo.Insert(toAccountTransaction);
+            
+            // Calcular los puntos
+            var points = (int)Math.Round(amount * 0.03);
+            user.Points += points;
+
+            await _unitOfWork.AccountRepo.Update(account);
+            await _unitOfWork.SaveChangesAsync();
+        }
+        return Ok("Transferencia realizada con éxito");
+    }
+  
     // PUT: api/accounts/{id}
     [HttpPut]
     [Route("{id}")]
+    [Authorize(Roles = "Admin")]
+    
     public async Task<IActionResult> Put(int id, AccountDTO account)
     {
         //var account = await _accountService.GetAccountById(id);
@@ -148,7 +217,9 @@ public class AccountController : ControllerBase
     }
 
     // DELETE: api/accounts/{id}
-    [HttpDelete("{id}")]
+    [HttpDelete]
+    [Route("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
         //var account = await _accountService.GetAccountById(id);
