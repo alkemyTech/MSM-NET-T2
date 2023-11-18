@@ -13,28 +13,28 @@ public class RoleService : IRoleService
          _roleRepository = roleRepository;
     }
     
-    public async Task<IEnumerable<Role>> GetAllRoles()
+    public async Task<IEnumerable<Role>> GetAll()
     {
-        return await _roleRepository.GetAllRoles();
+        return await _roleRepository.GetAll();
     }
     
-     public async Task<Role> GetRoleById(int id)
+     public async Task<Role> GetById(int id)
     {
-        return await _roleRepository.GetRoleById(id);
+        return await _roleRepository.GetById(id);
     }
 
-    public async Task AddRole(Role role)
+    public async Task Insert(Role role)
     {
-        await _roleRepository.AddRole(role);
+        await _roleRepository.Insert(role);
     }
 
-    public async Task UpdateRole(Role role)
+    public async Task Update(Role role)
     {
-        await _roleRepository.UpdateRole(role);
+        await _roleRepository.Update(role);
     }
 
-    public async Task DeleteRole(int id)
+    public async Task Delete(int id)
     {
-        await _roleRepository.DeleteRole(id);
+        await _roleRepository.Delete(id);
     }
 }

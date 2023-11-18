@@ -2,7 +2,6 @@
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
-
 namespace VirtualWallet.Services
 {
     public class CatalogueService : ICatalogueService
@@ -19,7 +18,6 @@ namespace VirtualWallet.Services
             return await _catalogueRepository.getAll();
 
         }
-
 
         public async Task<Catalogue> getCatalogueAsync(int id)
         {

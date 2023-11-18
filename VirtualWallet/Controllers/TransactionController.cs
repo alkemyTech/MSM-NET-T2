@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
 
@@ -19,103 +19,133 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [Authorize(Roles = "Admin,Regular")]
+        public async Task<IActionResult> Get(int pageNumber=1, int pageSize= 10)
         {
-            var transactions = await _transactionService.getAllTransactionsAsync();
-
-            if (transactions == null)
+            try
             {
-                return NotFound();
+                var userId = User.FindFirstValue("Id");
+                var result = await _transactionService.getAllTransactionsAsync(pageNumber, pageSize, userId);
+
+                if (result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+
+                return Ok(result);
             }
-
-            return Ok(transactions);
-
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
-        [HttpGet]
-        [Route("{transaction_id}")]
-        public async Task<IActionResult> GetById(int transaction_id)
-        {
-            var transaction = await _transactionService.getTransactionAsync(transaction_id);
-            if (transaction == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(transaction);
+        [HttpGet]
+        [Route("{id}")]
+        [Authorize(Roles = "Admin,Regular")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            try
+            {
+                var userId = User.FindFirstValue("Id");
+                var result = await _transactionService.getTransactionAsync(id, userId);
+
+                if (result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(TransactionDTO transactionDTO)
         {
-            var _transactionDTO = new Transaction
+            try
             {
-                transactionId = transactionDTO.transactionId,
-                Amount = transactionDTO.Amount,
-                Concept = transactionDTO.Concept,
-                Date = transactionDTO.Date,
-                Type = transactionDTO.Type,
-                AccountId = transactionDTO.AccountId,
-                UserId = transactionDTO.UserId,
-                ToAccountId = transactionDTO.ToAccountId
-            };
+                var userId = User.FindFirstValue("Id");
+                var result = await _transactionService.addTransactionAsync(transactionDTO, userId);
 
-            await _transactionService.addTransactionAsync(_transactionDTO);
+                if (result == null)
+                {
+                    throw new Exception("BAD_REQUEST");
+                }
 
-            return CreatedAtAction("Get", new { id = _transactionDTO.transactionId }, _transactionDTO);
+                return CreatedAtAction("Get", new { id = result.transactionId }, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
 
-        [HttpPut]
-        [Route("{transaction_id}")]
-        public async Task<IActionResult> Put(int transaction_id, TransactionDTO transaction)
+        [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Put(int id, TransactionDTO transaction)
         {
-            var _transaction = await _transactionService.getTransactionAsync(transaction_id);
-
-
-            if (_transaction == null)
+            try
             {
-                return NotFound();
-            }
+                var result = await _transactionService.updateTransactionAsync(id, transaction);
 
-            if (_transaction.ToAccountId == null)
+                if (result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+
+                return Ok();
+            }
+            catch(Exception ex)
             {
-                _transaction.Amount = transaction.Amount;
-                _transaction.Concept = transaction.Concept;
-                _transaction.Date = transaction.Date;
-                _transaction.Type = transaction.Type;
-                _transaction.AccountId = transaction.AccountId;
-                _transaction.UserId = transaction.UserId;
+                return StatusCode(404, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                    });
             }
-            else
-            {
-                _transaction.Amount = transaction.Amount;
-                _transaction.Concept = transaction.Concept;
-                _transaction.Date = transaction.Date;
-                _transaction.Type = transaction.Type;
-                _transaction.AccountId = transaction.AccountId;
-                _transaction.UserId = transaction.UserId;
-                _transaction.ToAccountId = transaction.ToAccountId;
-            }
-
-
-            await _transactionService.updateTransactionAsync(_transaction);
-
-            return Ok();
         }
 
-        [HttpDelete]
-        [Route("{transaction_id}")]
-        public async Task<IActionResult> Delete(int transaction_id)
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var transaction = await _transactionService.getTransactionAsync(transaction_id);
-
-            if (transaction == null)
+            try
             {
-                return NotFound();
+                var result = await _transactionService.deleteTransactionAsync(id);
+
+                if (!result)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+
+                return Ok();
             }
-
-            await _transactionService.deleteTransactionAsync(transaction_id);
-
-            return Ok();
+            catch(Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
 
     }

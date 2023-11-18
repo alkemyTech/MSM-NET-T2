@@ -12,7 +12,6 @@ using VirtualWallet.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Configuration.AddJsonFile("appsettings.json");
 var secretKey = builder.Configuration.GetSection("settings:secretkey").Value;
 var keyBytes = Encoding.UTF8.GetBytes(secretKey);
@@ -79,26 +78,28 @@ builder.Services.AddDbContext<VirtualWalletDbContext>(options =>
 
 // Scoped Repo - Services
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-builder.Services.AddScoped<IRoleService, RoleService>();
-
 builder.Services.AddScoped<ICatalogueRepository, CatalogueRepository>();
-builder.Services.AddScoped<ICatalogueService, CatalogueService>();
-
 builder.Services.AddScoped<ITransactionsRepository, TransactionRepository>();
-builder.Services.AddScoped<ITransactionService, TransactionService>();
-
 builder.Services.AddScoped<IFixedTermRepository, FixedTermRepository>();
-builder.Services.AddScoped<IFixedTermService, FixedTermService>();
-
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<RoleService>();
+builder.Services.AddScoped<CatalogueService>();
+builder.Services.AddScoped<TransactionService>();
+builder.Services.AddScoped<FixedTermService>();
+builder.Services.AddScoped<UserService>();
 
 builder.Services.AddScoped<UnitOfWork>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var virtualWalletDbContext = scope.ServiceProvider.GetRequiredService<VirtualWalletDbContext>();
+    virtualWalletDbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

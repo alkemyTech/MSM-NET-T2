@@ -2,38 +2,47 @@
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
+using System.Linq;
 
 namespace VirtualWallet.Repository
 {
     public class FixedTermRepository : IFixedTermRepository
     {
         private readonly VirtualWalletDbContext _dbContext;
+
         public FixedTermRepository(VirtualWalletDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<FixedTermDeposit>> getAll()
+        public async Task<IEnumerable<FixedTermDeposit>> GetAll()
         {
             return await _dbContext.FixedTermDeposits.ToListAsync();
         }
 
-        public async Task<FixedTermDeposit> getById(int id)
+        public async Task<FixedTermDeposit> GetById(int id)
         {
             return await _dbContext.FixedTermDeposits.FirstOrDefaultAsync(f => f.Id == id);
+        }
 
+        public async Task<FixedTermDeposit> GetMyFixedTermById(int id)
+        {
+            return await _dbContext.FixedTermDeposits.FirstOrDefaultAsync(f => f.Id == id);
+        }
+
+        public async Task<IEnumerable<FixedTermDeposit>> GetAllByUserId(string userId)
+        {
+            return await _dbContext.FixedTermDeposits.ToListAsync();
         }
 
         public async Task Insert(FixedTermDeposit fixedTerm)
         {
             _dbContext.FixedTermDeposits.Add(fixedTerm);
-            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task Update(FixedTermDeposit fixedTerm)
         {
             _dbContext.FixedTermDeposits.Update(fixedTerm);
-            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
@@ -43,9 +52,7 @@ namespace VirtualWallet.Repository
             if (fixedTerm != null)
             {
                 _dbContext.FixedTermDeposits.Remove(fixedTerm);
-                //await _dbContext.SaveChangesAsync();
             }
-
         }
     }
 }

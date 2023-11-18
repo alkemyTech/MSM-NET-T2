@@ -26,22 +26,31 @@ namespace VirtualWallet.Controllers
         [Route("validar")]
         public async Task<IActionResult> Validar([FromBody] AuthModel request)
         {
+
             var users = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+
+            var account = await _context.Accounts.FindAsync(users.Id);
+
             if (users == null)
             {
                 return StatusCode(StatusCodes.Status401Unauthorized, new { token = "inexistente o inhabilitado" });
             }
+
+            //En caso de tratarse de una cuenta bloqueada se le niega el acceso
+            if (account.IsBlocked)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new { error = "La cuenta se encuentra bloqueada" });
+            }
+
             if (request.Password == users.Password && request.Email == users.Email)
             {
                 var keyBytes = Encoding.UTF8.GetBytes(secretKey);
                 var claims = new ClaimsIdentity();
 
+                claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.Password.ToString()));
                 claims.AddClaim(new Claim("Id", users.Id.ToString()));
-                //claims.AddClaim(new Claim(ClaimTypes.Email, users.Email));
-                claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.Password));
                 claims.AddClaim(new Claim(ClaimTypes.Role, users.Role_Id == 1 ? "Admin" : "Regular"));
-                
-                
+
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = claims,

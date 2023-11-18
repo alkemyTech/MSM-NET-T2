@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace VirtualWallet.Models
 {
@@ -7,8 +8,10 @@ namespace VirtualWallet.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [BindNever]
         public int Id { get; set; }
 
+        [BindNever]
         public int UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

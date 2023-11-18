@@ -2,11 +2,6 @@ using VirtualWallet.Repository;
 
 namespace VirtualWallet.DataAccess;
 
-/*public interface IUnitOfWork : IDisposable
-{
-    Task<int> Save();
-}*/
-
 public class UnitOfWork
 {
     private readonly VirtualWalletDbContext _dbContext;
@@ -102,13 +97,4 @@ public class UnitOfWork
     {
         await _dbContext.SaveChangesAsync();
     }
-        
-    /*public async Task<int> Save() =>
-        await _dbContext.SaveChangesAsync();
-
-    // Liberar de la memoria los recursos utilizados 
-    public void Dispose()
-    {
-        _dbContext.Dispose();
-    }*/
 }

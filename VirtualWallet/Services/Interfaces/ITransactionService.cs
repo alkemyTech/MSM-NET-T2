@@ -5,14 +5,14 @@ namespace VirtualWallet.Services.Interfaces
 {
     public interface ITransactionService
     {
-        Task<IEnumerable<TransactionDTO>> getAllTransactionsAsync();
+        Task<Object> getAllTransactionsAsync(int pageNumber, int pageSize, string userId);
 
-        Task<Transaction> getTransactionAsync(int codTransaction);
+        Task<Transaction> getTransactionAsync(int transactionId, string userId);
 
-        Task addTransactionAsync(Transaction transaction);
+        Task<Transaction> addTransactionAsync(TransactionDTO transactionDTO, string userId);
 
-        Task updateTransactionAsync(Transaction transaction);
+        Task<Transaction> updateTransactionAsync(int transactionId, TransactionDTO transaction);
 
-        Task deleteTransactionAsync(int transaction_id);
+        Task<bool> deleteTransactionAsync(int transactionId);
     }
 }

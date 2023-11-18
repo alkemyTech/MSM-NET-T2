@@ -30,7 +30,6 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Get()
     {
-        //var accounts = await _accountService.GetAllAccounts();
         var accounts = await _unitOfWork.AccountRepo.GetAll();
 
         if (accounts == null)
@@ -46,7 +45,6 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetById(int id)
     {
-        //var account = await _accountService.GetAccountById(id);
         var accounts = await _unitOfWork.AccountRepo.GetById(id);
 
         if (accounts == null)
@@ -70,7 +68,6 @@ public class AccountController : ControllerBase
             UserId = accountDto.UserId
         };
         
-        //await _accountService.AddAccount(_account);
         await _unitOfWork.AccountRepo.Insert(_account);
         await _unitOfWork.SaveChangesAsync();
         return CreatedAtAction("Get", new { id = accountDto.Id }, accountDto);
@@ -198,7 +195,6 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Put(int id, AccountDTO account)
     {
-        //var account = await _accountService.GetAccountById(id);
         var _account = await _unitOfWork.AccountRepo.GetById(id);
 
         if (_account == null)
@@ -210,7 +206,6 @@ public class AccountController : ControllerBase
         _account.Money = account.Money;
         _account.IsBlocked = account.IsBlocked;
         
-        //await _accountService.UpdateAccount(_account);
         await _unitOfWork.AccountRepo.Update(_account);
         await _unitOfWork.SaveChangesAsync();
         return Ok();
@@ -222,7 +217,6 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
-        //var account = await _accountService.GetAccountById(id);
         var account = await _unitOfWork.AccountRepo.GetById(id);
         
         if (account == null)
@@ -230,7 +224,6 @@ public class AccountController : ControllerBase
             return NotFound();
         }
         
-        //await _accountService.DeleteAccount(id);
         await _unitOfWork.AccountRepo.Delete(id);
         await _unitOfWork.SaveChangesAsync();  
         return Ok();

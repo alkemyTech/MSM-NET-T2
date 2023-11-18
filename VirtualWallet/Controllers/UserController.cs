@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
@@ -6,22 +6,25 @@ using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly UserService _userService;
 
-        public UserController(IUserService userService)
+        public UserController(UserService userService)
         {
             _userService = userService;
 
         }
-
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
-            var users = await _userService.GetAllUsersAsync();
+            try
+            {
+                var users = await _userService.GetAllUsersAsync();
 
             if (users == null)
             {
@@ -29,76 +32,164 @@ namespace VirtualWallet.Controllers
             }
 
             return Ok(users);
-
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
+        
         [HttpGet]
+        [Authorize(Roles = "Regular")]
         [Route("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var user = await _userService.GetUserAsync(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var _user = await _userService.GetUserAsync(id);
+                if (_user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(_user);
             }
-
-            return Ok(user);
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
-
+        
         [HttpPost]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> Post(UserDTO user)
         {
-            var _user = new User
+            try
             {
-                First_name = user.First_name,
-                Last_name = user.Last_name,
-                Email = user.Email,
-                Password = user.Password,
-                Points = user.Points,
-                Role_Id = user.Role_Id
-            }; 
-
-            await _userService.AddUserAsync(_user);
-
-            return CreatedAtAction("Get", new { id = user.Id }, user);
+                var _user = await _userService.AddUserAsync(user);
+                if (_user == null)
+                {
+                    return NotFound();
+                }
+                return CreatedAtAction("Get", new { id = user.Id }, user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
-
+    
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Put(int user_id, UserDTO user)
+        public async Task<IActionResult> Put(int id, UserDTO user)
         {
-            var _user = await _userService.GetUserAsync(user_id);
-
-            if (_user == null)
+            try
             {
-                return NotFound();
+                var _user = await _userService.UpdateUserAsync(id, user);
+                if (_user == null)
+                {
+                    return NotFound();
+                }
+                return Ok();
             }
-
-            _user.First_name = user.First_name;
-            _user.Last_name = user.Last_name;
-            _user.Email = user.Email;
-            _user.Password = user.Password;
-            _user.Points = user.Points;
-            _user.Role_Id = user.Role_Id;
-
-            await _userService.UpdateUserAsync(_user);
-
-            return Ok();
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
+        }
+        
+        [HttpPatch("users/block/{id}")]
+        [Authorize(Roles = "Regular")]
+        public async Task<IActionResult> BlockAccount(int id)
+        {
+            try 
+            {
+                if(await _userService.BlockAccount(id))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    throw new Exception("Cuenta inexistente o bloqueada");
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, new
+                {
+                status = 400,
+                errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
 
+        [HttpPatch("users/unblock/{id}")]
+        [Authorize(Roles = "Regular")]
+        public async Task<IActionResult> UnblockAccount(int id)
+        {
+            try
+            {
+                if (await _userService.UnblockAccount(id))
+                {
+                    return Ok();
+                }
+                else
+                {
+                    throw new Exception("Cuenta inexistente o ya se encuentra desbloqueada");
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
+        }
+        
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var user = await _userService.GetUserAsync(id);
-
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = await _userService.DeleteUserAsync(id);
+
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
             }
 
-            await _userService.DeleteUserAsync(id);
-
-            return Ok();
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace VirtualWallet.Models.DTO
+﻿namespace VirtualWallet.Models.DTO
 {
     public class UserDTO
     {
@@ -12,6 +9,5 @@ namespace VirtualWallet.Models.DTO
         public string Password { get; set; }
         public int Points { get; set; }
         public int Role_Id { get; set; }
-
     }
 }

@@ -4,9 +4,9 @@ namespace VirtualWallet.Services.Interfaces;
 
 public interface IRoleService
 {
-    Task<IEnumerable<Role>> GetAllRoles();
-    Task<Role> GetRoleById(int id);
-    Task AddRole(Role role);
-    Task UpdateRole(Role role);
-    Task DeleteRole(int id); 
+    Task<IEnumerable<Role>> GetAll();
+    Task<Role> GetById(int id);
+    Task Insert(Role role);
+    Task Update(Role role);
+    Task Delete(int id); 
 }

@@ -1,64 +1,108 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
+using VirtualWallet.Models.DTO;
 using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers;
 
-[ApiController] 
+[ApiController]
 [Route("api/[Controller]")]
 public class RoleController : ControllerBase
-{ 
-    private readonly IRoleService _roleService;
-    
-    public RoleController(IRoleService roleService)
-    { 
-        _roleService = roleService;
-    }
-    
-    // GET: api/roles
-    [HttpGet] 
-    public async Task<IActionResult> Get() 
-    { 
-        var roles = await _roleService.GetAllRoles();
-        return Ok(roles);
-    }
-    
-    // GET: api/roles/{id}
-    [HttpGet("{id}")]
-    public async Task<IActionResult> Get(int id)
+{
+    private readonly UnitOfWork _unitOfWork;
+    public RoleController (UnitOfWork unitOfWork)
     {
-        var role = await _roleService.GetRoleById(id);
-        if (role == null) return NotFound();
-        return Ok(role);
-    }
-    
-    // POST: api/roles
-    [HttpPost]
-    public async Task<IActionResult> Post(Role role)
-    {
-        await _roleService.AddRole(role);
-        return CreatedAtAction(nameof(Get), new { id = role.Id }, role);
-    }
-    
-    // PUT: api/roles/{id}
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Role updatedRole)
-    {
-        var role = await _roleService.GetRoleById(id);
-        if (role == null) return NotFound();
-        role.Name = updatedRole.Name;
-        role.Description = updatedRole.Description;
-        await _roleService.UpdateRole(role);
-        return NoContent();
+        _unitOfWork = unitOfWork;
     }
 
-    // DELETE: api/roless/{id}
+    // GET: api/roles
+    [HttpGet]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Get()
+    {
+        var roles = await _unitOfWork.RoleRepo.GetAll();
+        if (roles == null)
+        {
+            return NotFound();
+        }
+        return Ok(roles);
+    }
+
+    // GET: api/roles/{id}
+    [HttpGet]
+    [Route("{id}")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Get(int id)
+    {
+        var role = await _unitOfWork.RoleRepo.GetById(id);
+        if (role == null)
+        {
+            return NotFound();
+        }
+        return Ok(role);
+    }
+
+    // POST: api/roles
+    [HttpPost]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Post(Role role)
+    {
+        if (role == null)
+        {
+            return BadRequest("El rol no posee datos válidos");
+        }
+
+        if (role.Id == 0 ||
+            role.Name.Equals("Admin") ||
+            role.Name.Equals("Cliente") ||
+            role.Description.Length  <= 5 
+            )
+        {
+            return BadRequest("La cuenta no pudo ser creada: uno o más errores encontrados");
+        }
+
+        var _role = new Role
+        {
+            Id = role.Id,
+            Name = role.Name,
+            Description = role.Description
+        };
+
+        await _unitOfWork.RoleRepo.Insert(_role);
+        await _unitOfWork.SaveChangesAsync();
+        return CreatedAtAction("Get", new { id = role.Id }, role);
+    }
+
+    // PUT: api/roles/{id}
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Put(int id, Role role)
+    {
+        var _role = await _unitOfWork.RoleRepo.GetById(id);
+        if (_role == null)
+        {
+            return NotFound();
+        }
+        _role.Name = role.Name;
+        _role.Description = role.Description;
+        await _unitOfWork.RoleRepo.Update(_role);
+        await _unitOfWork.SaveChangesAsync();
+        return Ok();
+    }
+
+    // DELETE: api/roles/{id}
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        var role = await _roleService.GetRoleById(id);
-        if (role == null) return NotFound();
-        await _roleService.DeleteRole(id);
-        return NoContent();
-    } 
-} 
+        var role = await _unitOfWork.RoleRepo.GetById(id);
+        if (role == null)
+        {
+            return NotFound();
+        }
+        await _unitOfWork.RoleRepo.Delete(id);
+        await _unitOfWork.SaveChangesAsync();
+        return Ok();
+    }
+}

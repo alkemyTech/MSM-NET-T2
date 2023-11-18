@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
-using VirtualWallet.Models.DTO;
 using VirtualWallet.Repository.Interfaces;
 
 namespace VirtualWallet.Repository
@@ -22,6 +21,9 @@ namespace VirtualWallet.Repository
 
         public async Task<Transaction> getById(int transaction_id)
         {
+            // Ejemplo usando Include para cargar la propiedad User
+            var transaction = _dbContext.Transactions.Include(t => t.User).FirstOrDefault(t => t.transactionId == transaction_id);
+
             return await _dbContext.Transactions.FirstOrDefaultAsync(t => t.transactionId == transaction_id);
 
         }
@@ -29,13 +31,11 @@ namespace VirtualWallet.Repository
         public async Task Insert(Transaction transaction)
         {
             _dbContext.Transactions.Add(transaction);
-            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task Update(Transaction transaction)
         {
             _dbContext.Transactions.Update(transaction);
-            //await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int transaction_id)
@@ -45,7 +45,6 @@ namespace VirtualWallet.Repository
             if (_transaction != null)
             {
                 _dbContext.Transactions.Remove(_transaction);
-                //await _dbContext.SaveChangesAsync();
             }
 
         }
