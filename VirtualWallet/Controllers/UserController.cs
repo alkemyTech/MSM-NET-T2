@@ -129,7 +129,6 @@ namespace VirtualWallet.Controllers
                 {
                     throw new Exception("Cuenta inexistente o bloqueada");
                 }
-                return Ok();
             }
             catch (Exception ex)
             {
@@ -156,7 +155,6 @@ namespace VirtualWallet.Controllers
                     throw new Exception("Cuenta inexistente o ya se encuentra desbloqueada");
                 }
 
-                return Ok();
             }
             catch (Exception ex)
             {
