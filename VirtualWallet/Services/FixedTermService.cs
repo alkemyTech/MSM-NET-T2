@@ -18,7 +18,10 @@ namespace VirtualWallet.Services
         public async Task<IEnumerable<FixedTermDepositDTO>> getAllFixedTermsAsync()
         {
             var fixedTerms = await _fixedTermRepository.GetAll();
-            
+           
+            var fixedTerms = await _fixedTermRepository.getAll();
+
+
             var fixedTermsDTOs = fixedTerms.Select(fixedTerm => new FixedTermDepositDTO
             {
                 Id = fixedTerm.Id,
@@ -57,7 +60,7 @@ namespace VirtualWallet.Services
         {
             return await _fixedTermRepository.GetById(id);
         }
-        
+
         public async Task<FixedTermDeposit> getFixedTermAsync(int id)
         {
             return await _fixedTermRepository.GetById(id);
@@ -77,7 +80,7 @@ namespace VirtualWallet.Services
         {
             await _fixedTermRepository.Update(fixedTerm);
         }
-        
+
         public async Task updateMyFixedTermAsync(FixedTermDeposit fixedTerm)
         {
             await _fixedTermRepository.Update(fixedTerm);

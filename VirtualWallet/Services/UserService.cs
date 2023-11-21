@@ -32,7 +32,7 @@ namespace VirtualWallet.Services
         {
             var _user = await _unitOfWork.UserRepo.GetById(id);
             if(_user == null)
-            {
+        {
                 return null;
             }
             await _unitOfWork.UserRepo.Delete(id);

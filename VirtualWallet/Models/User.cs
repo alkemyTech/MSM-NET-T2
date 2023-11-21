@@ -27,10 +27,15 @@ namespace VirtualWallet.Models
         [Required(ErrorMessage = "Ingrese sus puntos.")]
         [Range(0, 1000000, ErrorMessage = "el valor de los puntos debe ser de 0 a 1.000.000.")]
         public int Points { get; set; }
+
+       
         public int Role_Id { get; set; }
         [ForeignKey("Role_Id")]
         public virtual Role Role { get; set; }
+
+
         public virtual ICollection<FixedTermDeposit> FixedTermDeposits { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
+
     }
 }

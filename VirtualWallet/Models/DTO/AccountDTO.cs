@@ -9,10 +9,10 @@ namespace VirtualWallet.Models.DTO
         
         [Required(ErrorMessage = "El campo Creation Date es obligatorio.")]
         public DateTime CreationDate { get; set; }
-        
+
         [Column(TypeName = "decimal(10, 2)")]
         [Required(ErrorMessage = "El campo Money es obligatorio.")]
-        public decimal Money { get; set; } 
+        public decimal Money { get; set; }
         
         [Required(ErrorMessage = "El campo IsBlocked es obligatorio.")]
         public bool IsBlocked { get; set; }

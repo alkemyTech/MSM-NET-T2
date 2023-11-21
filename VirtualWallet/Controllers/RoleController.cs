@@ -52,7 +52,7 @@ public class RoleController : ControllerBase
     {
         if (role == null)
         {
-            return BadRequest("El rol no posee datos válidos");
+            return BadRequest("El rol no posee datos v�lidos");
         }
 
         if (role.Id == 0 ||
@@ -61,7 +61,7 @@ public class RoleController : ControllerBase
             role.Description.Length  <= 5 
             )
         {
-            return BadRequest("La cuenta no pudo ser creada: uno o más errores encontrados");
+            return BadRequest("La cuenta no pudo ser creada: uno o m�s errores encontrados");
         }
 
         var _role = new Role

@@ -39,6 +39,6 @@ namespace VirtualWallet.Models
         public virtual User User { get; set; }
 
         public int? ToAccountId { get; set; } //FK a Account
-
+        
     }
 }

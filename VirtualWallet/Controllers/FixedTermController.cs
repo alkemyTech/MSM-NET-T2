@@ -36,7 +36,9 @@ namespace VirtualWallet.Controllers
             {
                 return NotFound();
             }
+
             return Ok(fixedTerms);
+
         }
 
         //ADMIN ROLE
@@ -102,6 +104,7 @@ namespace VirtualWallet.Controllers
             {
                 return NotFound();
             }
+
             _fixedTerm.UserId = fixedTerm.UserId;
             _fixedTerm.AccountId = fixedTerm.AccountId;
             _fixedTerm.Amount = fixedTerm.Amount;

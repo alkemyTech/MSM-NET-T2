@@ -6,7 +6,7 @@ using VirtualWallet.Repository.Interfaces;
 namespace VirtualWallet.Repository;
 
 public class RoleRepository : IRoleRepository
-{       
+{
     private readonly VirtualWalletDbContext _dbContext;
 
     public RoleRepository(VirtualWalletDbContext dbContext)
@@ -42,5 +42,5 @@ public class RoleRepository : IRoleRepository
         {
             _dbContext.Roles.Remove(role);
         }
-    }    
+    }
 }

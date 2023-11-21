@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
+using VirtualWallet.Repository.Interfaces;
 
 namespace VirtualWallet.Repository
 {
@@ -27,11 +28,13 @@ namespace VirtualWallet.Repository
         public async Task Insert(User user)
         {
             _dbContext.Users.Add(user);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Update(User user)
         {
             _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
@@ -41,6 +44,7 @@ namespace VirtualWallet.Repository
             if (_user != null)
             {
                 _dbContext.Users.Remove(_user);
+                await _dbContext.SaveChangesAsync();
             }
         }
     }

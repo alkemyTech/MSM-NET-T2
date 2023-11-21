@@ -1,16 +1,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using VirtualWallet.Models;
 
 namespace VirtualWallet.DataAccess;
 
 public class VirtualWalletDbContext : DbContext
-{ 
-    public VirtualWalletDbContext(DbContextOptions<VirtualWalletDbContext> options) : base(options)
+{
+    public VirtualWalletDbContext(DbContextOptions<VirtualWalletDbContext> options, IConfiguration configuration) : base(options)
     {
-        
-    }  
-    
+
+    }
+
     public DbSet<Role> Roles { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Account> Accounts { get; set; }
@@ -34,7 +35,7 @@ public class VirtualWalletDbContext : DbContext
             new Role { Id = 1, Name = "Admin", Description = "Permisos para agregar y eliminar usuarios" },
             new Role { Id = 2, Name = "Regular", Description = "Cliente" }
         );
-        
+
         // Seed User
         modelBuilder.Entity<User>().HasData(
             new User { Id = 1, First_name = "Pedro", Last_name = "Gonzalez", Email = "pedro@pedro", Password = "123", Points = 50, Role_Id = 1 },
@@ -88,4 +89,5 @@ public class VirtualWalletDbContext : DbContext
             .HasForeignKey(f => f.UserId)
             .OnDelete(DeleteBehavior.Restrict); // O Restrict para OnUpdate
     }
+
 }

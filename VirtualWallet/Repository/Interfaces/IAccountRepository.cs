@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using VirtualWallet.Models;
 
-namespace VirtualWallet.Repository.Interfaces;
-
 public interface IAccountRepository
 {
     Task<IEnumerable<Account>> GetAll();
