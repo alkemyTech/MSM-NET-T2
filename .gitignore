@@ -7,3 +7,4 @@
 VirtualWallet/bin/
 VirtualWallet/obj/
 VirtualWallet/appsettings.json
+/VirtualWallet/VirtualWallet.csproj
