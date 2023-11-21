@@ -5,7 +5,6 @@ using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -116,7 +115,6 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPatch("users/block/{id}")]
-        [Authorize(Roles = "Admin, Regular")]
         public async Task<IActionResult> BlockAccount(int id)
         {
             try
@@ -141,7 +139,6 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPatch("users/unblock/{id}")]
-        [Authorize(Roles = "Admin, Regular")]
         public async Task<IActionResult> UnblockAccount(int id)
         {
             try
