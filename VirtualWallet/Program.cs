@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using VirtualWallet;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Repository;
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services;
+using VirtualWallet.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,7 +43,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "VirtualWallet", Version = "v1" });
 
-    // Configura la autenticación para Swagger
+    // Configura la autenticaciï¿½n para Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme",
@@ -79,18 +79,27 @@ builder.Services.AddDbContext<VirtualWalletDbContext>(options =>
 // Scoped Repo - Services
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-builder.Services.AddScoped<ITransactionsRepository, TransactionRepository>();
 builder.Services.AddScoped<ICatalogueRepository, CatalogueRepository>();
+builder.Services.AddScoped<ITransactionsRepository, TransactionRepository>();
 builder.Services.AddScoped<IFixedTermRepository, FixedTermRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-builder.Services.AddScoped<TransactionService>();
+builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<CatalogueService>();
+builder.Services.AddScoped<TransactionService>();
 builder.Services.AddScoped<FixedTermService>();
-builder.Services.AddScoped<IUserService, UserService>();
-//builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped<UserService>();
+
+builder.Services.AddScoped<UnitOfWork>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var virtualWalletDbContext = scope.ServiceProvider.GetRequiredService<VirtualWalletDbContext>();
+    virtualWalletDbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

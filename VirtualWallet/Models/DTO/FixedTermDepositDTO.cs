@@ -1,12 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace VirtualWallet.Models.DTO
 {
     public class FixedTermDepositDTO
     {
+        [BindNever]
         public int Id { get; set; }
 
+        [BindNever]
         public int UserId { get; set; }
 
         public int AccountId { get; set; }

@@ -1,7 +1,9 @@
 # .gitignore
 .vs/
 .idea/
+.idea
 .git/
 .github/
 VirtualWallet/bin/
 VirtualWallet/obj/
+VirtualWallet/appsettings.json

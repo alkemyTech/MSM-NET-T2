@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
@@ -22,6 +22,9 @@ namespace VirtualWallet.Repository
 
         public async Task<Transaction> getById(int transaction_id)
         {
+            // Ejemplo usando Include para cargar la propiedad User
+            var transaction = _dbContext.Transactions.Include(t => t.User).FirstOrDefault(t => t.transactionId == transaction_id);
+
             return await _dbContext.Transactions.FirstOrDefaultAsync(t => t.transactionId == transaction_id);
 
         }

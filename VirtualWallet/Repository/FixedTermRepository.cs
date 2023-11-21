@@ -2,6 +2,7 @@
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
+using System.Linq;
 
 namespace VirtualWallet.Repository
 {
@@ -14,15 +15,24 @@ namespace VirtualWallet.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<FixedTermDeposit>> getAll()
+        public async Task<IEnumerable<FixedTermDeposit>> GetAll()
         {
             return await _dbContext.FixedTermDeposits.ToListAsync();
         }
 
-        public async Task<FixedTermDeposit> getById(int id)
+        public async Task<FixedTermDeposit> GetById(int id)
         {
             return await _dbContext.FixedTermDeposits.FirstOrDefaultAsync(f => f.Id == id);
+        }
 
+        public async Task<FixedTermDeposit> GetMyFixedTermById(int id)
+        {
+            return await _dbContext.FixedTermDeposits.FirstOrDefaultAsync(f => f.Id == id);
+        }
+
+        public async Task<IEnumerable<FixedTermDeposit>> GetAllByUserId(string userId)
+        {
+            return await _dbContext.FixedTermDeposits.ToListAsync();
         }
 
         public async Task Insert(FixedTermDeposit fixedTerm)

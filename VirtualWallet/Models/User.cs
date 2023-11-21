@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VirtualWallet.Models
 {
@@ -10,10 +10,22 @@ namespace VirtualWallet.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Ingrese su Nombre.")]
         public string First_name { get; set; }
+
+        [Required(ErrorMessage = "Ingrese su Apellido.")]
         public string Last_name { get; set; }
+
+        [Required(ErrorMessage = "Ingrese su Email.")]
+        [EmailAddress(ErrorMessage = "El Email no tiene un formato válido.")]
         public string Email { get; set; }
+        
+        [Required(ErrorMessage = "Ingrese su Contraseña.")]
         public string Password { get; set; }
+
+        [Required(ErrorMessage = "Ingrese sus puntos.")]
+        [Range(0, 1000000, ErrorMessage = "el valor de los puntos debe ser de 0 a 1.000.000.")]
         public int Points { get; set; }
 
        
