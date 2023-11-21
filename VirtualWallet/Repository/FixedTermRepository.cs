@@ -2,7 +2,6 @@
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
-using System.Linq;
 
 namespace VirtualWallet.Repository
 {

@@ -1,7 +1,5 @@
-﻿﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
@@ -139,7 +137,7 @@ namespace VirtualWallet.Controllers
 
             return Ok("Plazo fijo eliminado con exito");
         }
-        
+
         //REGULAR ROLE
         [HttpGet]
         [Route("GetMyFixedTermById/{id}")]

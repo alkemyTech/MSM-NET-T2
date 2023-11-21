@@ -20,7 +20,7 @@ namespace VirtualWallet.Services.Interfaces
         Task updateFixedTermAsync(FixedTermDeposit fixedTerm);
 
         Task updateMyFixedTermAsync(FixedTermDeposit fixedTerm);
-        
+
         Task deleteFixedTermAsync(int id);
     }
 }

@@ -29,7 +29,7 @@ namespace VirtualWallet.Controllers
             return Ok(catalogues);
 
         }
-        
+
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetById(int id)

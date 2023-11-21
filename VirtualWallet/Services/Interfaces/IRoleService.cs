@@ -8,5 +8,5 @@ public interface IRoleService
     Task<Role> GetById(int id);
     Task Insert(Role role);
     Task Update(Role role);
-    Task Delete(int id); 
+    Task Delete(int id);
 }

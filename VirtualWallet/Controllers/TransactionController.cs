@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
 
@@ -21,7 +20,7 @@ namespace VirtualWallet.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin,Regular")]
-        public async Task<IActionResult> Get(int pageNumber=1, int pageSize= 10)
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 10)
         {
             try
             {
@@ -29,12 +28,12 @@ namespace VirtualWallet.Controllers
                 var result = await _transactionService.getAllTransactionsAsync(pageNumber, pageSize, userId);
 
                 if (result == null)
-            {
+                {
                     throw new Exception("NOT_FOUND");
-            }
+                }
 
                 return Ok(result);
-        }
+            }
             catch (Exception ex)
             {
                 return StatusCode(404, new
@@ -58,10 +57,10 @@ namespace VirtualWallet.Controllers
                 if (result == null)
                 {
                     throw new Exception("NOT_FOUND");
-            }
+                }
 
                 return Ok(result);
-        }
+            }
             catch (Exception ex)
             {
                 return StatusCode(404, new
