@@ -12,8 +12,8 @@ using VirtualWallet.DataAccess;
 namespace VirtualWallet.Migrations
 {
     [DbContext(typeof(VirtualWalletDbContext))]
-    [Migration("20231114004509_VirtualWallet")]
-    partial class VirtualWallet
+    [Migration("20231122225435_MyInitialCreate")]
+    partial class MyInitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,11 +238,13 @@ namespace VirtualWallet.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 

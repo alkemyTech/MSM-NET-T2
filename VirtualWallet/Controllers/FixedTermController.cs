@@ -1,10 +1,12 @@
-﻿﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
+using VirtualWallet.DataAccess;
+using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers
 {
@@ -12,11 +14,11 @@ namespace VirtualWallet.Controllers
     [Route("api/[controller]")]
     public class FixedTermController : ControllerBase
     {
-        private readonly FixedTermService _fixedTermService;
+        private readonly UnitOfWork _unitOfWork;
 
-        public FixedTermController(FixedTermService fixedTermService)
+        public FixedTermController(UnitOfWork unitOfWork)
         {
-            _fixedTermService = fixedTermService;
+            _unitOfWork = unitOfWork;
 
         }
 
@@ -30,15 +32,13 @@ namespace VirtualWallet.Controllers
                 // Usuario no autorizado
                 return Unauthorized("Usuario no autorizado");
             }
-            var fixedTerms = await _fixedTermService.getAllFixedTermsAsync();
+            var fixedTerms = await _unitOfWork.FixedTermRepo.GetAll();
 
             if (fixedTerms == null)
             {
-                return NotFound();
+                return NotFound("No existen plazos fijos");
             }
-
             return Ok(fixedTerms);
-
         }
 
         //ADMIN ROLE
@@ -51,11 +51,11 @@ namespace VirtualWallet.Controllers
                 // Usuario no autorizado
                 return Unauthorized("Usuario no autorizado");
             }
-            var fixedTerms = await _fixedTermService.getFixedTermAsync(id);
+            var fixedTerms = await _unitOfWork.FixedTermRepo.GetById(id);
 
             if (fixedTerms == null)
             {
-                return NotFound();
+                return NotFound("Plazo fijo inexistente");
             }
 
             return Ok(fixedTerms);
@@ -83,7 +83,8 @@ namespace VirtualWallet.Controllers
                 State = fixedTerm.State
             };
 
-            await _fixedTermService.addFixedTermAsync(_fixedTerm);
+            await _unitOfWork.FixedTermRepo.Insert(_fixedTerm);
+            await _unitOfWork.SaveChangesAsync();
 
             return CreatedAtAction("Get", new { id = fixedTerm.Id }, fixedTerm);
         }
@@ -91,20 +92,19 @@ namespace VirtualWallet.Controllers
         //ADMIN ROLE
         [HttpPut]
         [Route("Edit/{id}")]
-        public async Task<IActionResult> EditFixedTerm(int id, FixedTermDeposit fixedTerm)
+        public async Task<IActionResult> EditFixedTerm(int id, FixedTermDepositDTO fixedTerm)
         {
             if (!User.IsInRole("Admin"))
             {
                 // Usuario no autorizado
                 return Unauthorized("Usuario no autorizado");
             }
-            var _fixedTerm = await _fixedTermService.getFixedTermAsync(id);
+            var _fixedTerm = await _unitOfWork.FixedTermRepo.GetById(id);
 
             if (_fixedTerm == null)
             {
-                return NotFound();
+                return NotFound("Plazo fijo inexistente");
             }
-
             _fixedTerm.UserId = fixedTerm.UserId;
             _fixedTerm.AccountId = fixedTerm.AccountId;
             _fixedTerm.Amount = fixedTerm.Amount;
@@ -113,7 +113,8 @@ namespace VirtualWallet.Controllers
             _fixedTerm.NominalRate = fixedTerm.NominalRate;
             _fixedTerm.State = fixedTerm.State;
 
-            await _fixedTermService.updateFixedTermAsync(_fixedTerm);
+            await _unitOfWork.FixedTermRepo.Update(_fixedTerm);
+            await _unitOfWork.SaveChangesAsync();
 
             return Ok("Plazo fijo editado con exito");
         }
@@ -128,48 +129,56 @@ namespace VirtualWallet.Controllers
                 // Usuario no autorizado
                 return Unauthorized("Usuario no autorizado");
             }
-            var catalogue = await _fixedTermService.getFixedTermAsync(id);
+            var catalogue = await _unitOfWork.FixedTermRepo.GetById(id);
 
             if (catalogue == null)
             {
-                return NotFound();
+                return NotFound("Plazo fijo inexistente");
             }
 
-            await _fixedTermService.deleteFixedTermAsync(id);
+            await _unitOfWork.FixedTermRepo.Delete(id);
+            await _unitOfWork.SaveChangesAsync();
 
             return Ok("Plazo fijo eliminado con exito");
         }
-        
+
+
+
         //REGULAR ROLE
         [HttpGet]
         [Route("GetMyFixedTermById/{id}")]
         public async Task<IActionResult> getMyFixedTermById(int id)
         {
             var userIdValue = User.FindFirstValue("Id");
+            var userId = int.Parse(userIdValue);
             var fixedTermValue = id;
-            var fixedTerms = await _fixedTermService.getAllFixedTermsByUserIdAsync(userIdValue);
+            var fixedTerms = await _unitOfWork.FixedTermRepo.GetMyFixedTerms(userId);
             var myFixedTerm = fixedTerms.Where(t => t.Id == fixedTermValue);
+            var _fixedTerm = await _unitOfWork.FixedTermRepo.GetById(id);
 
-            if (myFixedTerm == null)
+            if (myFixedTerm.Equals("") || myFixedTerm.Count() == 0 || myFixedTerm == null)
             {
-                return NotFound();
+                return NotFound("Este plazo fijo no corresponde a un plazo fijo creado por este usuario");
             }
-            return Ok(myFixedTerm);
+            return Ok(_fixedTerm);
         }
 
         //REGULAR ROLE
         [HttpGet("GetMyFixedTerms")]
-        public async Task<IActionResult> GetByUserId()
+        public async Task<IActionResult> GetMyFixedTerms()
         {
             var userIdValue = User.FindFirstValue("Id");
-            var fixedTerms = await _fixedTermService.getAllFixedTermsByUserIdAsync(userIdValue);
+            var userId = int.Parse(userIdValue);
+            var fixedTerms = await _unitOfWork.FixedTermRepo.GetAll();
+            var myFixedTerm = fixedTerms.Where(t => t.UserId == userId);
 
-            if (fixedTerms == null)
+
+            if (myFixedTerm == null)
             {
-                throw new Exception("NOT_FOUND");
+                return NotFound("Este usuario no contiene plazos fijos");
             }
 
-            return Ok(fixedTerms);
+            return Ok(myFixedTerm);
         }
 
         //REGULAR ROLE
@@ -190,7 +199,8 @@ namespace VirtualWallet.Controllers
                 State = fixedTerm.State
             };
 
-            await _fixedTermService.addFixedTermAsync(_fixedTerm);
+            await _unitOfWork.FixedTermRepo.Insert(_fixedTerm);
+            await _unitOfWork.SaveChangesAsync();
 
             return CreatedAtAction("Get", new { id = fixedTerm.Id }, fixedTerm);
         }
@@ -203,9 +213,9 @@ namespace VirtualWallet.Controllers
             var userIdValue = User.FindFirstValue("Id");
             var userId = int.Parse(userIdValue);
             var fixedTermValue = id;
-            var fixedTerms = await _fixedTermService.getAllFixedTermsByUserIdAsync(userIdValue);
+            var fixedTerms = await _unitOfWork.FixedTermRepo.GetMyFixedTerms(userId);
             var myFixedTerm = fixedTerms.Where(t => t.Id == fixedTermValue);
-            var _fixedTerm = await _fixedTermService.getFixedTermAsync(id);
+            var _fixedTerm = await _unitOfWork.FixedTermRepo.GetById(id);
 
 
             if (myFixedTerm.Equals("") || myFixedTerm.Count() == 0 || myFixedTerm == null)
@@ -221,8 +231,8 @@ namespace VirtualWallet.Controllers
             _fixedTerm.NominalRate = fixedTerm.NominalRate;
             _fixedTerm.State = fixedTerm.State;
 
-            await _fixedTermService.updateMyFixedTermAsync(_fixedTerm);
-
+            await _unitOfWork.FixedTermRepo.Update(_fixedTerm);
+            await _unitOfWork.SaveChangesAsync();
             return Ok("Plazo fijo editado con exito");
         }
 
@@ -233,8 +243,9 @@ namespace VirtualWallet.Controllers
         {
 
             var userIdValue = User.FindFirstValue("Id");
+            var userId = int.Parse(userIdValue);
             var fixedTermValue = id;
-            var fixedTerms = await _fixedTermService.getAllFixedTermsByUserIdAsync(userIdValue);
+            var fixedTerms = await _unitOfWork.FixedTermRepo.GetMyFixedTerms(userId);
             var myFixedTerm = fixedTerms.Where(t => t.Id == fixedTermValue);
 
 
@@ -242,7 +253,8 @@ namespace VirtualWallet.Controllers
             {
                 return NotFound("Este plazo fijo no puede eliminarse dado que no pertenece a este usuario");
             }
-            await _fixedTermService.deleteFixedTermAsync(id);
+            await _unitOfWork.FixedTermRepo.Delete(id);
+            await _unitOfWork.SaveChangesAsync();
 
             return Ok("Plazo fijo eliminado con exito");
         }

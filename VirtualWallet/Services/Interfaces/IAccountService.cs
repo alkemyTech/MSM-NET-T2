@@ -8,5 +8,5 @@ public interface IAccountService
     Task<Account> GetById(int id);
     Task Insert(Account account);
     Task Update(Account account);
-    Task Delete(int id);   
+    Task Delete(int id);
 }
