@@ -19,9 +19,6 @@ namespace VirtualWallet.Services
         {
             var fixedTerms = await _fixedTermRepository.GetAll();
            
-            var fixedTerms = await _fixedTermRepository.getAll();
-
-
             var fixedTermsDTOs = fixedTerms.Select(fixedTerm => new FixedTermDepositDTO
             {
                 Id = fixedTerm.Id,

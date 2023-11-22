@@ -40,14 +40,31 @@ namespace VirtualWallet.Services
             return _user;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<Object> GetAllUsersAsync(int pageNumber, int pageSize)
         {
             var users = await _unitOfWork.UserRepo.GetAll();
-            if( users ==  null)
+            var pagesUsers = users
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            if (pagesUsers.Count() == 0)
             {
                 return null;
             }
-            return users;
+
+            var prevPage = pageNumber > 1 ? "Get?pageNumber=" + (pageNumber - 1) + "&pageSize=" + pageSize : null;
+
+            var nextPage = pageNumber < (int)Math.Ceiling((double)users.Count() / pageSize) ? "Get?pageNumber=" + (pageNumber + 1) + "&pageSize=" + pageSize : null;
+
+            var result = new
+            {
+                Transactions = pagesUsers,
+                PrevPage = prevPage,
+                NextPage = nextPage
+            };
+
+            return result;
         }
 
         public async Task <User> GetUserAsync(int id)

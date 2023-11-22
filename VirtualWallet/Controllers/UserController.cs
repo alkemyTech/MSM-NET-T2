@@ -6,7 +6,7 @@ using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -20,12 +20,12 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Get()
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 10)
         {
             try
             {
-            var users = await _userService.GetAllUsersAsync();
+            var users = await _userService.GetAllUsersAsync(pageNumber, pageSize);
 
             if (users == null)
             {
@@ -46,7 +46,7 @@ namespace VirtualWallet.Controllers
         }
         
         [HttpGet]
-        [Authorize(Roles = "Regular")]
+        //[Authorize(Roles = "Regular")]
         [Route("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -70,7 +70,7 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Regular")]
+        //[Authorize(Roles = "Regular")]
         public async Task<IActionResult> Post(UserDTO user)
         {
             try
@@ -116,7 +116,7 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPatch("users/block/{id}")]
-        [Authorize(Roles = "Regular")]
+        //[Authorize(Roles = "Regular")]
         public async Task<IActionResult> BlockAccount(int id)
         {
             try 
@@ -142,7 +142,7 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPatch("users/unblock/{id}")]
-        [Authorize(Roles = "Regular")]
+        //[Authorize(Roles = "Regular")]
         public async Task<IActionResult> UnblockAccount(int id)
         {
             try
@@ -168,8 +168,8 @@ namespace VirtualWallet.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpDelete]
+        //[Authorize(Roles = "Admin")]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -191,10 +191,6 @@ namespace VirtualWallet.Controllers
                     errors = new[] { new { error = ex.Message } }
                 });
             }
-
-            await _userService.DeleteUserAsync(id);
-
-            return Ok();
         }
     }
 }

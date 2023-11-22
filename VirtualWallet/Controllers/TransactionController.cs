@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
 
@@ -21,7 +20,7 @@ namespace VirtualWallet.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin,Regular")]
-        public async Task<IActionResult> Get(int pageNumber=1, int pageSize= 10)
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 10)
         {
             try
             {
@@ -29,12 +28,12 @@ namespace VirtualWallet.Controllers
                 var result = await _transactionService.getAllTransactionsAsync(pageNumber, pageSize, userId);
 
                 if (result == null)
-            {
+                {
                     throw new Exception("NOT_FOUND");
-            }
+                }
 
                 return Ok(result);
-        }
+            }
             catch (Exception ex)
             {
                 return StatusCode(404, new
@@ -58,10 +57,10 @@ namespace VirtualWallet.Controllers
                 if (result == null)
                 {
                     throw new Exception("NOT_FOUND");
-            }
+                }
 
                 return Ok(result);
-        }
+            }
             catch (Exception ex)
             {
                 return StatusCode(404, new
@@ -103,34 +102,25 @@ namespace VirtualWallet.Controllers
         public async Task<IActionResult> Put(int id, TransactionDTO transaction)
         {
             try
-        {
+            {
                 var result = await _transactionService.updateTransactionAsync(id, transaction);
 
                 if (result == null)
-            {
+                {
                     throw new Exception("NOT_FOUND");
-            }
+                }
 
                 return Ok();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(404, new
-            {
+                {
                     status = 400,
                     errors = new[] { new { error = ex.Message } }
-                    });
+                });
             }
-            else
-            {
-                _transaction.Amount = transaction.Amount;
-                _transaction.Concept = transaction.Concept;
-                _transaction.Date = transaction.Date;
-                _transaction.Type = transaction.Type;
-                _transaction.AccountId = transaction.AccountId;
-                _transaction.UserId = transaction.UserId;
-                _transaction.ToAccountId = transaction.ToAccountId;
-            }
+        }
 
 
         [HttpDelete("{id}")]
@@ -146,20 +136,16 @@ namespace VirtualWallet.Controllers
                     throw new Exception("NOT_FOUND");
                 }
 
-            return Ok();
-        }
-            catch(Exception ex)
-        {
-                return StatusCode(404, new
+                return Ok();
+            }
+            catch (Exception ex)
             {
+                return StatusCode(404, new
+                {
                     status = 404,
                     errors = new[] { new { error = ex.Message } }
                 });
             }
-
-            await _transactionService.deleteTransactionAsync(transaction_id);
-
-            return Ok();
         }
 
     }
