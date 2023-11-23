@@ -1,17 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using VirtualWallet.Models;
+﻿using VirtualWallet.Models;
 
-namespace VirtualWallet.Repository.Interfaces;
-
-public interface IFixedTermRepository
+namespace VirtualWallet.Repository.Interfaces
 {
-    Task<IEnumerable<FixedTermDeposit>> GetAll();
+    public interface IFixedTermRepository
+    {
+        //getAll, getById, insert , delete, update
+        Task<IEnumerable<FixedTermDeposit>> GetAll();
 
-    Task<IEnumerable<FixedTermDeposit>> GetMyFixedTerms(int id);
-    Task<FixedTermDeposit> GetById(int id);
-    Task Insert(FixedTermDeposit fixedTermDeposit);
-    Task Update(FixedTermDeposit fixedTermDeposit);
-    Task Delete(int id);
+        Task<FixedTermDeposit> GetById(int id);
 
+        Task<FixedTermDeposit> GetMyFixedTermById(int id);
+
+        Task<IEnumerable<FixedTermDeposit>> GetAllByUserId(string userId);
+
+        Task Insert(FixedTermDeposit fixedTerm);
+
+        Task Update(FixedTermDeposit fixedTerm);
+
+        Task Delete(int fixedTerm_id);
+    }
 }

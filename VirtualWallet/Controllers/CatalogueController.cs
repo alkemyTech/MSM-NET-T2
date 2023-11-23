@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using VirtualWallet.DataAccess;
+﻿using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Services;
 
@@ -10,98 +8,83 @@ namespace VirtualWallet.Controllers
     [Route("api/[controller]")]
     public class CatalogueController : Controller
     {
-        private readonly UnitOfWork _unitOfWork;
+        private readonly CatalogueService _catalogueService;
 
-        public CatalogueController(UnitOfWork unitOfWork)
+        public CatalogueController(CatalogueService catalogueService)
         {
-            _unitOfWork = unitOfWork;
+            _catalogueService = catalogueService;
 
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
-            var catalogues = await _unitOfWork.CatalogueRepo.getAll();
+            var catalogues = await _catalogueService.getAllCataloguesAsync();
 
             if (catalogues == null)
             {
-                return NotFound("No existen catalogos");
+                return NotFound();
             }
 
             return Ok(catalogues);
 
         }
-        
+
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         [Route("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var catalogue = await _unitOfWork.CatalogueRepo.getById(id);
+            var catalogue = await _catalogueService.getCatalogueAsync(id);
             if (catalogue == null)
             {
-                return NotFound("Catalogo inexistente");
+                return NotFound();
             }
 
             return Ok(catalogue);
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(Catalogue catalogue)
         {
-            var _catalogue = new Catalogue
-            {
-                Id = catalogue.Id,
-                ProductDescription = catalogue.ProductDescription,
-                Image = catalogue.Image,
-                Points = catalogue.Points,
-            };
-            await _unitOfWork.CatalogueRepo.Insert(catalogue);
-            await _unitOfWork.SaveChangesAsync();
+            await _catalogueService.addCatalogueAsync(catalogue);
 
             return CreatedAtAction("Get", new { id = catalogue.Id }, catalogue);
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin")]
         [Route("{id}")]
         public async Task<IActionResult> Put(int id, Catalogue catalogue)
         {
-            var _catalogue = await _unitOfWork.CatalogueRepo.getById(id);
+            var _catalogue = await _catalogueService.getCatalogueAsync(id);
 
             if (_catalogue == null)
             {
-                return NotFound("No se ha encontrado este catalogo");
+                return NotFound();
             }
 
             _catalogue.ProductDescription = catalogue.ProductDescription;
             _catalogue.Image = catalogue.Image;
             _catalogue.Points = catalogue.Points;
 
-            await _unitOfWork.CatalogueRepo.Update(_catalogue);
-            await _unitOfWork.SaveChangesAsync();
+            await _catalogueService.updateCatalogueAsync(_catalogue);
 
             return Ok();
         }
 
         [HttpDelete]
-        [Authorize(Roles = "Admin")]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var catalogue = await _unitOfWork.CatalogueRepo.getById(id);
+            var catalogue = await _catalogueService.getCatalogueAsync(id);
 
             if (catalogue == null)
             {
                 return NotFound();
             }
 
-            await _unitOfWork.CatalogueRepo.Delete(id);
+            await _catalogueService.deleteCatalogueAsync(id);
 
-            await _unitOfWork.SaveChangesAsync();
-            return Ok("Catalogo eliminado con exito");
+            return Ok();
         }
     }
 }

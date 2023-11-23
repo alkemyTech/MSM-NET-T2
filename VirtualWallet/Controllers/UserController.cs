@@ -6,7 +6,7 @@ using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -20,21 +20,21 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Get()
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 10)
         {
             try
             {
-            var users = await _userService.GetAllUsersAsync();
+                var users = await _userService.GetAllUsersAsync(pageNumber, pageSize);
 
-            if (users == null)
-            {
-                return NotFound();
+                if (users == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(users);
+
             }
-
-            return Ok(users);
-
-        }
             catch (Exception ex)
             {
                 return StatusCode(404, new
@@ -44,9 +44,9 @@ namespace VirtualWallet.Controllers
                 });
             }
         }
-        
+
         [HttpGet]
-        [Authorize(Roles = "Regular")]
+        //[Authorize(Roles = "Regular")]
         [Route("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -55,8 +55,8 @@ namespace VirtualWallet.Controllers
                 var _user = await _userService.GetUserAsync(id);
                 if (_user == null)
                 {
-                return NotFound();
-            }
+                    return NotFound();
+                }
                 return Ok(_user);
             }
             catch (Exception ex)
@@ -70,18 +70,18 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Regular")]
+        //[Authorize(Roles = "Regular")]
         public async Task<IActionResult> Post(UserDTO user)
         {
             try
             {
                 var _user = await _userService.AddUserAsync(user);
                 if (_user == null)
-            {
+                {
                     return NotFound();
                 }
-            return CreatedAtAction("Get", new { id = user.Id }, user);
-        }
+                return CreatedAtAction("Get", new { id = user.Id }, user);
+            }
             catch (Exception ex)
             {
                 return StatusCode(404, new
@@ -97,12 +97,12 @@ namespace VirtualWallet.Controllers
         public async Task<IActionResult> Put(int id, UserDTO user)
         {
             try
-        {
-                var _user = await _userService.UpdateUserAsync(id, user);
-            if (_user == null)
             {
-                return NotFound();
-            }
+                var _user = await _userService.UpdateUserAsync(id, user);
+                if (_user == null)
+                {
+                    return NotFound();
+                }
                 return Ok();
             }
             catch (Exception ex)
@@ -116,12 +116,12 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPatch("users/block/{id}")]
-        [Authorize(Roles = "Regular")]
+        //[Authorize(Roles = "Regular")]
         public async Task<IActionResult> BlockAccount(int id)
         {
-            try 
+            try
             {
-                if(await _userService.BlockAccount(id))
+                if (await _userService.BlockAccount(id))
                 {
                     return Ok();
                 }
@@ -135,14 +135,14 @@ namespace VirtualWallet.Controllers
             {
                 return StatusCode(400, new
                 {
-                status = 400,
-                errors = new[] { new { error = ex.Message } }
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
                 });
             }
         }
 
         [HttpPatch("users/unblock/{id}")]
-        [Authorize(Roles = "Regular")]
+        //[Authorize(Roles = "Regular")]
         public async Task<IActionResult> UnblockAccount(int id)
         {
             try
@@ -156,8 +156,8 @@ namespace VirtualWallet.Controllers
                     throw new Exception("Cuenta inexistente o ya se encuentra desbloqueada");
                 }
 
-            return Ok();
-        }
+                return Ok();
+            }
             catch (Exception ex)
             {
                 return StatusCode(400, new
@@ -168,8 +168,8 @@ namespace VirtualWallet.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpDelete]
+        //[Authorize(Roles = "Admin")]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -177,10 +177,10 @@ namespace VirtualWallet.Controllers
             {
                 var user = await _userService.DeleteUserAsync(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+                if (user == null)
+                {
+                    return NotFound();
+                }
                 return Ok(user);
             }
             catch (Exception ex)
@@ -191,10 +191,6 @@ namespace VirtualWallet.Controllers
                     errors = new[] { new { error = ex.Message } }
                 });
             }
-
-            await _userService.DeleteUserAsync(id);
-
-            return Ok();
         }
     }
 }

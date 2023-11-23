@@ -22,7 +22,7 @@ public class AccountRepository : IAccountRepository
         return await _dbContext.Accounts
             .ToListAsync();
     }
-    
+
     public async Task<Account> GetById(int id)
     {
         return await _dbContext.Accounts.FirstOrDefaultAsync(a => a.Id == id);

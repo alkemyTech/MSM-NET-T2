@@ -19,12 +19,12 @@ public class RoleRepository : IRoleRepository
         return await _dbContext.Roles
             .ToListAsync();
     }
-    
+
     public async Task<Role> GetById(int id)
     {
         return await _dbContext.Roles.FirstOrDefaultAsync(r => r.Id == id);
     }
-    
+
     public async Task Insert(Role role)
     {
         _dbContext.Roles.Add(role);

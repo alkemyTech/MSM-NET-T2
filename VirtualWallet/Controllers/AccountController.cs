@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
+using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers;
 

@@ -36,7 +36,7 @@ namespace VirtualWallet.Services
             //Links para página Anterior y Siguiente
 
             var prevPage = pageNumber > 1 ? "Get?pageNumber=" + (pageNumber - 1) + "&pageSize=" + pageSize : null;
-            
+
             var nextPage = pageNumber < (int)Math.Ceiling((double)filteredTransactions.Count() / pageSize) ? "Get?pageNumber=" + (pageNumber + 1) + "&pageSize=" + pageSize : null;
 
             //Formateo la salida con un objeto que contiene las transacciones efectuadas por el usuario, junto con los links para la paginación
@@ -57,7 +57,7 @@ namespace VirtualWallet.Services
 
             //De no existir la transacción hecha por el usuario se devuelve un null
             if (transaction == null || !userId.Equals(transaction.AccountId.ToString()))
-        {
+            {
                 return null;
             }
             //Si se trata de un depósito no contiene ToAccountId
@@ -104,7 +104,7 @@ namespace VirtualWallet.Services
                 ToAccountId = transactionDTO.ToAccountId
             };
 
-            if(transaction == null)
+            if (transaction == null)
             {
                 return null;
             }
@@ -117,7 +117,7 @@ namespace VirtualWallet.Services
 
             //En caso de ser una transferencia se suma la cantidad de dinero ingresada a la cuenta destinataria
             else
-        {
+            {
                 var account = await _unitOfWork.AccountRepo.GetById((int)transaction.ToAccountId);
                 account.Money += transaction.Amount;
             }
@@ -134,7 +134,7 @@ namespace VirtualWallet.Services
             var _transaction = await _unitOfWork.TransactionRepo.getById(transactionId);
 
             if (_transaction == null)
-        {
+            {
                 return null;
             }
 
@@ -158,7 +158,7 @@ namespace VirtualWallet.Services
 
             //De no existir la transaccion se devuelve False
             if (transaction == null)
-        {
+            {
                 return false;
             }
 

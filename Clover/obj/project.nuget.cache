@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "tKvWDTwn1TC55Wm6I5VQg5/YBDImsr+geJ62bpTk9vPsgaY9kAyWF2Z8Cn3PynG1TW/WhV86ybgfIIkNzIHuPQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\schmi\\Source\\Repos\\MSM-NET-T2\\Clover\\Clover.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\schmi\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

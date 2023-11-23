@@ -42,7 +42,8 @@ namespace VirtualWallet.Controllers
             //     return StatusCode(StatusCodes.Status403Forbidden, new { error = "La cuenta se encuentra bloqueada" });
             //}
             //VER LINEA SIGUIENTE//
-            if (EncryptPass.GetSHA256(request.Password) == users.Password && request.Email == users.Email)
+            //if (EncryptPass.GetSHA256(request.Password) == users.Password && request.Email == users.Email)
+            if (request.Password == users.Password && request.Email == users.Email)
             {
                 var keyBytes = Encoding.UTF8.GetBytes(secretKey);
                 var claims = new ClaimsIdentity();
