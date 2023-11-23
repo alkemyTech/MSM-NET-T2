@@ -25,6 +25,11 @@ namespace VirtualWallet.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
+            if (!User.IsInRole("Admin"))
+            {
+                // Usuario no autorizado
+                return Unauthorized("Usuario no autorizado");
+            }
             var fixedTerms = await _fixedTermService.getAllFixedTermsAsync();
 
             if (fixedTerms == null)
@@ -152,7 +157,7 @@ namespace VirtualWallet.Controllers
 
             if (myFixedTerm == null)
             {
-                return NotFound();
+                return NotFound("Plazo fijo no encontrado");
             }
             return Ok(myFixedTerm);
         }

@@ -1,5 +1,6 @@
 ﻿using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
+using VirtualWallet.Repository;
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
@@ -17,7 +18,6 @@ namespace VirtualWallet.Services
         public async Task<IEnumerable<FixedTermDepositDTO>> getAllFixedTermsAsync()
         {
             var fixedTerms = await _fixedTermRepository.GetAll();
-
 
             var fixedTermsDTOs = fixedTerms.Select(fixedTerm => new FixedTermDepositDTO
             {

@@ -1,4 +1,5 @@
 using VirtualWallet.Models;
+using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Services;

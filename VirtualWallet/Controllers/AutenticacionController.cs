@@ -29,7 +29,7 @@ namespace VirtualWallet.Controllers
 
             var users = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
 
-            var account = await _context.Accounts.FindAsync(users.Id);
+            //var account = await _context.Accounts.FindAsync(users.Id);
 
             if (users == null)
             {
@@ -37,11 +37,12 @@ namespace VirtualWallet.Controllers
             }
 
             //En caso de tratarse de una cuenta bloqueada se le niega el acceso
-            if (account.IsBlocked)
-            {
-                return StatusCode(StatusCodes.Status403Forbidden, new { error = "La cuenta se encuentra bloqueada" });
-            }
-
+            //if (account.IsBlocked)
+            // {
+            //     return StatusCode(StatusCodes.Status403Forbidden, new { error = "La cuenta se encuentra bloqueada" });
+            //}
+            //VER LINEA SIGUIENTE//
+            //if (EncryptPass.GetSHA256(request.Password) == users.Password && request.Email == users.Email)
             if (request.Password == users.Password && request.Email == users.Email)
             {
                 var keyBytes = Encoding.UTF8.GetBytes(secretKey);

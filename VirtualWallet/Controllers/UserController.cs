@@ -23,7 +23,7 @@ namespace VirtualWallet.Controllers
         {
             try
             {
-                var users = await _userService.GetAllUsersAsync();
+                var users = await _userService.GetAllUsersAsync(pageNumber, pageSize);
 
                 if (users == null)
                 {
@@ -165,6 +165,7 @@ namespace VirtualWallet.Controllers
 
 
         [HttpDelete]
+        //[Authorize(Roles = "Admin")]
         [Route("{id}")]
         [Authorize(Roles = "Admin, Regular")]
         public async Task<IActionResult> Delete(int id)
