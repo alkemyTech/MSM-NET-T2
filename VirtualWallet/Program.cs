@@ -7,7 +7,6 @@ using VirtualWallet.DataAccess;
 using VirtualWallet.Repository;
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services;
-using VirtualWallet.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,11 +94,6 @@ builder.Services.AddScoped<UnitOfWork>();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var virtualWalletDbContext = scope.ServiceProvider.GetRequiredService<VirtualWalletDbContext>();
-    virtualWalletDbContext.Database.Migrate();
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -19,7 +19,7 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Regular")]
         public async Task<IActionResult> Get()
         {
             var catalogues = await _unitOfWork.CatalogueRepo.getAll();
@@ -32,10 +32,12 @@ namespace VirtualWallet.Controllers
             return Ok(catalogues);
 
         }
-        
+
         [HttpGet]
         [Authorize(Roles = "Admin")]
         [Route("{id}")]
+
+        [Authorize(Roles = "Admin,Regular")]
         public async Task<IActionResult> GetById(int id)
         {
             var catalogue = await _unitOfWork.CatalogueRepo.getById(id);
@@ -48,6 +50,7 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPost]
+
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(Catalogue catalogue)
         {
@@ -67,6 +70,8 @@ namespace VirtualWallet.Controllers
         [HttpPut]
         [Authorize(Roles = "Admin")]
         [Route("{id}")]
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(int id, Catalogue catalogue)
         {
             var _catalogue = await _unitOfWork.CatalogueRepo.getById(id);
@@ -89,6 +94,7 @@ namespace VirtualWallet.Controllers
         [HttpDelete]
         [Authorize(Roles = "Admin")]
         [Route("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var catalogue = await _unitOfWork.CatalogueRepo.getById(id);

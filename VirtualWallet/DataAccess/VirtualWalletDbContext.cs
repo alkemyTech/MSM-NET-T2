@@ -1,6 +1,4 @@
-using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using VirtualWallet.Models;
 
 namespace VirtualWallet.DataAccess;
@@ -17,9 +15,9 @@ public class VirtualWalletDbContext : DbContext
     public DbSet<Account> Accounts { get; set; }
     public DbSet<Catalogue> Catalogues { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
-    public DbSet<FixedTermDeposit> FixedTermDeposits { get; set; } 
-    
-    
+    public DbSet<FixedTermDeposit> FixedTermDeposits { get; set; }
+
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Especificar al modelo que las tablas van en singular 
@@ -29,7 +27,7 @@ public class VirtualWalletDbContext : DbContext
         modelBuilder.Entity<Catalogue>().ToTable("Catalogue");
         modelBuilder.Entity<Transaction>().ToTable("Transaction");
         modelBuilder.Entity<FixedTermDeposit>().ToTable("FixedTermDeposit");
-        
+
         // Seed Role
         modelBuilder.Entity<Role>().HasData(
             new Role { Id = 1, Name = "Admin", Description = "Permisos para agregar y eliminar usuarios" },
@@ -41,9 +39,9 @@ public class VirtualWalletDbContext : DbContext
             new User { Id = 1, First_name = "Pedro", Last_name = "Gonzalez", Email = "pedro@pedro", Password = "123", Points = 50, Role_Id = 1 },
             new User { Id = 2, First_name = "Fede", Last_name = "Perez", Email = "fede@fede", Password = "1234", Points = 504, Role_Id = 2 },
             new User { Id = 3, First_name = "Maca", Last_name = "Pereira", Email = "maca@maca", Password = "12345", Points = 5, Role_Id = 2 },
-            new User { Id = 4, First_name = "Sofia", Last_name = "Gomez", Email = "sofi@sofi", Password = "123456", Points = 23, Role_Id = 2 }    
+            new User { Id = 4, First_name = "Sofia", Last_name = "Gomez", Email = "sofi@sofi", Password = "123456", Points = 23, Role_Id = 2 }
         );
-        
+
         // Seed Account
         modelBuilder.Entity<Account>().HasData(
             new Account { Id = 1, CreationDate = new DateTime(2018, 2, 21), Money = 210600, IsBlocked = true, UserId = 1 },
@@ -51,7 +49,7 @@ public class VirtualWalletDbContext : DbContext
             new Account { Id = 3, CreationDate = new DateTime(2019, 8, 8), Money = 250990, IsBlocked = false, UserId = 3 },
             new Account { Id = 4, CreationDate = new DateTime(2019, 11, 5), Money = 420560, IsBlocked = false, UserId = 4 }
         );
-        
+
         // Seed Transaction
         modelBuilder.Entity<Transaction>().HasData(
             new Transaction { transactionId = 1, Amount = 7500, Concept = "Compra en línea 3", Date = new DateTime(2023, 1, 15), Type = "payment", AccountId = 2, UserId = 2 },
@@ -66,15 +64,15 @@ public class VirtualWalletDbContext : DbContext
             .WithMany(u => u.Transactions)
             .HasForeignKey(t => t.UserId)
             .OnDelete(DeleteBehavior.NoAction); // O NoAction para OnUpdate
-        
-         // Seed Catalogue
+
+        // Seed Catalogue
         modelBuilder.Entity<Catalogue>().HasData(
             new Catalogue { Id = 3, ProductDescription = "Auriculares inalámbricos", Image = "Image3.jpg", Points = 32000 },
             new Catalogue { Id = 4, ProductDescription = "Tarjeta de regalo de $50", Image = "Image4.jpg", Points = 5000 },
             new Catalogue { Id = 5, ProductDescription = "Camiseta de edición limitada", Image = "Image5.jpg", Points = 12000 },
             new Catalogue { Id = 6, ProductDescription = "Botella de vino premium", Image = "Image6.jpg", Points = 15000 }
-           );    
-        
+           );
+
         // Seed FixedTermDeposit
         modelBuilder.Entity<FixedTermDeposit>().HasData(
             new FixedTermDeposit { Id = 1, AccountId = 1, UserId = 1, Amount = 10000.00M, CreationDate = new DateTime(2023, 3, 1), ClosingDate = new DateTime(2023, 6, 1), NominalRate = 5.0M, State = "Active" },

@@ -10,15 +10,15 @@ public class RoleService : IRoleService
 
     public RoleService(IRoleRepository roleRepository)
     {
-         _roleRepository = roleRepository;
+        _roleRepository = roleRepository;
     }
-    
+
     public async Task<IEnumerable<Role>> GetAll()
     {
         return await _roleRepository.GetAll();
     }
-    
-     public async Task<Role> GetById(int id)
+
+    public async Task<Role> GetById(int id)
     {
         return await _roleRepository.GetById(id);
     }

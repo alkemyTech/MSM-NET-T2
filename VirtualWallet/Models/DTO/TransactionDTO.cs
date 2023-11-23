@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VirtualWallet.Models.DTO
@@ -29,7 +28,7 @@ namespace VirtualWallet.Models.DTO
         [Required(ErrorMessage = "El campo UserId es obligatorio.")]
         public int UserId { get; set; }  //FK a Users
 
-        public int? ToAccountId { get; set; } 
+        public int? ToAccountId { get; set; }
 
     }
 }
