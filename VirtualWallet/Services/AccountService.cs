@@ -1,5 +1,4 @@
 using VirtualWallet.Models;
-using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Services;
@@ -10,15 +9,15 @@ public class AccountService : IAccountService
 
     public AccountService(IAccountRepository accountRepository)
     {
-         _accountRepository = accountRepository;
+        _accountRepository = accountRepository;
     }
-    
+
     public async Task<IEnumerable<Account>> GetAll()
     {
         return await _accountRepository.GetAll();
     }
-    
-     public async Task<Account> GetById(int id)
+
+    public async Task<Account> GetById(int id)
     {
         return await _accountRepository.GetById(id);
     }
@@ -36,5 +35,5 @@ public class AccountService : IAccountService
     public async Task Delete(int id)
     {
         await _accountRepository.Delete(id);
-    }    
+    }
 }

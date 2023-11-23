@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Services;
 
@@ -17,6 +18,7 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,Regular")]
         public async Task<IActionResult> Get()
         {
             var catalogues = await _catalogueService.getAllCataloguesAsync();
@@ -29,9 +31,11 @@ namespace VirtualWallet.Controllers
             return Ok(catalogues);
 
         }
-        
+
         [HttpGet]
         [Route("{id}")]
+
+        [Authorize(Roles = "Admin,Regular")]
         public async Task<IActionResult> GetById(int id)
         {
             var catalogue = await _catalogueService.getCatalogueAsync(id);
@@ -44,6 +48,8 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPost]
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(Catalogue catalogue)
         {
             await _catalogueService.addCatalogueAsync(catalogue);
@@ -53,6 +59,8 @@ namespace VirtualWallet.Controllers
 
         [HttpPut]
         [Route("{id}")]
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(int id, Catalogue catalogue)
         {
             var _catalogue = await _catalogueService.getCatalogueAsync(id);
@@ -73,6 +81,7 @@ namespace VirtualWallet.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var catalogue = await _catalogueService.getCatalogueAsync(id);

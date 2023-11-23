@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
-using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers;
 
@@ -24,7 +23,7 @@ public class AccountController : ControllerBase
     {
         _unitOfWork = unitOfWork;
     }
-    
+
     // GET: api/accounts
     [HttpGet]
     [Authorize(Roles = "Admin")]
@@ -67,12 +66,12 @@ public class AccountController : ControllerBase
             IsBlocked = accountDto.IsBlocked,
             UserId = accountDto.UserId
         };
-        
+
         await _unitOfWork.AccountRepo.Insert(_account);
         await _unitOfWork.SaveChangesAsync();
         return CreatedAtAction("Get", new { id = accountDto.Id }, accountDto);
     }
-    
+
     // POST api/accounts/Deposit/{id}
     [HttpPost]
     [Route("Deposit/{id}")]
@@ -84,7 +83,7 @@ public class AccountController : ControllerBase
         var user = await _unitOfWork.UserRepo.GetById(id);
         var userId = User.FindFirstValue("Id");
         //var userId = "2";
-        
+
         // Verificar la cuenta
         if (account == null)
         {
@@ -95,30 +94,30 @@ public class AccountController : ControllerBase
         {
             // Realizar el depósito
             var deposit = account.Money += amount;
-            
+
             // Registrar la transacción
             var newTransaction = new Transaction
-            { 
+            {
                 Amount = deposit,
-                Concept = "Depósito", 
-                Date = DateTime.Now, 
-                Type = "topup", 
-                AccountId = int.Parse(userId), 
+                Concept = "Depósito",
+                Date = DateTime.Now,
+                Type = "topup",
+                AccountId = int.Parse(userId),
                 UserId = int.Parse(userId)
-                
+
             };
             await _unitOfWork.TransactionRepo.Insert(newTransaction);
-            
+
             // Calcular los puntos
             var points = (int)Math.Round(amount * 0.02);
             user.Points += points;
-            
-          await _unitOfWork.SaveChangesAsync();
+
+            await _unitOfWork.SaveChangesAsync();
         }
-        
+
         return Ok("Depósito exitoso");
     }
-    
+
     // POST api/accounts/Transfer/{id}
     [HttpPost]
     [Route("Transfer/{id}")]
@@ -130,11 +129,11 @@ public class AccountController : ControllerBase
         var transferId = await _unitOfWork.AccountRepo.GetById(toAccount);
         var user = await _unitOfWork.UserRepo.GetById(id);
         var userId = User.FindFirstValue("Id");
-        
+
         //var userId = "3";
-        
+
         // Verificar ambas cuentas
-          if (account == null || transferId == null)
+        if (account == null || transferId == null)
         {
             return NotFound("Una o ambas cuentas no fueron encontradas.");
         }
@@ -143,30 +142,30 @@ public class AccountController : ControllerBase
         {
             return BadRequest("Saldo insuficiente para realizar la transferencia");
         }
-        
+
         // Comparación del UserId que llega con el UserId de la Account
-         if (userId.Equals(account.Id.ToString()))
+        if (userId.Equals(account.Id.ToString()))
         {
             // Realizar la transferencia
             var transfer = account.Money -= amount;
             account.Money -= transfer;
-            
+
             var receive = transferId.Money += amount;
             transferId.Money += amount;
-                
+
             // Registrar la transacción de la cuenta emisora
             var newTransaction = new Transaction
-            { 
+            {
                 Amount = transfer,
-                Concept = "Transferencia a cuenta de terceros", 
-                Date = DateTime.Now, 
-                Type = "payment", 
-                AccountId = int.Parse(userId), 
+                Concept = "Transferencia a cuenta de terceros",
+                Date = DateTime.Now,
+                Type = "payment",
+                AccountId = int.Parse(userId),
                 UserId = int.Parse(userId),
                 ToAccountId = transferId.Id
             };
             await _unitOfWork.TransactionRepo.Insert(newTransaction);
-            
+
             // Registrar la transacción en la cuenta destino
             var toAccountTransaction = new Transaction
             {
@@ -178,7 +177,7 @@ public class AccountController : ControllerBase
                 UserId = transferId.UserId
             };
             await _unitOfWork.TransactionRepo.Insert(toAccountTransaction);
-            
+
             // Calcular los puntos de la cuenta emisora
             var points = (int)Math.Round(amount * 0.03);
             user.Points += points;
@@ -188,7 +187,7 @@ public class AccountController : ControllerBase
         }
         return Ok("Transferencia realizada con éxito");
     }
-  
+
     // PUT: api/accounts/{id}
     [HttpPut]
     [Route("{id}")]
@@ -201,11 +200,11 @@ public class AccountController : ControllerBase
         {
             return NotFound();
         }
-        
+
         _account.CreationDate = account.CreationDate;
         _account.Money = account.Money;
         _account.IsBlocked = account.IsBlocked;
-        
+
         await _unitOfWork.AccountRepo.Update(_account);
         await _unitOfWork.SaveChangesAsync();
         return Ok();
@@ -218,14 +217,14 @@ public class AccountController : ControllerBase
     public async Task<IActionResult> Delete(int id)
     {
         var account = await _unitOfWork.AccountRepo.GetById(id);
-        
+
         if (account == null)
         {
             return NotFound();
         }
-        
+
         await _unitOfWork.AccountRepo.Delete(id);
-        await _unitOfWork.SaveChangesAsync();  
+        await _unitOfWork.SaveChangesAsync();
         return Ok();
     }
 }

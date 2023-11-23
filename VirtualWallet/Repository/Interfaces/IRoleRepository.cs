@@ -4,7 +4,7 @@ namespace VirtualWallet.Repository.Interfaces;
 
 public interface IRoleRepository
 {
-    Task<IEnumerable<Role>> GetAll(); 
+    Task<IEnumerable<Role>> GetAll();
     Task<Role> GetById(int id);
     Task Insert(Role role);
     Task Update(Role role);

@@ -1,5 +1,4 @@
 ﻿using VirtualWallet.Models;
-using VirtualWallet.Models.DTO;
 
 namespace VirtualWallet.Repository.Interfaces
 {

@@ -1,7 +1,6 @@
-﻿﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
@@ -23,13 +22,9 @@ namespace VirtualWallet.Controllers
         //ADMIN ROLE
         [HttpGet]
         [Route("GetAll")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
-            if (!User.IsInRole("Admin"))
-            {
-                // Usuario no autorizado
-                return Unauthorized("Usuario no autorizado");
-            }
             var fixedTerms = await _fixedTermService.getAllFixedTermsAsync();
 
             if (fixedTerms == null)
@@ -44,6 +39,7 @@ namespace VirtualWallet.Controllers
         //ADMIN ROLE
         [HttpGet]
         [Route("GetById{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetById(int id)
         {
             if (!User.IsInRole("Admin"))
@@ -64,6 +60,7 @@ namespace VirtualWallet.Controllers
         //ADMIN ROLE
         [HttpPost]
         [Route("Post")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(FixedTermDeposit fixedTerm)
         {
             if (!User.IsInRole("Admin"))
@@ -91,6 +88,7 @@ namespace VirtualWallet.Controllers
         //ADMIN ROLE
         [HttpPut]
         [Route("Edit/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> EditFixedTerm(int id, FixedTermDeposit fixedTerm)
         {
             if (!User.IsInRole("Admin"))
@@ -121,6 +119,7 @@ namespace VirtualWallet.Controllers
         //ADMIN ROLE
         [HttpDelete]
         [Route("Delete/{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
             if (!User.IsInRole("Admin"))
@@ -139,10 +138,11 @@ namespace VirtualWallet.Controllers
 
             return Ok("Plazo fijo eliminado con exito");
         }
-        
+
         //REGULAR ROLE
         [HttpGet]
         [Route("GetMyFixedTermById/{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> getMyFixedTermById(int id)
         {
             var userIdValue = User.FindFirstValue("Id");
@@ -159,6 +159,7 @@ namespace VirtualWallet.Controllers
 
         //REGULAR ROLE
         [HttpGet("GetMyFixedTerms")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> GetByUserId()
         {
             var userIdValue = User.FindFirstValue("Id");
@@ -174,6 +175,7 @@ namespace VirtualWallet.Controllers
 
         //REGULAR ROLE
         [HttpPost("Insert")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> Insert(FixedTermDepositDTO fixedTerm)
         {
             var userIdValue = User.FindFirstValue("Id");
@@ -198,6 +200,7 @@ namespace VirtualWallet.Controllers
         //REGULAR ROLE
         [HttpPut]
         [Route("EditMyFixedTerm/{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> EditMyFixedTerm(int id, FixedTermDepositDTO fixedTerm)
         {
             var userIdValue = User.FindFirstValue("Id");
@@ -229,6 +232,7 @@ namespace VirtualWallet.Controllers
         //REGULAR ROLE
         [HttpDelete]
         [Route("DeleteMyFixedTerm/{id}")]
+        [Authorize(Roles = "Regular")]
         public async Task<IActionResult> DeleteMyFixedTerm(int id)
         {
 
