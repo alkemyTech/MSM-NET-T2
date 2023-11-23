@@ -19,7 +19,7 @@ namespace VirtualWallet.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin, Regular")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 10)
         {
             try
             {
