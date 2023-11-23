@@ -1,58 +1,62 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Repository.Interfaces;
+using System.Linq;
 
-namespace VirtualWallet.Repository;
-
-public class FixedTermRepository : IFixedTermRepository
+namespace VirtualWallet.Repository
 {
-    private readonly VirtualWalletDbContext _dbContext;
-
-    public FixedTermRepository(VirtualWalletDbContext dbContext)
+    public class FixedTermRepository : IFixedTermRepository
     {
-        _dbContext = dbContext;
-    }
+        private readonly VirtualWalletDbContext _dbContext;
 
-    public async Task<IEnumerable<FixedTermDeposit>> GetAll()
-    {
-        return await _dbContext.FixedTermDeposits
-            .ToListAsync();
-    }
-
-    public async Task<IEnumerable<FixedTermDeposit>> GetMyFixedTerms(int id)
-    {
-        return await _dbContext.FixedTermDeposits
-            .ToListAsync();
-    }
-
-    public async Task<FixedTermDeposit> GetById(int id)
-    {
-        return await _dbContext.FixedTermDeposits.FirstOrDefaultAsync(a => a.Id == id);
-    }
-
-    public async Task Insert(FixedTermDeposit fixedTermDeposit)
-    {
-        _dbContext.FixedTermDeposits.Add(fixedTermDeposit);
-        //await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task Update(FixedTermDeposit fixedTermDeposit)
-    {
-        _dbContext.FixedTermDeposits.Update(fixedTermDeposit);
-        //await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task Delete(int id)
-    {
-        var fixedTermDeposit = _dbContext.FixedTermDeposits.FirstOrDefault(a => a.Id == id);
-        if (fixedTermDeposit != null)
+        public FixedTermRepository(VirtualWalletDbContext dbContext)
         {
-            _dbContext.FixedTermDeposits.Remove(fixedTermDeposit);
-            //await _dbContext.SaveChangesAsync();
+            _dbContext = dbContext;
+        }
+
+        public async Task<IEnumerable<FixedTermDeposit>> GetAll()
+        {
+            return await _dbContext.FixedTermDeposits.ToListAsync();
+        }
+
+        public async Task<FixedTermDeposit> GetById(int id)
+        {
+            return await _dbContext.FixedTermDeposits.FirstOrDefaultAsync(f => f.Id == id);
+        }
+
+        public async Task<FixedTermDeposit> GetMyFixedTermById(int id)
+        {
+            return await _dbContext.FixedTermDeposits.FirstOrDefaultAsync(f => f.Id == id);
+        }
+
+        public async Task<IEnumerable<FixedTermDeposit>> GetAllByUserId(string userId)
+        {
+            return await _dbContext.FixedTermDeposits.ToListAsync();
+        }
+
+        public async Task Insert(FixedTermDeposit fixedTerm)
+        {
+            _dbContext.FixedTermDeposits.Add(fixedTerm);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task Update(FixedTermDeposit fixedTerm)
+        {
+            _dbContext.FixedTermDeposits.Update(fixedTerm);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var fixedTerm = _dbContext.FixedTermDeposits.FirstOrDefault(f => f.Id == id);
+
+            if (fixedTerm != null)
+            {
+                _dbContext.FixedTermDeposits.Remove(fixedTerm);
+                await _dbContext.SaveChangesAsync();
+            }
+
         }
     }
 }
