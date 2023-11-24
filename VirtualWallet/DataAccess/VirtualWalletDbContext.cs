@@ -4,8 +4,8 @@ using VirtualWallet.Models;
 namespace VirtualWallet.DataAccess;
 
 public class VirtualWalletDbContext : DbContext
-{ 
-    public VirtualWalletDbContext(DbContextOptions<VirtualWalletDbContext> options) : base(options)
+{
+    public VirtualWalletDbContext(DbContextOptions<VirtualWalletDbContext> options, IConfiguration configuration) : base(options)
     {
         
     }  

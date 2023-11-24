@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using VirtualWallet.DataAccess;
+﻿using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
-using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Services
@@ -36,7 +34,7 @@ namespace VirtualWallet.Services
             //Links para página Anterior y Siguiente
 
             var prevPage = pageNumber > 1 ? "Get?pageNumber=" + (pageNumber - 1) + "&pageSize=" + pageSize : null;
-            
+
             var nextPage = pageNumber < (int)Math.Ceiling((double)filteredTransactions.Count() / pageSize) ? "Get?pageNumber=" + (pageNumber + 1) + "&pageSize=" + pageSize : null;
 
             //Formateo la salida con un objeto que contiene las transacciones efectuadas por el usuario, junto con los links para la paginación
@@ -49,12 +47,12 @@ namespace VirtualWallet.Services
 
             return result;
         }
-        
+
         public async Task<Transaction> getTransactionAsync(int transactionId, string userId)
         {
             //Obtengo la transacción consultada 
             var transaction = await _unitOfWork.TransactionRepo.getById(transactionId);
-            
+
             //De no existir la transacción hecha por el usuario se devuelve un null
             if (transaction == null || !userId.Equals(transaction.AccountId.ToString()))
             {
@@ -78,7 +76,7 @@ namespace VirtualWallet.Services
                 ToAccountId = transactionDTO.ToAccountId
             };
 
-            if(transaction == null)
+            if (transaction == null)
             {
                 return null;
             }

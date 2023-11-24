@@ -9,5 +9,6 @@
         public string Password { get; set; }
         public int Points { get; set; }
         public int Role_Id { get; set; }
+
     }
 }

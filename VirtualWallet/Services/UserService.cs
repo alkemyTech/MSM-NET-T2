@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VirtualWallet.DataAccess;
+﻿using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 
@@ -8,7 +7,8 @@ namespace VirtualWallet.Services
     public class UserService : IUserService
     {
         private readonly UnitOfWork _unitOfWork;
-        public UserService (UnitOfWork unitOfWork) {
+        public UserService(UnitOfWork unitOfWork)
+        {
             _unitOfWork = unitOfWork;
         }
 
@@ -31,7 +31,7 @@ namespace VirtualWallet.Services
         public async Task<User> DeleteUserAsync(int id)
         {
             var _user = await _unitOfWork.UserRepo.GetById(id);
-            if(_user == null)
+            if (_user == null)
             {
                 return null;
             }
@@ -40,17 +40,34 @@ namespace VirtualWallet.Services
             return _user;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<Object> GetAllUsersAsync(int pageNumber, int pageSize)
         {
             var users = await _unitOfWork.UserRepo.GetAll();
-            if( users ==  null)
+            var pagesUsers = users
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            if (pagesUsers.Count() == 0)
             {
                 return null;
             }
-            return users;
+
+            var prevPage = pageNumber > 1 ? "Get?pageNumber=" + (pageNumber - 1) + "&pageSize=" + pageSize : null;
+
+            var nextPage = pageNumber < (int)Math.Ceiling((double)users.Count() / pageSize) ? "Get?pageNumber=" + (pageNumber + 1) + "&pageSize=" + pageSize : null;
+
+            var result = new
+            {
+                Transactions = pagesUsers,
+                PrevPage = prevPage,
+                NextPage = nextPage
+            };
+
+            return result;
         }
 
-        public async Task <User> GetUserAsync(int id)
+        public async Task<User> GetUserAsync(int id)
         {
             var _user = await _unitOfWork.UserRepo.GetById(id);
             if (_user == null)
@@ -60,10 +77,10 @@ namespace VirtualWallet.Services
             return _user;
         }
 
-        public async Task<User> UpdateUserAsync(int id ,UserDTO user)
+        public async Task<User> UpdateUserAsync(int id, UserDTO user)
         {
             var _user = await _unitOfWork.UserRepo.GetById(id);
-            if(_user == null)
+            if (_user == null)
             {
                 return null;
             }
@@ -79,7 +96,7 @@ namespace VirtualWallet.Services
 
             return _user;
         }
-        
+
         public async Task<bool> BlockAccount(int id)
         {
             var account = await _unitOfWork.AccountRepo.GetById(id);
