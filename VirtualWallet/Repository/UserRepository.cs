@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
-using VirtualWallet.Repository.Interfaces;
 
 namespace VirtualWallet.Repository
 {

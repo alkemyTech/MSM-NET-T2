@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VirtualWallet.DataAccess;
+﻿using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 
@@ -8,7 +7,8 @@ namespace VirtualWallet.Services
     public class UserService : IUserService
     {
         private readonly UnitOfWork _unitOfWork;
-        public UserService (UnitOfWork unitOfWork) {
+        public UserService(UnitOfWork unitOfWork)
+        {
             _unitOfWork = unitOfWork;
         }
 
@@ -31,8 +31,8 @@ namespace VirtualWallet.Services
         public async Task<User> DeleteUserAsync(int id)
         {
             var _user = await _unitOfWork.UserRepo.GetById(id);
-            if(_user == null)
-        {
+            if (_user == null)
+            {
                 return null;
             }
             await _unitOfWork.UserRepo.Delete(id);
@@ -67,7 +67,7 @@ namespace VirtualWallet.Services
             return result;
         }
 
-        public async Task <User> GetUserAsync(int id)
+        public async Task<User> GetUserAsync(int id)
         {
             var _user = await _unitOfWork.UserRepo.GetById(id);
             if (_user == null)
@@ -77,10 +77,10 @@ namespace VirtualWallet.Services
             return _user;
         }
 
-        public async Task<User> UpdateUserAsync(int id ,UserDTO user)
+        public async Task<User> UpdateUserAsync(int id, UserDTO user)
         {
             var _user = await _unitOfWork.UserRepo.GetById(id);
-            if(_user == null)
+            if (_user == null)
             {
                 return null;
             }
@@ -96,7 +96,7 @@ namespace VirtualWallet.Services
 
             return _user;
         }
-        
+
         public async Task<bool> BlockAccount(int id)
         {
             var account = await _unitOfWork.AccountRepo.GetById(id);

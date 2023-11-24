@@ -1,10 +1,7 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
-using VirtualWallet.Models.DTO;
-using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers;
 
@@ -13,7 +10,7 @@ namespace VirtualWallet.Controllers;
 public class RoleController : ControllerBase
 {
     private readonly UnitOfWork _unitOfWork;
-    public RoleController (UnitOfWork unitOfWork)
+    public RoleController(UnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
@@ -58,7 +55,7 @@ public class RoleController : ControllerBase
         if (role.Id == 0 ||
             role.Name.Equals("Admin") ||
             role.Name.Equals("Cliente") ||
-            role.Description.Length  <= 5 
+            role.Description.Length <= 5
             )
         {
             return BadRequest("La cuenta no pudo ser creada: uno o m�s errores encontrados");
