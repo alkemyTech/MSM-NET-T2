@@ -58,32 +58,6 @@ namespace VirtualWallet.Services
             {
                 return null;
             }
-            //Si se trata de un depósito no contiene ToAccountId
-            /*if (transaction.Type.Equals("topup"))
-            {
-                return (
-                "Código de Transferencia: " + transaction.transactionId + "\n" +
-                "Monto: " + transaction.Amount + "\n" +
-                "Motivo: " + transaction.Concept + "\n" +
-                "Fecha: " + transaction.Date + "\n" +
-                "Tipo: " + transaction.Type + "\n" +
-                "De: " + transaction.UserId + "\n" +
-                "Cuenta: " + transaction.AccountId);
-            }
-
-            //Si se trata se una transferencia se ingresa el destinatario
-            else
-            {
-                return (
-                "Código de Transferencia: " + transaction.transactionId + "\n" +
-                "Monto: " + transaction.Amount + "\n" +
-                "Motivo: " + transaction.Concept + "\n" +
-                "Fecha: " + transaction.Date + "\n" +
-                "Tipo: " + transaction.Type + "\n" +
-                "De: " + transaction.UserId + "\n" +
-                "Cuenta N°: " + transaction.AccountId + "\n" +
-                "Para Cuenta N°: " + transaction.ToAccountId);
-            }*/
             return transaction;
         }
 
@@ -148,7 +122,7 @@ namespace VirtualWallet.Services
             await _unitOfWork.TransactionRepo.Update(_transaction);
             await _unitOfWork.SaveChangesAsync();
 
-            return _transaction;
+            return _transaction; 
         }
 
         public async Task<bool> deleteTransactionAsync(int transactionId)

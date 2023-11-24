@@ -1,9 +1,9 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 
@@ -42,7 +42,7 @@ namespace VirtualWallet.Controllers
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "La cuenta se encuentra bloqueada" });
             }
 
-            if (request.Password == users.Password && request.Email == users.Email)
+            if (EncryptPass.GetSHA256(request.Password) == users.Password && request.Email == users.Email)
             {
                 var keyBytes = Encoding.UTF8.GetBytes(secretKey);
                 var claims = new ClaimsIdentity();

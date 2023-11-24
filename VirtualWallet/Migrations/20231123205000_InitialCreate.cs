@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -33,8 +34,8 @@ namespace VirtualWallet.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,7 +89,7 @@ namespace VirtualWallet.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FixedTerm",
+                name: "FixedTermDeposit",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -103,15 +104,15 @@ namespace VirtualWallet.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FixedTerm", x => x.Id);
+                    table.PrimaryKey("PK_FixedTermDeposit", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FixedTerm_Account_AccountId",
+                        name: "FK_FixedTermDeposit_Account_AccountId",
                         column: x => x.AccountId,
                         principalTable: "Account",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_FixedTerm_User_UserId",
+                        name: "FK_FixedTermDeposit_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -173,10 +174,16 @@ namespace VirtualWallet.Migrations
                 columns: new[] { "Id", "Email", "First_name", "Last_name", "Password", "Points", "Role_Id" },
                 values: new object[,]
                 {
-                    { 1, "pedro@pedro", "Pedro", "Gonzalez", "123", 50, 1 },
-                    { 2, "fede@fede", "Fede", "Perez", "1234", 504, 2 },
-                    { 3, "maca@maca", "Maca", "Pereira", "12345", 5, 2 },
-                    { 4, "mac@maca", "Sofia", "Gomez", "123456", 23, 2 }
+                    { 1, "juan@gmail.com", "Juan", "Diaz", "admin", 50000, 1 },
+                    { 2, "abi@gmail.com", "Abi", "Barroso", "admin", 50000, 1 },
+                    { 3, "emi@gmail.com", "Emi", "Brito", "admin", 50000, 1 },
+                    { 4, "vir@gmail.com", "Vir", "Schmied", "admin", 50000, 1 },
+                    { 5, "pedro@gmail.com", "Pedro", "Gonzalez", "user", 5800, 2 },
+                    { 6, "fede@gmail.com", "Fede", "Perez", "user", 5040, 2 },
+                    { 7, "maca@gmail.com", "Maca", "Pereira", "user", 1560, 2 },
+                    { 8, "sofi@gmail.com", "Sofi", "Gomez", "user", 2300, 2 },
+                    { 9, "manu@gmail.com", "Manu", "Noriega", "user", 1800, 2 },
+                    { 10, "clara@gmail.com", "Clara", "Aguayo", "user", 2590, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -184,14 +191,20 @@ namespace VirtualWallet.Migrations
                 columns: new[] { "Id", "CreationDate", "IsBlocked", "Money", "UserId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2018, 2, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 210600m, 1 },
-                    { 2, new DateTime(2018, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 100980m, 2 },
-                    { 3, new DateTime(2019, 8, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 250990m, 3 },
-                    { 4, new DateTime(2019, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 420560m, 4 }
+                    { 1, new DateTime(2018, 2, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 210600m, 1 },
+                    { 2, new DateTime(2018, 8, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 100980m, 2 },
+                    { 3, new DateTime(2019, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 250990m, 3 },
+                    { 4, new DateTime(2019, 11, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 420560m, 4 },
+                    { 5, new DateTime(2020, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 80980m, 5 },
+                    { 6, new DateTime(2021, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 90900m, 6 },
+                    { 7, new DateTime(2022, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 100800m, 7 },
+                    { 8, new DateTime(2023, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), false, 56630m, 8 },
+                    { 9, new DateTime(2022, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 685510m, 9 },
+                    { 10, new DateTime(2023, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), true, 550380m, 10 }
                 });
 
             migrationBuilder.InsertData(
-                table: "FixedTerm",
+                table: "FixedTermDeposit",
                 columns: new[] { "Id", "AccountId", "Amount", "ClosingDate", "CreationDate", "NominalRate", "State", "UserId" },
                 values: new object[,]
                 {
@@ -206,11 +219,16 @@ namespace VirtualWallet.Migrations
                 columns: new[] { "transactionId", "AccountId", "Amount", "Concept", "Date", "ToAccountId", "Type", "UserId" },
                 values: new object[,]
                 {
-                    { 1, 2, 7500m, "Compra en l�nea 3", new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "payment", 2 },
-                    { 2, 1, 3000m, "Dep�sito en efectivo 2", new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "topup", 1 },
+                    { 1, 2, 7500m, "Compra en línea 3", new DateTime(2023, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "payment", 2 },
+                    { 2, 1, 3000m, "Depósito en efectivo 2", new DateTime(2023, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "topup", 1 },
                     { 3, 3, 9000m, "Pago de factura 2", new DateTime(2023, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "payment", 3 },
-                    { 4, 2, 6000m, "Transferencia bancaria 2", new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "payment", 2 },
-                    { 5, 4, 4200m, "Recarga de tarjeta 2", new DateTime(2023, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "topup", 4 }
+                    { 4, 2, 6000m, "Transferencia a cuenta de terceros", new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "payment", 2 },
+                    { 5, 4, 4200m, "Recarga de tarjeta 2", new DateTime(2023, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "topup", 4 },
+                    { 6, 7, 3000m, "Transferencia a cuenta de terceros", new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, "payment", 7 },
+                    { 7, 5, 3000m, "Transferencia de terceros", new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "payment", 5 },
+                    { 8, 6, 7300m, "Depósito", new DateTime(2023, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "topup", 6 },
+                    { 9, 8, 10500m, "Depósito", new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "topup", 8 },
+                    { 10, 7, 8000m, "Recarga de tarjeta", new DateTime(2023, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "topup", 7 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -219,13 +237,13 @@ namespace VirtualWallet.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FixedTerm_AccountId",
-                table: "FixedTerm",
+                name: "IX_FixedTermDeposit_AccountId",
+                table: "FixedTermDeposit",
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FixedTerm_UserId",
-                table: "FixedTerm",
+                name: "IX_FixedTermDeposit_UserId",
+                table: "FixedTermDeposit",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -257,7 +275,7 @@ namespace VirtualWallet.Migrations
                 name: "Catalogue");
 
             migrationBuilder.DropTable(
-                name: "FixedTerm");
+                name: "FixedTermDeposit");
 
             migrationBuilder.DropTable(
                 name: "Transaction");
