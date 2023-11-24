@@ -11,8 +11,16 @@ namespace Clover
 
             builder.Services.AddHttpClient("Api", client =>
             {
-                client.BaseAddress = new Uri("http://localhost:7120/api");
+                client.BaseAddress = new Uri("http://localhost:7121/api");
                 client.DefaultRequestHeaders.Add("User-Agent", "MiProyectoRazor");
+            });
+
+            builder.Services.AddSession(options =>
+            {
+                // Tiempo de duración de la sesión que utilizo para que todos los metodos tengan el valor del bearer token
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
 
             var app = builder.Build();
@@ -27,6 +35,8 @@ namespace Clover
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseRouting();
 
