@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using VirtualWallet.Models;
 using VirtualWallet.Services;
+using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers
 {
@@ -9,6 +10,8 @@ namespace VirtualWallet.Controllers
     [Route("api/[controller]")]
     public class CatalogueController : Controller
     {
+
+
         private readonly CatalogueService _catalogueService;
 
         public CatalogueController(CatalogueService catalogueService)
@@ -21,14 +24,24 @@ namespace VirtualWallet.Controllers
         [Authorize(Roles = "Admin,Regular")]
         public async Task<IActionResult> Get()
         {
-            var catalogues = await _catalogueService.getAllCataloguesAsync();
-
-            if (catalogues == null)
+            try
             {
-                return NotFound();
-            }
+                var result = await _catalogueService.getAllCataloguesAsync();
 
-            return Ok(catalogues);
+                if (result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
 
         }
 
@@ -38,13 +51,24 @@ namespace VirtualWallet.Controllers
         [Authorize(Roles = "Admin,Regular")]
         public async Task<IActionResult> GetById(int id)
         {
-            var catalogue = await _catalogueService.getCatalogueAsync(id);
-            if (catalogue == null)
+            try
             {
-                return NotFound();
-            }
+                var result = await _catalogueService.getCatalogueAsync(id);
 
-            return Ok(catalogue);
+                if (result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
 
         [HttpPost]
@@ -52,9 +76,16 @@ namespace VirtualWallet.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(Catalogue catalogue)
         {
-            await _catalogueService.addCatalogueAsync(catalogue);
-
-            return CreatedAtAction("Get", new { id = catalogue.Id }, catalogue);
+            try
+            {
+                await _catalogueService.addCatalogueAsync(catalogue);
+                return CreatedAtAction("Get", new { id = catalogue.Id }, catalogue);
+            }
+            catch (Exception ex)
+            {
+                
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
@@ -63,20 +94,25 @@ namespace VirtualWallet.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(int id, Catalogue catalogue)
         {
-            var _catalogue = await _catalogueService.getCatalogueAsync(id);
-
-            if (_catalogue == null)
+            try
             {
-                return NotFound();
+                var result = await _catalogueService.updateCatalogueAsync(id,catalogue);
+
+                if(result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+
+                return Ok();
             }
-
-            _catalogue.ProductDescription = catalogue.ProductDescription;
-            _catalogue.Image = catalogue.Image;
-            _catalogue.Points = catalogue.Points;
-
-            await _catalogueService.updateCatalogueAsync(_catalogue);
-
-            return Ok();
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
 
         [HttpDelete]
@@ -84,16 +120,25 @@ namespace VirtualWallet.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var catalogue = await _catalogueService.getCatalogueAsync(id);
-
-            if (catalogue == null)
+            try
             {
-                return NotFound();
+                var result = await _catalogueService.deleteCatalogueAsync(id);
+
+                if (!result)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+
+                return Ok();
             }
-
-            await _catalogueService.deleteCatalogueAsync(id);
-
-            return Ok();
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
     }
 }

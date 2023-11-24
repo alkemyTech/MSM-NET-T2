@@ -28,13 +28,11 @@ namespace VirtualWallet.Repository
         public async Task Insert(Catalogue catalogue)
         {
             _dbContext.Catalogues.Add(catalogue);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Update(Catalogue catalogue)
         {
             _dbContext.Catalogues.Update(catalogue);
-            await _dbContext.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
@@ -44,7 +42,6 @@ namespace VirtualWallet.Repository
             if (_catalogue != null)
             {
                 _dbContext.Catalogues.Remove(_catalogue);
-                await _dbContext.SaveChangesAsync();
             }
 
         }

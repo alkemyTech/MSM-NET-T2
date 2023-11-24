@@ -141,7 +141,9 @@ namespace VirtualWallet.Services
             _transaction.Concept = transaction.Concept;
             _transaction.Date = transaction.Date;
             _transaction.Type = transaction.Type;
-            _transaction.ToAccountId = transaction.ToAccountId;
+
+
+            if (transaction.ToAccountId != null) { _transaction.ToAccountId = transaction.ToAccountId; }
 
             await _unitOfWork.TransactionRepo.Update(_transaction);
             await _unitOfWork.SaveChangesAsync();
