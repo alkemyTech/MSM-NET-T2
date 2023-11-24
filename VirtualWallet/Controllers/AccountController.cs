@@ -1,10 +1,8 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VirtualWallet.DataAccess;
-using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
-using VirtualWallet.Services.Interfaces;
+using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers;
 
@@ -12,31 +10,37 @@ namespace VirtualWallet.Controllers;
 [Route("api/[controller]")]
 public class AccountController : ControllerBase
 {
-    /*private readonly IAccountService _accountService;
+    private readonly AccountService _accountService;
     
-    public AccountController(IAccountService accountService)
+    public AccountController(AccountService accountService)
     {
         _accountService = accountService;
-    }*/
-
-    private readonly UnitOfWork _unitOfWork;
-    public AccountController(UnitOfWork unitOfWork)
-    {
-        _unitOfWork = unitOfWork;
     }
     
     // GET: api/accounts
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(int pageNumber=1, int pageSize= 10)
     {
-        var accounts = await _unitOfWork.AccountRepo.GetAll();
-
-        if (accounts == null)
-        {
-            return NotFound();
+        try
+        { 
+            var userId = User.FindFirstValue("Id"); 
+            var result = await _accountService.GetAll(pageNumber, pageSize, userId);
+            
+            if (result == null)
+            {
+                throw new Exception("NOT_FOUND");
+            }
+            return Ok(result);
         }
-        return Ok(accounts);
+        catch (Exception ex)
+        {
+            return StatusCode(404, new
+            {
+                status = 404,
+                errors = new[] { new { error = ex.Message } }
+            });
+        }
     }
 
     // GET: api/accounts/{id}
@@ -45,13 +49,25 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetById(int id)
     {
-        var accounts = await _unitOfWork.AccountRepo.GetById(id);
-
-        if (accounts == null)
+        try
         {
-            return NotFound();
+            var userId = User.FindFirstValue("Id");
+            var result = await _accountService.GetById(id, userId);
+            
+            if (result == null)
+            {
+                throw new Exception("NOT_FOUND");
+            }
+            return Ok(result);
         }
-        return Ok(accounts);
+        catch (Exception ex)
+        {
+            return StatusCode(404, new
+            {
+                status = 404,
+                errors = new[] { new { error = ex.Message } }
+            });
+        }
     }
 
     // POST: api/accounts
@@ -59,18 +75,26 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "Regular")]
     public async Task<IActionResult> Post(AccountDTO accountDto)
     {
-        var _account = new Account
+        try
         {
-            Id = accountDto.Id,
-            CreationDate = DateTime.Now,
-            Money = accountDto.Money,
-            IsBlocked = accountDto.IsBlocked,
-            UserId = accountDto.UserId
-        };
-        
-        await _unitOfWork.AccountRepo.Insert(_account);
-        await _unitOfWork.SaveChangesAsync();
-        return CreatedAtAction("Get", new { id = accountDto.Id }, accountDto);
+            var userId = User.FindFirstValue("Id");
+            var result = await _accountService.Insert(accountDto, userId);
+            
+            if (result == null)
+            {
+                throw new Exception("BAD_REQUEST");
+            }
+            
+            return CreatedAtAction("Get", new { id = accountDto.Id }, result);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(400, new
+            {
+                status = 400,
+                errors = new[] { new { error = ex.Message } }
+            });
+        }
     }
     
     // POST api/accounts/Deposit/{id}
@@ -79,44 +103,26 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "Regular")]
     public async Task<IActionResult> Deposit(int id, int amount)
     {
-        // Endpoint -> Realizar depósito
-        var account = await _unitOfWork.AccountRepo.GetById(id);
-        var user = await _unitOfWork.UserRepo.GetById(id);
-        var userId = User.FindFirstValue("Id");
-        //var userId = "2";
-        
-        // Verificar la cuenta
-        if (account == null)
-        {
-            return NotFound("No se encuentra / No existe la cuenta solicitada.");
-        }
-        // Comparación del UserId que llega con el UserId de la Account
-        if (userId.Equals(account.Id.ToString()))
-        {
-            // Realizar el depósito
-            var deposit = account.Money += amount;
+       try
+       {
+           var userId = User.FindFirstValue("Id");
+           var result = await _accountService.Deposit(id, amount, userId);
             
-            // Registrar la transacción
-            var newTransaction = new Transaction
-            { 
-                Amount = deposit,
-                Concept = "Depósito", 
-                Date = DateTime.Now, 
-                Type = "topup", 
-                AccountId = int.Parse(userId), 
-                UserId = int.Parse(userId)
-                
-            };
-            await _unitOfWork.TransactionRepo.Insert(newTransaction);
+           if (result == null)
+           {
+               throw new Exception("BAD_REQUEST");
+           }
             
-            // Calcular los puntos
-            var points = (int)Math.Round(amount * 0.02);
-            user.Points += points;
-            
-          await _unitOfWork.SaveChangesAsync();
-        }
-        
-        return Ok("Depósito exitoso");
+           return CreatedAtAction("Get", new { id, amount }, result);
+       }
+       catch (Exception ex)
+       {
+           return StatusCode(400, new
+           {
+               status = 400,
+               errors = new[] { new { error = ex.Message } }
+           });
+       }
     }
     
     // POST api/accounts/Transfer/{id}
@@ -125,90 +131,53 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "Regular")]
     public async Task<IActionResult> Transfer(int id, int toAccount, int amount)
     {
-        // Endpoint -> Realizar transferencia
-        var account = await _unitOfWork.AccountRepo.GetById(id);
-        var transferId = await _unitOfWork.AccountRepo.GetById(toAccount);
-        var user = await _unitOfWork.UserRepo.GetById(id);
-        var userId = User.FindFirstValue("Id");
-        
-        //var userId = "3";
-        
-        // Verificar ambas cuentas
-          if (account == null || transferId == null)
+        try
         {
-            return NotFound("Una o ambas cuentas no fueron encontradas.");
+           var userId = User.FindFirstValue("Id");
+           var result = await _accountService.Deposit(id, amount, userId);
+            
+           if (result == null)
+           {
+               throw new Exception("BAD_REQUEST");
+           }
+            
+           return CreatedAtAction("Get", new { id, amount }, result); 
         }
-        // Verificar que la cuenta origen tenga saldo suficiente
-        if (account.Money < amount)
+        catch (Exception ex)
         {
-            return BadRequest("Saldo insuficiente para realizar la transferencia");
-        }
-        
-        // Comparación del UserId que llega con el UserId de la Account
-         if (userId.Equals(account.Id.ToString()))
-        {
-            // Realizar la transferencia
-            var transfer = account.Money -= amount;
-            account.Money -= transfer;
-            
-            var receive = transferId.Money += amount;
-            transferId.Money += amount;
-                
-            // Registrar la transacción de la cuenta emisora
-            var newTransaction = new Transaction
-            { 
-                Amount = transfer,
-                Concept = "Transferencia a cuenta de terceros", 
-                Date = DateTime.Now, 
-                Type = "payment", 
-                AccountId = int.Parse(userId), 
-                UserId = int.Parse(userId),
-                ToAccountId = transferId.Id
-            };
-            await _unitOfWork.TransactionRepo.Insert(newTransaction);
-            
-            // Registrar la transacción en la cuenta destino
-            var toAccountTransaction = new Transaction
-            {
-                Amount = receive,
-                Concept = "Transferencia de terceros",
-                Date = DateTime.Now,
-                Type = "payment",
-                AccountId = transferId.Id,
-                UserId = transferId.UserId
-            };
-            await _unitOfWork.TransactionRepo.Insert(toAccountTransaction);
-            
-            // Calcular los puntos de la cuenta emisora
-            var points = (int)Math.Round(amount * 0.03);
-            user.Points += points;
-
-            await _unitOfWork.AccountRepo.Update(account);
-            await _unitOfWork.SaveChangesAsync();
-        }
-        return Ok("Transferencia realizada con éxito");
+           return StatusCode(400, new
+           {
+               status = 400,
+               errors = new[] { new { error = ex.Message } }
+           });
+        } 
     }
   
     // PUT: api/accounts/{id}
     [HttpPut]
     [Route("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Put(int id, AccountDTO account)
+    public async Task<IActionResult> Update(int id, AccountDTO account)
     {
-        var _account = await _unitOfWork.AccountRepo.GetById(id);
-
-        if (_account == null)
+        try
         {
-            return NotFound();
+           var result = await _accountService.Update(id, account);
+            
+           if (result == null)
+           {
+               throw new Exception("BAD_REQUEST");
+           }
+            
+           return Ok(); 
         }
-        
-        _account.CreationDate = account.CreationDate;
-        _account.Money = account.Money;
-        _account.IsBlocked = account.IsBlocked;
-        
-        await _unitOfWork.AccountRepo.Update(_account);
-        await _unitOfWork.SaveChangesAsync();
-        return Ok();
+        catch (Exception ex)
+        {
+           return StatusCode(400, new
+           {
+               status = 400,
+               errors = new[] { new { error = ex.Message } }
+           });
+        }         
     }
 
     // DELETE: api/accounts/{id}
@@ -217,15 +186,24 @@ public class AccountController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
-        var account = await _unitOfWork.AccountRepo.GetById(id);
-        
-        if (account == null)
+        try
         {
-            return NotFound();
+            var result = await _accountService.Delete(id);
+
+            if (!result)
+            {
+                throw new Exception("NOT_FOUND");
+            }
+
+            return Ok();
         }
-        
-        await _unitOfWork.AccountRepo.Delete(id);
-        await _unitOfWork.SaveChangesAsync();  
-        return Ok();
+        catch(Exception ex)
+        {
+            return StatusCode(404, new
+            {
+                status = 404,
+                errors = new[] { new { error = ex.Message } }
+            });
+        }
     }
 }

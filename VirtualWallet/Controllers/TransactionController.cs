@@ -118,11 +118,10 @@ namespace VirtualWallet.Controllers
                 {
                     status = 400,
                     errors = new[] { new { error = ex.Message } }
-                    });
+                });
             }
         }
-
-
+        
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)

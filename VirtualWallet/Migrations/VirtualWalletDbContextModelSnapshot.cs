@@ -53,14 +53,14 @@ namespace VirtualWallet.Migrations
                         {
                             Id = 1,
                             CreationDate = new DateTime(2018, 2, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IsBlocked = true,
+                            IsBlocked = false,
                             Money = 210600m,
                             UserId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreationDate = new DateTime(2018, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreationDate = new DateTime(2018, 8, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsBlocked = false,
                             Money = 100980m,
                             UserId = 2
@@ -68,7 +68,7 @@ namespace VirtualWallet.Migrations
                         new
                         {
                             Id = 3,
-                            CreationDate = new DateTime(2019, 8, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreationDate = new DateTime(2019, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsBlocked = false,
                             Money = 250990m,
                             UserId = 3
@@ -80,6 +80,54 @@ namespace VirtualWallet.Migrations
                             IsBlocked = false,
                             Money = 420560m,
                             UserId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreationDate = new DateTime(2020, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsBlocked = false,
+                            Money = 80980m,
+                            UserId = 5
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreationDate = new DateTime(2021, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsBlocked = false,
+                            Money = 90900m,
+                            UserId = 6
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreationDate = new DateTime(2022, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsBlocked = false,
+                            Money = 100800m,
+                            UserId = 7
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreationDate = new DateTime(2023, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsBlocked = false,
+                            Money = 56630m,
+                            UserId = 8
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreationDate = new DateTime(2022, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsBlocked = true,
+                            Money = 685510m,
+                            UserId = 9
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreationDate = new DateTime(2023, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsBlocked = true,
+                            Money = 550380m,
+                            UserId = 10
                         });
                 });
 
@@ -235,11 +283,13 @@ namespace VirtualWallet.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -338,7 +388,7 @@ namespace VirtualWallet.Migrations
                             transactionId = 4,
                             AccountId = 2,
                             Amount = 6000m,
-                            Concept = "Transferencia bancaria 2",
+                            Concept = "Transferencia a cuenta de terceros",
                             Date = new DateTime(2023, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ToAccountId = 3,
                             Type = "payment",
@@ -353,6 +403,57 @@ namespace VirtualWallet.Migrations
                             Date = new DateTime(2023, 5, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Type = "topup",
                             UserId = 4
+                        },
+                        new
+                        {
+                            transactionId = 6,
+                            AccountId = 7,
+                            Amount = 3000m,
+                            Concept = "Transferencia a cuenta de terceros",
+                            Date = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ToAccountId = 5,
+                            Type = "payment",
+                            UserId = 7
+                        },
+                        new
+                        {
+                            transactionId = 7,
+                            AccountId = 5,
+                            Amount = 3000m,
+                            Concept = "Transferencia de terceros",
+                            Date = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Type = "payment",
+                            UserId = 5
+                        },
+                        new
+                        {
+                            transactionId = 8,
+                            AccountId = 6,
+                            Amount = 7300m,
+                            Concept = "Depósito",
+                            Date = new DateTime(2023, 9, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Type = "topup",
+                            UserId = 6
+                        },
+                        new
+                        {
+                            transactionId = 9,
+                            AccountId = 8,
+                            Amount = 10500m,
+                            Concept = "Depósito",
+                            Date = new DateTime(2023, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Type = "topup",
+                            UserId = 8
+                        },
+                        new
+                        {
+                            transactionId = 10,
+                            AccountId = 7,
+                            Amount = 8000m,
+                            Concept = "Recarga de tarjeta",
+                            Date = new DateTime(2023, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Type = "topup",
+                            UserId = 7
                         });
                 });
 
@@ -399,41 +500,101 @@ namespace VirtualWallet.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "pedro@pedro",
-                            First_name = "Pedro",
-                            Last_name = "Gonzalez",
-                            Password = "123",
-                            Points = 50,
+                            Email = "juan@gmail.com",
+                            First_name = "Juan",
+                            Last_name = "Diaz",
+                            Password = "admin",
+                            Points = 50000,
                             Role_Id = 1
                         },
                         new
                         {
                             Id = 2,
-                            Email = "fede@fede",
-                            First_name = "Fede",
-                            Last_name = "Perez",
-                            Password = "1234",
-                            Points = 504,
-                            Role_Id = 2
+                            Email = "abi@gmail.com",
+                            First_name = "Abi",
+                            Last_name = "Barroso",
+                            Password = "admin",
+                            Points = 50000,
+                            Role_Id = 1
                         },
                         new
                         {
                             Id = 3,
-                            Email = "maca@maca",
-                            First_name = "Maca",
-                            Last_name = "Pereira",
-                            Password = "12345",
-                            Points = 5,
-                            Role_Id = 2
+                            Email = "emi@gmail.com",
+                            First_name = "Emi",
+                            Last_name = "Brito",
+                            Password = "admin",
+                            Points = 50000,
+                            Role_Id = 1
                         },
                         new
                         {
                             Id = 4,
-                            Email = "sofi@sofi",
-                            First_name = "Sofia",
+                            Email = "vir@gmail.com",
+                            First_name = "Vir",
+                            Last_name = "Schmied",
+                            Password = "admin",
+                            Points = 50000,
+                            Role_Id = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "pedro@gmail.com",
+                            First_name = "Pedro",
+                            Last_name = "Gonzalez",
+                            Password = "user",
+                            Points = 5800,
+                            Role_Id = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "fede@gmail.com",
+                            First_name = "Fede",
+                            Last_name = "Perez",
+                            Password = "user",
+                            Points = 5040,
+                            Role_Id = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Email = "maca@gmail.com",
+                            First_name = "Maca",
+                            Last_name = "Pereira",
+                            Password = "user",
+                            Points = 1560,
+                            Role_Id = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Email = "sofi@gmail.com",
+                            First_name = "Sofi",
                             Last_name = "Gomez",
-                            Password = "123456",
-                            Points = 23,
+                            Password = "user",
+                            Points = 2300,
+                            Role_Id = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Email = "manu@gmail.com",
+                            First_name = "Manu",
+                            Last_name = "Noriega",
+                            Password = "user",
+                            Points = 1800,
+                            Role_Id = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Email = "clara@gmail.com",
+                            First_name = "Clara",
+                            Last_name = "Aguayo",
+                            Password = "user",
+                            Points = 2590,
                             Role_Id = 2
                         });
                 });
