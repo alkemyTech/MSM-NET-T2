@@ -10,12 +10,12 @@ namespace Clover.Pages
 {
     public class FixedTermDepositModel : PageModel
     {
-        public List<FixedTermDeposit>? FixedTermDeposit { get; set; }
+        public List<FixedTermDeposit> FixedTermDeposit { get; set; }
         public async Task OnGetAsync()
         {
             using (var HttpClient = new HttpClient())
             {
-                var response = await HttpClient.GetAsync("http://localhost:7120/api/FixedTerm");
+                var response = await HttpClient.GetAsync("http://localhost:7120/api/FixedTerm/GetAllMyFIxedTerms");
 
                 if (response.IsSuccessStatusCode)
                 {
