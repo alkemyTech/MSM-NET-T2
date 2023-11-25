@@ -1,91 +1,264 @@
-﻿using VirtualWallet.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
+using VirtualWallet.DataAccess;
+using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 using VirtualWallet.Repository;
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
+
 namespace VirtualWallet.Services
 {
     public class FixedTermService : IFixedTermService
     {
-        private readonly IFixedTermRepository _fixedTermRepository;
-
-        public FixedTermService(IFixedTermRepository fixedTermRepository)
+        private readonly UnitOfWork _unitOfWork;
+        public FixedTermService(UnitOfWork unitOfWork)
         {
-            _fixedTermRepository = fixedTermRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<FixedTermDepositDTO>> getAllFixedTermsAsync()
+        //ADMIN
+        public async Task<Object> GetAll(int pageNumber, int pageSize)
         {
-            var fixedTerms = await _fixedTermRepository.GetAll();
+            var fixedTerms = await _unitOfWork.FixedTermRepo.GetAll();
+            //var filteredFixedTerms = fixedTerms.Where(t => t.UserId.ToString() == userId).OrderBy(t => t.CreationDate); //Filtro los plazos fijos realizados por el usuario logueado
 
-            var fixedTermsDTOs = fixedTerms.Select(fixedTerm => new FixedTermDepositDTO
+            var pagedFixedTerm = fixedTerms
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+            if (fixedTerms == null)
             {
-                Id = fixedTerm.Id,
-                UserId = fixedTerm.UserId,
-                AccountId = fixedTerm.AccountId,
-                Amount = fixedTerm.Amount,
-                CreationDate = fixedTerm.CreationDate,
-                ClosingDate = fixedTerm.ClosingDate,
-                NominalRate = fixedTerm.NominalRate,
-                State = fixedTerm.State
+                return null;
+            }
 
-            });
-            return fixedTermsDTOs;
-        }
+            var prevPage = pageNumber > 1 ? "Get?pageNumber=" + (pageNumber - 1) + "&pageSize=" + pageSize : null;
 
-        public async Task<IEnumerable<FixedTermDepositDTO>> getAllFixedTermsByUserIdAsync(string userId)
-        {
-            var fixedTerms = await _fixedTermRepository.GetAll();
+            var nextPage = pageNumber < (int)Math.Ceiling((double)pagedFixedTerm.Count() / pageSize) ? "Get?pageNumber=" + (pageNumber + 1) + "&pageSize=" + pageSize : null;
 
-            var list = fixedTerms.Where(t => t.UserId.ToString() == userId);
-
-            var fixedTermsDTOs = list.Select(fixedTerm => new FixedTermDepositDTO
+            var result = new
             {
-                Id = fixedTerm.Id,
-                UserId = (int)fixedTerm.UserId,
-                AccountId = fixedTerm.AccountId,
-                Amount = fixedTerm.Amount,
-                CreationDate = fixedTerm.CreationDate,
-                ClosingDate = fixedTerm.ClosingDate,
-                State = fixedTerm.State
-            }); ;
-            return fixedTermsDTOs;
+                FixedTerm = pagedFixedTerm,
+                prevPage = prevPage,
+                nextPage = nextPage
+            };
+
+            return result;
+        }
+        //REGULAR
+        public async Task<Object> GetAllMyFixedTerms(int pageNumber, int pageSize, string userId)
+        {
+            var fixedTerms = await _unitOfWork.FixedTermRepo.GetAll();
+            var filteredFixedTerms = fixedTerms.Where(t => t.UserId.ToString() == userId).OrderBy(t => t.CreationDate); //Filtro los plazos fijos realizados por el usuario logueado
+
+            var pagedFixedTerm = filteredFixedTerms
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+            if (filteredFixedTerms == null)
+            {
+                return null;
+            }
+
+            var prevPage = pageNumber > 1 ? "Get?pageNumber=" + (pageNumber - 1) + "&pageSize=" + pageSize : null;
+
+            var nextPage = pageNumber < (int)Math.Ceiling((double)pagedFixedTerm.Count() / pageSize) ? "Get?pageNumber=" + (pageNumber + 1) + "&pageSize=" + pageSize : null;
+
+            var result = new
+            {
+                FixedTerm = pagedFixedTerm,
+                prevPage = prevPage,
+                nextPage = nextPage
+            };
+
+            return result;
         }
 
-        public async Task<FixedTermDeposit> getMyFixedTermAsync(int id)
+        //REGULAR
+        public async Task<FixedTermDeposit> GetMyFixedTermById(int id, string userId)
         {
-            return await _fixedTermRepository.GetById(id);
+            var allFixedTerms = await _unitOfWork.FixedTermRepo.GetAll();
+            var fixedTerm = await _unitOfWork.FixedTermRepo.GetById(id);
+            var filteredFixedTerms = allFixedTerms.Where(t => t.UserId.ToString() == userId);
+            var myfixedTerm = filteredFixedTerms.Where(t => t.Id == id);
+
+            //De no existir el plazo fijo hecho por el usuario se devuelve un null
+            if (myfixedTerm == null)
+            {
+                return null;
+            }
+
+            return fixedTerm;
+        }
+        //ADMIN
+        public async Task<FixedTermDeposit> GetById(int id)
+        {
+            // Se obtiene el plazo fijo
+            var fixedTerm = await _unitOfWork.FixedTermRepo.GetById(id);
+
+            
+            if (fixedTerm == null)
+            {
+                return null;
+            }
+
+            return fixedTerm;
         }
 
-        public async Task<FixedTermDeposit> getFixedTermAsync(int id)
-        {
-            return await _fixedTermRepository.GetById(id);
+        //ADMIN//
+        public async Task<FixedTermDeposit> Post(FixedTermDepositDTO fixedTermDepositDTO)
+        { 
+
+            var fixedTerm = new FixedTermDeposit
+            {
+                Id = fixedTermDepositDTO.Id,
+                UserId = fixedTermDepositDTO.UserId,
+                AccountId = fixedTermDepositDTO.AccountId,
+                Amount = fixedTermDepositDTO.Amount,
+                CreationDate = DateTime.Now,
+                ClosingDate = fixedTermDepositDTO.ClosingDate,
+                NominalRate = fixedTermDepositDTO.NominalRate,
+                State = fixedTermDepositDTO.State,
+            };
+
+            // Verificar
+            if (fixedTerm == null)
+            {
+                return null;
+            }
+
+            await _unitOfWork.FixedTermRepo.Insert(fixedTerm);
+            await _unitOfWork.SaveChangesAsync();
+
+            return fixedTerm;
         }
 
-        public async Task addFixedTermAsync(FixedTermDeposit fixedTerm)
+        //REGULAR
+        public async Task<FixedTermDeposit> InsertMyNewFixedTerm(FixedTermDepositDTO fixedTermDepositDTO, string userId)
         {
-            await _fixedTermRepository.Insert(fixedTerm);
+            var userIdValue = int.Parse(userId);
+
+            var fixedTerm = new FixedTermDeposit
+            {
+                Id = fixedTermDepositDTO.Id,
+                UserId = userIdValue,
+                AccountId = fixedTermDepositDTO.AccountId,
+                Amount = fixedTermDepositDTO.Amount,
+                CreationDate = DateTime.Now,
+                ClosingDate = fixedTermDepositDTO.ClosingDate,
+                NominalRate = fixedTermDepositDTO.NominalRate,
+                State = fixedTermDepositDTO.State,
+            };
+
+            // Verificar
+            if (fixedTerm == null)
+            {
+                return null;
+            }
+
+            await _unitOfWork.FixedTermRepo.Insert(fixedTerm);
+            await _unitOfWork.SaveChangesAsync();
+
+            return fixedTerm;
         }
 
-        public async Task addFixedTermByUserIdAsync(FixedTermDeposit fixedTerm)
+
+        //ADMIN
+        public async Task<FixedTermDeposit> Update(int id, FixedTermDepositDTO fixedTermDepositDTO)
         {
-            await _fixedTermRepository.Insert(fixedTerm);
+            // Se obtiene el plazo fijo
+            var fixedTerm = await _unitOfWork.FixedTermRepo.GetById(id);
+
+            if (fixedTerm == null)
+            {
+                return null;
+            }
+
+            // Se modifica el plazo fijo
+
+           // fixedTerm.Id = fixedTermDepositDTO.Id;//
+            fixedTerm.UserId = fixedTermDepositDTO.UserId;
+            fixedTerm.AccountId = fixedTermDepositDTO.AccountId;
+            fixedTerm.Amount = fixedTermDepositDTO.Amount;
+            fixedTerm.CreationDate = DateTime.Now;
+            fixedTerm.ClosingDate = fixedTermDepositDTO.ClosingDate;
+            fixedTerm.NominalRate = fixedTermDepositDTO.NominalRate;
+            fixedTerm.State = fixedTermDepositDTO.State;
+
+
+            await _unitOfWork.FixedTermRepo.Update(fixedTerm);
+            await _unitOfWork.SaveChangesAsync();
+            return fixedTerm;
+        }
+        //REGULAR//
+        public async Task<FixedTermDeposit> UpdateMyFixedTerm(int id, FixedTermDepositDTO fixedTermDepositDTO, string userId)
+        {
+            // Se obtiene el plazo fijo y se corrobora si pertenece al usuario
+            var userIdValue = int.Parse(userId);
+            var allFixedTerms = await _unitOfWork.FixedTermRepo.GetAll();
+            var fixedTerm = await _unitOfWork.FixedTermRepo.GetById(id);
+            var filteredFixedTerms = allFixedTerms.Where(t => t.UserId.ToString() == userId);
+            var myfixedTerm = filteredFixedTerms.Where(t => t.Id == id);
+
+            if (myfixedTerm == null)
+            {
+                return null;
+            }
+
+            // Se modifica el plazo fijo
+
+            //  fixedTerm.Id = fixedTermDepositDTO.Id;//
+            fixedTerm.UserId = userIdValue;
+            fixedTerm.AccountId = fixedTermDepositDTO.AccountId;
+            fixedTerm.Amount = fixedTermDepositDTO.Amount;
+            fixedTerm.CreationDate = DateTime.Now;
+            fixedTerm.ClosingDate = fixedTermDepositDTO.ClosingDate;
+            fixedTerm.NominalRate = fixedTermDepositDTO.NominalRate;
+            fixedTerm.State = fixedTermDepositDTO.State;
+
+            await _unitOfWork.FixedTermRepo.Update(fixedTerm);
+            await _unitOfWork.SaveChangesAsync();
+            return fixedTerm;
         }
 
-        public async Task updateFixedTermAsync(FixedTermDeposit fixedTerm)
-        {
-            await _fixedTermRepository.Update(fixedTerm);
-        }
 
-        public async Task updateMyFixedTermAsync(FixedTermDeposit fixedTerm)
+        //ADMIN//
+        public async Task<bool> Delete(int id)
         {
-            await _fixedTermRepository.Update(fixedTerm);
-        }
+            // Se obtiene el plazo fijo
+            var fixedTerm = await _unitOfWork.FixedTermRepo.GetById(id);
 
-        public async Task deleteFixedTermAsync(int id)
+            if (fixedTerm == null)
+            {
+                return false;
+            }
+
+            await _unitOfWork.FixedTermRepo.Delete(id);
+            await _unitOfWork.SaveChangesAsync();
+
+            // En caso de realizarse con exito se devuelve un booleano True
+            return true;
+        }
+        //REGULAR//
+        public async Task<bool> DeleteMyFixedTerm(int id, string userId)
         {
-            await _fixedTermRepository.Delete(id);
+            // Se obtiene el plazo fijo
+            var allFixedTerms = await _unitOfWork.FixedTermRepo.GetAll();
+            var fixedTerm = await _unitOfWork.FixedTermRepo.GetById(id);
+            var filteredFixedTerms = allFixedTerms.Where(t => t.UserId.ToString() == userId);
+            var myfixedTerm = filteredFixedTerms.Where(t => t.Id == id);
+
+            if (myfixedTerm == null)
+            {
+                return false;
+            }
+            await _unitOfWork.FixedTermRepo.Delete(id);
+            await _unitOfWork.SaveChangesAsync();
+
+            return true;
         }
     }
 }
