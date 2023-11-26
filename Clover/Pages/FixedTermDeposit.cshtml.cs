@@ -8,14 +8,14 @@ using System.Text;
 
 namespace Clover.Pages
 {
-    public class FixedTermDepositModel : PageModel
+    public class FIxedTermDepositModel : PageModel
     {
         public List<FixedTermDeposit> FixedTermDeposit { get; set; }
         public async Task OnGetAsync()
         {
             using (var HttpClient = new HttpClient())
             {
-                var response = await HttpClient.GetAsync("http://localhost:7120/api/FixedTerm/GetAllMyFIxedTerms");
+                var response = await HttpClient.GetAsync("http://localhost:7120/api/FixedTerm/GetAllMyFixedTerms");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -44,50 +44,6 @@ namespace Clover.Pages
                 }
             }
         }
-        public async Task<IActionResult> OnPostCreateFixedTermDeposit()
-        {
-            string AccountId = Request.Form["AccountId"];
-            string Amount = Request.Form["Amount"];
-            string CreationDate = Request.Form["CreationDate"]; ;
-            string ClosingDate = Request.Form["ClosingDate"];
-            string NominalRate = Request.Form["NominalRate"];
-            string State = Request.Form["State"];
-
-
-            Console.WriteLine(AccountId + "" + Amount + " " + CreationDate + "" + ClosingDate + " " + NominalRate + " " + CreationDate);
-
-
-            var data = new
-            {
-                AccountId = AccountId,
-                Amount = Amount,
-                CreationDate = CreationDate,
-                ClosingDate = ClosingDate,
-                NominalRate = NominalRate,
-                State = State
-            };
-
-            Console.WriteLine(data);
-
-            var content = new StringContent(JsonConvert.SerializeObject(data), Encoding.UTF8, "application/json");
-
-            using (var httpClient = new HttpClient())
-            {
-                var response = await httpClient.PostAsync("http://localhost:7120/api/FixedTerm", content);
-                if (response.IsSuccessStatusCode)
-                {
-
-                    await OnGetAsync();
-
-                    return Page();
-                }
-                else
-                {
-                    return Page();
-                }
-            }
-        }
-
     }
 
     public class FixedTermDeposit
@@ -109,3 +65,4 @@ namespace Clover.Pages
         public string State { get; set; }
     }
 }
+

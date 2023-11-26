@@ -1,40 +1,12 @@
 ﻿@page
-@model Clover.Pages.FixedTermDepositModel
+@model Clover.Pages.FIxedTermDepositModel
 @{
     ViewData["Title"] = "Plazos Fijos";
 }
+<div class=" = fixedTermIntro">
 <h1>@ViewData["Title"]</h1>
-
-<form asp-action="updatedFixedTerm" class="formularios" method="post">
-
-    <div class="form-group">
-        <label for="AccountId">Cuenta</label>
-        <input type="number" id="AccountId" name="AccountId" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="Amount">Monto</label>
-        <input type="number" id="Amount" name="Amount" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="CreationDate">Fecha de Creacion</label>
-        <input type="datetime" id="CreationDate" name="CreationDate" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="ClosingDate">Fecha de Finalizacion</label>
-        <input type="datetime" id="ClosingDate" name="ClosingDate" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="NominalRate">Tasa</label>
-        <input type="number" id="NominalRate" name="NominalRate" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="State">Estado:</label>
-        <input type="text" id="State" name="State" class="form-control" />
-    </div>
-
-    <button asp-page-handler="CreateFixedTerm" type="submit" class="btn btn-primary">Crear Plazo Fijo</button>
-</form>
-
+    <button><a href="~/FormNewFixedTerm" class="button">Nuevo plazo fijo</a></button>
+</div>
 
 <table class="table">
     <thead>
@@ -52,7 +24,6 @@
         @foreach (var fixedTerm in Model.FixedTermDeposit)
         {
             <tr>
-                <td>@fixedTerm.Id</td>
                 <td>@fixedTerm.AccountId</td>
                 <td>@fixedTerm.Amount</td>
                 <td>@fixedTerm.CreationDate</td>
