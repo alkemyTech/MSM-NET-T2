@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-@{
-    var token = TempData["Token"] as string;
-}
-
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -13,8 +9,12 @@
     <link rel="stylesheet" href="~/WebClover.styles.css" asp-append-version="true" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <link rel="stylesheet" href="/css/layout-style.css">
+    <link rel="stylesheet" href="~/estilos/layout-style.css">
+    <style>
+        #boton-logout:hover{
+            background: #ff2222af;
+        }
+    </style>
 </head>
 <body id="hf-container">
     <header>
@@ -41,11 +41,10 @@
 
             </a>
             <div class="menu">
-                <a href="#">Inicio</a>
+                <a href="/Index">Inicio</a>
                 <a href="#">Más info</a>
             </div>
-
-            <a href="/login"><button>Ingresar</button></a>
+            <button  id="boton-logout" >Salir</button>
         </div>
         <div class="container">
             <main role="main" class="pb-3">
@@ -54,28 +53,36 @@
         </div>
     </header>
 
-    <footer class="footer text-muted">
+    @* <footer class="footer text-muted">
         <hr id="hr-line" />
         <div class="container">
             <p id="footer-text">
                 Made With 💚 By MilaNet
             </p>
         </div>
-    </footer>
+    </footer> *@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var token = '@TempData["Token"]'; // Obtengo el token desde TempData
-        if (token) {
-            localStorage.setItem("token", token); // Establezco el token en localStorage
-        }
-    });
-</script>
-     
+
+     <script>
+        $(document).ready(function () {
+            var token = localStorage.getItem("token");
+
+            if (!token) {
+                window.location.href = '/';
+            }
+        });
+    </script>
+
+     <script>
+                    document.getElementById('boton-logout').addEventListener('click', function () {
+                localStorage.removeItem('token');
+                        window.location.href="/login";
+            });
+        </script>
 </body>
 </html>
