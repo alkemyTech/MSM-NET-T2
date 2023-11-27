@@ -36,6 +36,5 @@ namespace VirtualWallet.Models
 
         public virtual ICollection<FixedTermDeposit> FixedTermDeposits { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
-
     }
 }

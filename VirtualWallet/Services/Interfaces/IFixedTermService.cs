@@ -5,22 +5,15 @@ namespace VirtualWallet.Services.Interfaces
 {
     public interface IFixedTermService
     {
-        Task<IEnumerable<FixedTermDepositDTO>> getAllFixedTermsAsync();
-
-        Task<FixedTermDeposit> getFixedTermAsync(int id);
-
-        Task<FixedTermDeposit> getMyFixedTermAsync(int id);
-
-        Task<IEnumerable<FixedTermDepositDTO>> getAllFixedTermsByUserIdAsync(string userId);
-
-        Task addFixedTermAsync(FixedTermDeposit fixedTerm);
-
-        Task addFixedTermByUserIdAsync(FixedTermDeposit fixedTerm);
-
-        Task updateFixedTermAsync(FixedTermDeposit fixedTerm);
-
-        Task updateMyFixedTermAsync(FixedTermDeposit fixedTerm);
-
-        Task deleteFixedTermAsync(int id);
-    }
+        Task<Object> GetAll(int pageNumber, int pageSize);
+        Task<Object> GetAllMyFixedTerms(int pageNumber, int pageSize, string userId);
+        Task<FixedTermDeposit> GetMyFixedTermById(int id, string userId);
+        Task<FixedTermDeposit> GetById(int id);
+        Task<FixedTermDeposit> InsertMyNewFixedTerm(FixedTermDepositDTO fixedTermDepositDTO, string userId);
+        Task<FixedTermDeposit> Post(FixedTermDepositDTO fixedTermDepositDTO);
+        Task<FixedTermDeposit> Update(int id, FixedTermDepositDTO fixedTermDepositDTO);
+        Task<FixedTermDeposit> UpdateMyFixedTerm(int id, FixedTermDepositDTO fixedTermDepositDTO, string userId);
+        Task<bool> Delete(int id);
+        Task<bool> DeleteMyFixedTerm(int id, string userId);
+    } 
 }
