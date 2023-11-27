@@ -1,12 +1,18 @@
 ﻿@page "/Usuarios/Editar/{id}"
 @model Clover.Pages.Usuarios.EditarUsuarioModel
 @{
-
+    Layout = "_Layout-Logeado";
 }
-
+<head>
+    <style>
+        #form-container{
+            color:white;
+        }
+    </style>
+</head>
 <body>
     <!-- Formulario con los campos de edición del usuario-->
-    <form method="post">
+    <form method="post" id="form-container">
         <div class="form-group">
             <label>Código de Usuario</label>
             <input type="number" class="form-control" asp-for="user.Id" readonly>
@@ -14,6 +20,10 @@
         <div class="form-group">
             <label asp-for="user.First_name">Nombre</label>
             <input type="text" class="form-control" asp-for="user.First_name" required>
+        </div>
+        <div class="form-group">
+            <label asp-for="user.Last_name">Apellido</label>
+            <input type="text" class="form-control" asp-for="user.Last_name" required>
         </div>
         <div class="form-group">
             <label asp-for="user.Email">Email</label>

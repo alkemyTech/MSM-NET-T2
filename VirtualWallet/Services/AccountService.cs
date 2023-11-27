@@ -146,17 +146,6 @@ public class AccountService : IAccountService
 
             var receive = transferId.Money += transaction.Amount;
 
-            // Registrar la transacción de la cuenta emisora
-            //var newTransaction = new Transaction
-            //{ 
-            //    Amount = transfer,
-            //    Concept = "Transferencia a cuenta de terceros", 
-            //    Date = DateTime.Now, 
-            //    Type = "payment", 
-            //    AccountId = int.Parse(userId), 
-            //    UserId = int.Parse(userId),
-            //    ToAccountId = transferId.Id
-            //};
             await _unitOfWork.TransactionRepo.Insert(transaction);
             
             // Registrar la transacción en la cuenta destino

@@ -47,7 +47,7 @@ namespace Clover.Pages.Transactions
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return Redirect("../Transactions");
+                    return Redirect("/Transactions");
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace Clover.Pages.Transactions
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return Redirect("../Transactions");
+                    return Redirect("/Transactions");
                 }
                 else
                 {

@@ -15,20 +15,25 @@ namespace Clover.Pages.Transactions
 
         public List<User> UsersList { get; set; }
 
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; } = 1;
+
+        [BindProperty(SupportsGet = true)]
+        public int PageSize { get; set; } = 10;
+
         public object PrevPage { get; private set; }
         public object NextPage { get; private set; }
 
+        public int TotalPages { get; set; }
+
         public async Task OnGetAsync()
         {
-
             using (var httpClient = new HttpClient())
             {
-                // Primero, obtén todas las transacciones
-
                 string token = HttpContext.Session.GetString("BearerToken");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var transactionResponse = await httpClient.GetAsync("http://localhost:7120/api/Transaction");
+                var transactionResponse = await httpClient.GetAsync($"http://localhost:7120/api/Transaction?pageNumber={PageNumber}&pageSize={PageSize}");
 
                 if (transactionResponse.IsSuccessStatusCode)
                 {
@@ -39,6 +44,7 @@ namespace Clover.Pages.Transactions
                         TransactionsList = apiResponse.Transactions;
                         PrevPage = apiResponse.PrevPage;
                         NextPage = apiResponse.NextPage;
+                        TotalPages = apiResponse.TotalPages;
                     }
                     else
                     {
@@ -49,42 +55,6 @@ namespace Clover.Pages.Transactions
                 {
                     TransactionsList = new List<Transaction>();
                 }
-
-                // Luego, obtén todos los usuarios
-                //var userResponse = await httpClient.GetAsync("http://localhost:7120/api/User");
-
-                //if (userResponse.IsSuccessStatusCode)
-                //{
-                //    var users = await userResponse.Content.ReadFromJsonAsync<UserResponse>();
-
-                //    if (userResponse != null)
-                //    {
-                //        UsersList = userResponse.Users;
-                //        PrevPage = userResponse.PrevPage;
-                //        NextPage = userResponse.NextPage;
-                //    }
-                //    else
-                //    {
-                //        TransactionsList = new List<User>();
-                //    }
-
-                //    // Ahora, para cada transacción, busca el nombre de usuario correspondiente
-                //    foreach (var transaction in TransactionsList)
-                //    {
-                //        var user = users.FirstOrDefault(u => u.Id == transaction.UserId);
-
-                //        if (user != null)
-                //        {
-                //            transaction.UserName = user.First_name + " " + user.Last_name;
-                //        }
-                //        if (transaction.ToAccountId != null)
-                //        {
-                //            var toUser = users.FirstOrDefault(u => u.Id == transaction.ToAccountId);
-
-                //            //transaction.ToUserName = toUser.First_name + " " + toUser.Last_name;
-                //        }
-                //    }
-                //}
             }
         }
         public async Task<IActionResult> OnPostTransfer()
@@ -118,7 +88,7 @@ namespace Clover.Pages.Transactions
                 }
 
             }
-            return RedirectToPage("/Transactions");
+            return Page();
 
 
         }
@@ -152,9 +122,10 @@ namespace Clover.Pages.Transactions
                         TransactionsList = new List<Transaction>();
                     }
                 }
+                return Redirect("/Transactions");
 
             }
-            return RedirectToPage("/Transactions");
+            return Page();
 
 
         }
@@ -178,6 +149,8 @@ public class TransactionResponse
     public List<Transaction> Transactions { get; set; }
     public object PrevPage { get; set; }
     public object NextPage { get; set; }
+
+    public int TotalPages { get; set; }
 }
 
 public class UserResponse
@@ -185,5 +158,7 @@ public class UserResponse
     public List<User> Users { get; set; }
     public object PrevPage { get; set; }
     public object NextPage { get; set; }
+
+
 }
 

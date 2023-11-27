@@ -1,6 +1,8 @@
 ﻿@page "/Transactions"
 @model Clover.Pages.Transactions.IndexModel
-
+@{
+    Layout = "_Layout-Logeado";
+}
 @{
 }
 <head>
@@ -27,7 +29,7 @@
 
         #table-container th, #table-container td {
             
-            border-bottom: 2px solid #51DAC9; /* Cambia el color y grosor según tus preferencias */
+            border-bottom: 2px solid #51DAC9; 
         }
 
 
@@ -46,20 +48,38 @@
                 width: 120px;
                 color: #F4EFE4;
         }
-        .container{
-            position: relative; 
-            top: 25px;
-        }
+
+        .botones-crear button a{
+            text-decoration: none;
+                    color: #F4EFE4;
+                }
+        
 
         .modal-content{
             border-radius: 25px !important;
-            background: #23AD63;
+            background: #11322E;
             color: white;
 
+        }
+        .modal-footer{
+            border-top: 0;
         }
 
         .form-group > label{
             margin: 5px 0;
+        }
+        nav{
+            display:flex;
+            justify-content:center;
+            margin-top: 10px;
+        }
+
+        .pagination .page-item.active .page-link {
+            background: transparent;
+            border: 1px solid green;
+        }
+        .page-link{
+            color: green;
         }
 
     </style>
@@ -105,12 +125,22 @@
             </tbody>
         </table>
     </div>
-   
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li id="item-page" class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i">@i</a>
+                </li>
+            }
+
+        </ul>
+    </nav>
 
     <!-- Botón que activa el modal -->
     <div class="botones-crear" style="display: flex; justify-content:center; gap: 15px;">
         <button type="button" >
-            <i class="fa-solid fa-plus"></i> Volver
+            <a href="/Index">Volver</a>
         </button>
         <button type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
             <i class="fa-solid fa-plus"></i> Agregar
@@ -169,8 +199,8 @@
                         
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            <input id="Deposit" type="submit" asp-page-handler="Deposit" class="btn btn-success" value="Guardar"></input>
-                            <input id="Transfer" type="submit" asp-page-handler="Transfer" class="btn btn-success" value="Guardar"></input>
+                            <input id="Deposit" type="submit" asp-page-handler="Deposit" class="btn btn-success" value="Añadir"></input>
+                            <input id="Transfer" type="submit" asp-page-handler="Transfer" class="btn btn-success" value="Añadir"></input>
                         </div>
                     </form>
                 </div>
@@ -184,20 +214,19 @@
 
     <script>
         $(document).ready(function () {
-            // Cuando el ratón pasa por encima de una fila (tr) dentro del cuerpo de la tabla (tbody)
+            
             $("tbody tr").click(function () {
-                // Aquí puedes hacer lo que quieras cuando el ratón pasa por encima de la fila
-                // Por ejemplo, podrías cambiar la URL. Asegúrate de reemplazar 'id' con el ID real de la fila.
+                
                 var id = $(this).find('th').text();
                 window.location.href = "/Transaction/editar/" + id;
             });
         });
         $(document).ready(function () {
-            // Oculta el campo ToAccountId al cargar la página
+            
             $('.toaccount').hide();
             $('#Deposit').hide();
 
-            // Agrega un evento change a los radio buttons con name "Transaction.Type"
+            
             $('input[name="Transaction.Type"]').change(function () {
                 // Verifica si el valor seleccionado es "topup"
                 if ($(this).val() === 'topup') {

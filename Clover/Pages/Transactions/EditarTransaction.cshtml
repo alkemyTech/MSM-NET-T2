@@ -1,19 +1,51 @@
 ﻿@page "/Transaction/editar/{id}"
 @model Clover.Pages.Transactions.EditarTransactionModel
 @{
+    Layout = "_Layout-Logeado";
 }
 <head>
     <style>
+        
         #form-container{
             color: white;
+            transform:translateY(100%)
+            
         }
+        .form-group{
+            width: 150px;
+            text-align: center;
+        }
+        #subform{
+            display: flex;
+            color: white;
+            border-radius: 30px;
+            padding: 20px;
+        
+            justify-content: space-around;
+            background-color: rgba(159, 163, 246, 0.5);
+        }
+
+        .buttons-form {
+            margin-top: 25px;
+            gap: 15px;
+            border-top: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .buttons-form > button, .buttons-form> a >button{
+            border-radius: 40px;
+            width: 120px;
+                border: 1px solid #9FA3F6;
+                background: transparent;
+        }
+
     </style>
 </head>
 
 <body>
     <!-- Formulario con los campos de edición del usuario-->
-    <form method="post">
-        <div id="form-container">
+    <form method="post" id="form-container">
+        <div id="subform">
             <div class="form-group">
                 <label>Id de Transaccíon</label>
                 <input type="number" class="form-control" asp-for="Transaction.TransactionId" readonly>
@@ -45,8 +77,8 @@
         </div>
 
         <!-- Botones de edición -->
-        <div class="modal-footer">
-            <a href="/Usuarios"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></a>
+        <div class="buttons-form">
+            <a href="/Transactions"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></a>
             <button type="submit" class="btn btn-success">Guardar</button>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
                 Eliminar
