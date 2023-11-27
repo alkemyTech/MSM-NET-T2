@@ -10,8 +10,8 @@ namespace VirtualWallet.Services.Interfaces
 
         Task addCatalogueAsync(Catalogue catalogue);
 
-        Task updateCatalogueAsync(Catalogue catalogue);
+        Task<Catalogue> updateCatalogueAsync(int id, Catalogue catalogue);
 
-        Task deleteCatalogueAsync(int id);
+        Task<bool> deleteCatalogueAsync(int id);
     }
 }

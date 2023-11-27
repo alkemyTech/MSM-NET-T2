@@ -7,6 +7,7 @@ using VirtualWallet.DataAccess;
 using VirtualWallet.Repository;
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services;
+using VirtualWallet.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,7 +43,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "VirtualWallet", Version = "v1" });
 
-    // Configura la autenticaci�n para Swagger
+    // Configura la autenticación para Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme",
@@ -93,7 +94,6 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<UnitOfWork>();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

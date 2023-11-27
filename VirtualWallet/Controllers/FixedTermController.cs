@@ -1,9 +1,10 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
+using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Controllers
 {
@@ -16,244 +17,280 @@ namespace VirtualWallet.Controllers
         public FixedTermController(FixedTermService fixedTermService)
         {
             _fixedTermService = fixedTermService;
-
         }
 
-        //ADMIN ROLE
+        //ADMIN//
         [HttpGet]
         [Route("GetAll")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int pageNumber = 1, int pageSize = 10)
         {
-            if (!User.IsInRole("Admin"))
+            try
             {
-                // Usuario no autorizado
-                return Unauthorized("Usuario no autorizado");
-            }
-            var fixedTerms = await _fixedTermService.getAllFixedTermsAsync();
+                //var userId = User.FindFirstValue("Id");
+                var result = await _fixedTermService.GetAll(pageNumber, pageSize);
 
-            if (fixedTerms == null)
+                if (result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
             }
+        }
+        //REGULAR//
+        [HttpGet]
+        [Route("GetAllMyFixedTerms")]
 
-            return Ok(fixedTerms);
+        [Authorize(Roles = "Regular")]
+        public async Task<IActionResult> GetAllMyFixedTerms(int pageNumber = 1, int pageSize = 10)
+        {
+            try
+            {
+                var userId = User.FindFirstValue("Id");
+                var result = await _fixedTermService.GetAllMyFixedTerms(pageNumber, pageSize, userId);
+              
 
+                if (result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
 
-        //ADMIN ROLE
+
+        //ADMIN//
         [HttpGet]
-        [Route("GetById{id}")]
+        [Route("GetById/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetById(int id)
         {
-            if (!User.IsInRole("Admin"))
+            try
             {
-                // Usuario no autorizado
-                return Unauthorized("Usuario no autorizado");
-            }
-            var fixedTerms = await _fixedTermService.getFixedTermAsync(id);
+                //var userId = User.FindFirstValue("Id");
+                var result = await _fixedTermService.GetById(id);
 
-            if (fixedTerms == null)
+                if (result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
             }
+        }
+        //REGULAR//
+        [HttpGet]
+        [Route("GetMyFixedTermById/{id}")]
+        [Authorize(Roles = "Regular")]
+        public async Task<IActionResult> GetMyFixedTermById(int id)
+        {
+            try
+            {
+                var userId = User.FindFirstValue("Id");
+                var result = await _fixedTermService.GetMyFixedTermById(id, userId);
 
-            return Ok(fixedTerms);
+                if (result == null)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
 
-        //ADMIN ROLE
+
+        //ADMIN
         [HttpPost]
         [Route("Post")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Post(FixedTermDeposit fixedTerm)
+        public async Task<IActionResult> Post(FixedTermDepositDTO fixedTermDepositDTO)
         {
-            if (!User.IsInRole("Admin"))
+            try
             {
-                // Usuario no autorizado
-                return Unauthorized("Usuario no autorizado");
+                var result = await _fixedTermService.Post(fixedTermDepositDTO);
+
+                if (result == null)
+                {
+                    throw new Exception("BAD_REQUEST");
+                }
+
+                return CreatedAtAction("Get", new { id = result.Id }, result);
             }
-            var _fixedTerm = new FixedTermDeposit
+            catch (Exception ex)
             {
-                Id = fixedTerm.Id,
-                UserId = fixedTerm.UserId,
-                AccountId = fixedTerm.AccountId,
-                Amount = fixedTerm.Amount,
-                CreationDate = fixedTerm.CreationDate,
-                ClosingDate = fixedTerm.ClosingDate,
-                NominalRate = fixedTerm.NominalRate,
-                State = fixedTerm.State
-            };
+                return StatusCode(400, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
+        }
+        //REGULAR
+        [HttpPost]
+        [Route("PostMyNewFixedTerm")]
+        [Authorize(Roles = "Regular")]
+        public async Task<IActionResult> InsertMyNewFixedTerm(FixedTermDepositDTO fixedTermDepositDTO)
+        {
+            try
+            {
+                var userId = User.FindFirstValue("Id");
+                var result = await _fixedTermService.InsertMyNewFixedTerm(fixedTermDepositDTO, userId);
 
-            await _fixedTermService.addFixedTermAsync(_fixedTerm);
+                if (result == null)
+                {
+                    throw new Exception("BAD_REQUEST");
+                }
 
-            return CreatedAtAction("Get", new { id = fixedTerm.Id }, fixedTerm);
+                return CreatedAtAction("Get", new { id = result.Id }, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
 
-        //ADMIN ROLE
+
+        //ADMIN//
         [HttpPut]
         [Route("Edit/{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> EditFixedTerm(int id, FixedTermDeposit fixedTerm)
+        public async Task<IActionResult> Update(int id, FixedTermDepositDTO fixedTermDepositDTO)
         {
-            if (!User.IsInRole("Admin"))
+            try
             {
-                // Usuario no autorizado
-                return Unauthorized("Usuario no autorizado");
-            }
-            var _fixedTerm = await _fixedTermService.getFixedTermAsync(id);
+                var result = await _fixedTermService.Update(id, fixedTermDepositDTO);
 
-            if (_fixedTerm == null)
+                if (result == null)
+                {
+                    throw new Exception("BAD_REQUEST");
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(400, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
             }
-
-            _fixedTerm.UserId = fixedTerm.UserId;
-            _fixedTerm.AccountId = fixedTerm.AccountId;
-            _fixedTerm.Amount = fixedTerm.Amount;
-            _fixedTerm.CreationDate = fixedTerm.CreationDate;
-            _fixedTerm.ClosingDate = fixedTerm.ClosingDate;
-            _fixedTerm.NominalRate = fixedTerm.NominalRate;
-            _fixedTerm.State = fixedTerm.State;
-
-            await _fixedTermService.updateFixedTermAsync(_fixedTerm);
-
-            return Ok("Plazo fijo editado con exito");
         }
 
-        //ADMIN ROLE
+        //REGULAR//
+        [HttpPut]
+        [Route("EditMyFixedTerm/{id}")]
+        [Authorize(Roles = "Regular")]
+        public async Task<IActionResult> UpdateMyFixedTerm(int id, FixedTermDepositDTO fixedTermDepositDTO)
+        {
+            try
+            {
+                var userId = User.FindFirstValue("Id");
+                var result = await _fixedTermService.UpdateMyFixedTerm(id, fixedTermDepositDTO, userId);
+
+                if (result == null)
+                {
+                    throw new Exception("BAD_REQUEST");
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(400, new
+                {
+                    status = 400,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
+        }
+
+        //ADMIN//
         [HttpDelete]
         [Route("Delete/{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            if (!User.IsInRole("Admin"))
+            try
             {
-                // Usuario no autorizado
-                return Unauthorized("Usuario no autorizado");
+                var result = await _fixedTermService.Delete(id);
+
+                if (!result)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+
+                return Ok();
             }
-            var catalogue = await _fixedTermService.getFixedTermAsync(id);
-
-            if (catalogue == null)
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
             }
-
-            await _fixedTermService.deleteFixedTermAsync(id);
-
-            return Ok("Plazo fijo eliminado con exito");
         }
-
-        //REGULAR ROLE
-        [HttpGet]
-        [Route("GetMyFixedTermById/{id}")]
-        [Authorize(Roles = "Regular")]
-        public async Task<IActionResult> getMyFixedTermById(int id)
-        {
-            var userIdValue = User.FindFirstValue("Id");
-            var fixedTermValue = id;
-            var fixedTerms = await _fixedTermService.getAllFixedTermsByUserIdAsync(userIdValue);
-            var myFixedTerm = fixedTerms.Where(t => t.Id == fixedTermValue);
-
-            if (myFixedTerm == null)
-            {
-                return NotFound("Plazo fijo no encontrado");
-            }
-            return Ok(myFixedTerm);
-        }
-
-        //REGULAR ROLE
-        [HttpGet("GetMyFixedTerms")]
-        [Authorize(Roles = "Regular")]
-        public async Task<IActionResult> GetByUserId()
-        {
-            var userIdValue = User.FindFirstValue("Id");
-            var fixedTerms = await _fixedTermService.getAllFixedTermsByUserIdAsync(userIdValue);
-
-            if (fixedTerms == null)
-            {
-                throw new Exception("NOT_FOUND");
-            }
-
-            return Ok(fixedTerms);
-        }
-
-        //REGULAR ROLE
-        [HttpPost("Insert")]
-        [Authorize(Roles = "Regular")]
-        public async Task<IActionResult> Insert(FixedTermDepositDTO fixedTerm)
-        {
-            var userIdValue = User.FindFirstValue("Id");
-            var userId = int.Parse(userIdValue);
-            var _fixedTerm = new FixedTermDeposit
-            {
-                Id = fixedTerm.Id,
-                UserId = userId,
-                AccountId = fixedTerm.AccountId,
-                Amount = fixedTerm.Amount,
-                CreationDate = fixedTerm.CreationDate,
-                ClosingDate = fixedTerm.ClosingDate,
-                NominalRate = fixedTerm.NominalRate,
-                State = fixedTerm.State
-            };
-
-            await _fixedTermService.addFixedTermAsync(_fixedTerm);
-
-            return CreatedAtAction("Get", new { id = fixedTerm.Id }, fixedTerm);
-        }
-
-        //REGULAR ROLE
-        [HttpPut]
-        [Route("EditMyFixedTerm/{id}")]
-        [Authorize(Roles = "Regular")]
-        public async Task<IActionResult> EditMyFixedTerm(int id, FixedTermDepositDTO fixedTerm)
-        {
-            var userIdValue = User.FindFirstValue("Id");
-            var userId = int.Parse(userIdValue);
-            var fixedTermValue = id;
-            var fixedTerms = await _fixedTermService.getAllFixedTermsByUserIdAsync(userIdValue);
-            var myFixedTerm = fixedTerms.Where(t => t.Id == fixedTermValue);
-            var _fixedTerm = await _fixedTermService.getFixedTermAsync(id);
-
-
-            if (myFixedTerm.Equals("") || myFixedTerm.Count() == 0 || myFixedTerm == null)
-            {
-                return NotFound("Este plazo fijo no puede editarse dado que no pertenece a este usuario");
-            }
-
-            _fixedTerm.UserId = userId;
-            _fixedTerm.AccountId = fixedTerm.AccountId;
-            _fixedTerm.Amount = fixedTerm.Amount;
-            _fixedTerm.CreationDate = fixedTerm.CreationDate;
-            _fixedTerm.ClosingDate = fixedTerm.ClosingDate;
-            _fixedTerm.NominalRate = fixedTerm.NominalRate;
-            _fixedTerm.State = fixedTerm.State;
-
-            await _fixedTermService.updateMyFixedTermAsync(_fixedTerm);
-
-            return Ok("Plazo fijo editado con exito");
-        }
-
-        //REGULAR ROLE
+        //REGULAR//
         [HttpDelete]
         [Route("DeleteMyFixedTerm/{id}")]
         [Authorize(Roles = "Regular")]
         public async Task<IActionResult> DeleteMyFixedTerm(int id)
         {
-
-            var userIdValue = User.FindFirstValue("Id");
-            var fixedTermValue = id;
-            var fixedTerms = await _fixedTermService.getAllFixedTermsByUserIdAsync(userIdValue);
-            var myFixedTerm = fixedTerms.Where(t => t.Id == fixedTermValue);
-
-
-            if (myFixedTerm.Equals("") || myFixedTerm.Count() == 0 || myFixedTerm == null)
+            try
             {
-                return NotFound("Este plazo fijo no puede eliminarse dado que no pertenece a este usuario");
-            }
-            await _fixedTermService.deleteFixedTermAsync(id);
+                var userId = User.FindFirstValue("Id");
+                var result = await _fixedTermService.DeleteMyFixedTerm(id, userId);
 
-            return Ok("Plazo fijo eliminado con exito");
+                if (!result)
+                {
+                    throw new Exception("NOT_FOUND");
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(404, new
+                {
+                    status = 404,
+                    errors = new[] { new { error = ex.Message } }
+                });
+            }
         }
     }
 }
