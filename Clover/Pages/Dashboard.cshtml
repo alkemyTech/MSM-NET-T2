@@ -1,0 +1,34 @@
+﻿@page "/dashboard"
+@model Clover.Pages.DashboardModel
+@{
+}
+<heas>
+
+</heas>
+<body>
+    <table class="table" style="text-align: center;">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Email</th>
+                <th scope="col">Puntos</th>
+                <th scope="col">Rol</th>
+                <th id="fila-administrar" scope="col"></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Trabajo in Model.ListUsers)
+            {
+                <tr>
+                    <td>@Trabajo.First_name</td>
+                    <td>@Trabajo.Last_name</td>
+                    <td>@Trabajo.Email</td>
+                    <td>@Trabajo.Points</td>
+                    <td>@Trabajo.Role_Id</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
