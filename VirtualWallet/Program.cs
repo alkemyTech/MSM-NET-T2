@@ -16,6 +16,8 @@ builder.Configuration.AddJsonFile("appsettings.json");
 var secretKey = builder.Configuration.GetSection("settings:secretkey").Value;
 var keyBytes = Encoding.UTF8.GetBytes(secretKey);
 
+
+
 builder.Services.AddAuthentication(config =>
 {
     config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

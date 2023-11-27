@@ -4,7 +4,30 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@* @{
+    var token = TempData["Token"] as string;
+} *@
+
+@* <div class="text-center">
+    <a href="/Transactions">
+        <button>
+            Transacciones
+        </button>
+    </a>
 </div>
+<div class="text-center">
+    <a href="/Usuarios/editar/5">
+        <button>
+            Test Editar Usuario
+        </button>
+    </a>
+</div> *@
+
+@* <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var token = '@TempData["Token"]'; // Obtengo el token desde TempData
+        if (token) {
+            localStorage.setItem("token", token); // Establezco el token en localStorage
+        }
+    });
+</script> *@

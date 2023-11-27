@@ -30,13 +30,13 @@ namespace VirtualWallet.Models
         public int AccountId { get; set; } //FK a Account
         [ForeignKey("AccountId")]
         [JsonIgnore]
-        public virtual Account Account { get; set; }
+        public virtual Account? Account { get; set; }
 
         [Required(ErrorMessage = "El campo UserId es obligatorio.")]
         public int UserId { get; set; }  //FK a Users
         [ForeignKey("UserId")]
         [JsonIgnore]
-        public virtual User User { get; set; }
+        public virtual User? User { get; set; }
 
         public int? ToAccountId { get; set; } //FK a Account
 
