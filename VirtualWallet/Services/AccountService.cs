@@ -1,7 +1,6 @@
 using VirtualWallet.DataAccess;
 using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
-using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services.Interfaces;
 
 namespace VirtualWallet.Services;
