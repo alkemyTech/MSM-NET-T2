@@ -12,8 +12,8 @@ using VirtualWallet.DataAccess;
 namespace VirtualWallet.Migrations
 {
     [DbContext(typeof(VirtualWalletDbContext))]
-    [Migration("20231125145552_MyInitialCreates")]
-    partial class MyInitialCreates
+    [Migration("20231127025156_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -506,7 +506,7 @@ namespace VirtualWallet.Migrations
                             Email = "juan@gmail.com",
                             First_name = "Juan",
                             Last_name = "Diaz",
-                            Password = "admin",
+                            Password = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
                             Points = 50000,
                             Role_Id = 1
                         },
@@ -516,7 +516,7 @@ namespace VirtualWallet.Migrations
                             Email = "abi@gmail.com",
                             First_name = "Abi",
                             Last_name = "Barroso",
-                            Password = "admin",
+                            Password = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
                             Points = 50000,
                             Role_Id = 1
                         },
@@ -526,7 +526,7 @@ namespace VirtualWallet.Migrations
                             Email = "emi@gmail.com",
                             First_name = "Emi",
                             Last_name = "Brito",
-                            Password = "admin",
+                            Password = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
                             Points = 50000,
                             Role_Id = 1
                         },
@@ -536,7 +536,7 @@ namespace VirtualWallet.Migrations
                             Email = "vir@gmail.com",
                             First_name = "Vir",
                             Last_name = "Schmied",
-                            Password = "admin",
+                            Password = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
                             Points = 50000,
                             Role_Id = 1
                         },
@@ -546,7 +546,7 @@ namespace VirtualWallet.Migrations
                             Email = "pedro@gmail.com",
                             First_name = "Pedro",
                             Last_name = "Gonzalez",
-                            Password = "user",
+                            Password = "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb",
                             Points = 5800,
                             Role_Id = 2
                         },
@@ -556,7 +556,7 @@ namespace VirtualWallet.Migrations
                             Email = "fede@gmail.com",
                             First_name = "Fede",
                             Last_name = "Perez",
-                            Password = "user",
+                            Password = "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb",
                             Points = 5040,
                             Role_Id = 2
                         },
@@ -566,7 +566,7 @@ namespace VirtualWallet.Migrations
                             Email = "maca@gmail.com",
                             First_name = "Maca",
                             Last_name = "Pereira",
-                            Password = "user",
+                            Password = "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb",
                             Points = 1560,
                             Role_Id = 2
                         },
@@ -576,7 +576,7 @@ namespace VirtualWallet.Migrations
                             Email = "sofi@gmail.com",
                             First_name = "Sofi",
                             Last_name = "Gomez",
-                            Password = "user",
+                            Password = "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb",
                             Points = 2300,
                             Role_Id = 2
                         },
@@ -586,7 +586,7 @@ namespace VirtualWallet.Migrations
                             Email = "manu@gmail.com",
                             First_name = "Manu",
                             Last_name = "Noriega",
-                            Password = "user",
+                            Password = "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb",
                             Points = 1800,
                             Role_Id = 2
                         },
@@ -596,7 +596,7 @@ namespace VirtualWallet.Migrations
                             Email = "clara@gmail.com",
                             First_name = "Clara",
                             Last_name = "Aguayo",
-                            Password = "user",
+                            Password = "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb",
                             Points = 2590,
                             Role_Id = 2
                         });
