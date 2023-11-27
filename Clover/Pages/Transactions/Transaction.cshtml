@@ -1,0 +1,217 @@
+﻿@page "/Transactions"
+@model Clover.Pages.Transactions.IndexModel
+
+@{
+}
+<head>
+    <style>
+        
+        body{
+            background: #11322E;
+            display: flex;
+            justify-content: center;
+        }
+
+        #table-container{
+            border-radius: 30px;
+            border: 1px solid #556;
+            background: rgba(35, 173, 99, 0.5);
+            overflow: hidden;
+            padding: 8px;
+        }
+
+        .table {
+            color: #F4EFE4;
+            
+        }
+
+        #table-container th, #table-container td {
+            
+            border-bottom: 2px solid #51DAC9; /* Cambia el color y grosor según tus preferencias */
+        }
+
+
+        #table-container td{
+            cursor:pointer;
+        }
+
+        .botones-crear{
+            padding: 10px;
+
+        }
+        .botones-crear button{
+            border-radius: 40px;
+            background: transparent;
+                border: 2px solid #51DAC9;
+                width: 120px;
+                color: #F4EFE4;
+        }
+        .container{
+            position: relative; 
+            top: 25px;
+        }
+
+        .modal-content{
+            border-radius: 25px !important;
+            background: #23AD63;
+            color: white;
+
+        }
+
+        .form-group > label{
+            margin: 5px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="table-container">
+        <table class="table" style="text-align: center">
+            <thead>
+                <tr>
+                    <th scope="col">Trans n°</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Concepto</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Cuenta n°</th>
+                    <th scope="col">Usuario n°</th>
+                    <th scope="col">Cuenta Destino</th>
+                    @* <th id="row-admin" scope="col">Detalle</th> *@
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Transaction in Model.TransactionsList)
+                {
+                    <tr class="align-middle">
+                        <a href="#">
+                        <th scope="row">@Transaction.TransactionId</th></a>
+                        <td>$@Transaction.Amount</td>
+                        <td>@Transaction.Concept</td>
+                        <td>@Transaction.Date</td>
+                        <td>@Transaction.Type</td>
+
+                        <td>@Transaction.AccountId</td>
+                        <td>@Transaction.UserId</td>
+                        <td>@Transaction.ToAccountId</td>
+                        
+                    </tr>
+                   
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+   
+
+    <!-- Botón que activa el modal -->
+    <div class="botones-crear" style="display: flex; justify-content:center; gap: 15px;">
+        <button type="button" >
+            <i class="fa-solid fa-plus"></i> Volver
+        </button>
+        <button type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <i class="fa-solid fa-plus"></i> Agregar
+        </button>
+    </div>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 9999">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nueva Transacción</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Formulario -->
+                    <form method="post" asp-action="OnPostAsync">
+
+                        <div class="form-group" style="text-align: center;">
+                            <label>Tipo de Transacción</label>
+                            <div class="radio-container">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="Transaction.Type" value="payment">
+                                    <label class="form-check-label">Transferencia</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="Transaction.Type" value="topup">
+                                    <label class="form-check-label">Depósito</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Amount">Monto</label>
+                            <input type="text" class="form-control" id="Amount" name="Transaction.Amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Concept">Concepto</label>
+                            <input type="text" class="form-control" id="Concept" name="Transaction.Concept" required/>
+                        </div>
+                        
+
+                        <div class="form-group">
+                            <label for="AccountId">Cuenta N°</label>
+                            <input type="number" class="form-control" id="AccountId" name="Transaction.AccountId" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="UserId">Usuario N°</label>
+                            <input type="number" class="form-control" id="UserId" name="Transaction.UserId" required>
+                        </div>
+                        <div class="form-group toaccount">
+                            <label for="ToAccountId">A Cuenta N°</label>
+                            <input type="number" class="form-control" id="ToAccountId" name="Transaction.ToAccountId">
+                        </div>
+                        
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <input id="Deposit" type="submit" asp-page-handler="Deposit" class="btn btn-success" value="Guardar"></input>
+                            <input id="Transfer" type="submit" asp-page-handler="Transfer" class="btn btn-success" value="Guardar"></input>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Cuando el ratón pasa por encima de una fila (tr) dentro del cuerpo de la tabla (tbody)
+            $("tbody tr").click(function () {
+                // Aquí puedes hacer lo que quieras cuando el ratón pasa por encima de la fila
+                // Por ejemplo, podrías cambiar la URL. Asegúrate de reemplazar 'id' con el ID real de la fila.
+                var id = $(this).find('th').text();
+                window.location.href = "/Transaction/editar/" + id;
+            });
+        });
+        $(document).ready(function () {
+            // Oculta el campo ToAccountId al cargar la página
+            $('.toaccount').hide();
+            $('#Deposit').hide();
+
+            // Agrega un evento change a los radio buttons con name "Transaction.Type"
+            $('input[name="Transaction.Type"]').change(function () {
+                // Verifica si el valor seleccionado es "topup"
+                if ($(this).val() === 'topup') {
+                    // Oculta el campo ToAccountId si es "topup"
+                    $('.toaccount').hide();
+                    $('#Transfer').hide();
+                    $('#Deposit').show();
+                } else {
+                    // Muestra el campo ToAccountId para otros tipos
+                    $('.toaccount').show();
+                    $('#Deposit').hide();
+                    $('#Transfer').show();
+                }
+            });
+        });
+    </script>
+</body>

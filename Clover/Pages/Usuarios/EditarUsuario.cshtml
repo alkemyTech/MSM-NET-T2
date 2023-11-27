@@ -1,0 +1,64 @@
+﻿@page "/Usuarios/Editar/{id}"
+@model Clover.Pages.Usuarios.EditarUsuarioModel
+@{
+
+}
+
+<body>
+    <!-- Formulario con los campos de edición del usuario-->
+    <form method="post">
+        <div class="form-group">
+            <label>Código de Usuario</label>
+            <input type="number" class="form-control" asp-for="user.Id" readonly>
+        </div>
+        <div class="form-group">
+            <label asp-for="user.First_name">Nombre</label>
+            <input type="text" class="form-control" asp-for="user.First_name" required>
+        </div>
+        <div class="form-group">
+            <label asp-for="user.Email">Email</label>
+            <input type="text" class="form-control" asp-for="user.Email" required>
+        </div>        
+        <div class="form-group">
+            <label asp-for="user.Password">Contraseña</label>
+            <input type="password" class="form-control" asp-for="user.Password" required>
+        </div>
+        <div class="form-group">
+            <label asp-for="user.Points">Puntos</label>
+            <input type="number" class="form-control" asp-for="user.Points" required>
+        </div>
+        <div class="form-group">
+            <label asp-for="user.Role_Id">Rol</label>
+            <input type="number" class="form-control" asp-for="user.Role_Id" required>
+        </div>
+
+        <!-- Botones de edición -->
+        <div class="modal-footer">
+            <a href="/Usuarios"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></a>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                Eliminar
+            </button>
+        </div>
+    </form>
+
+
+    <!-- Modal para confirmar la eliminación del Usuario -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que quieres eliminar este elemento?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form method="post"><input id="delete" type="submit" asp-page-handler="Delete" class="btn btn-danger" value="Eliminar"></input></form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

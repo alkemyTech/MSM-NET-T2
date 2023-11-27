@@ -1,0 +1,146 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+
+#hf-container {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #11322E;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color:;
+    padding: 10px;
+    margin: auto;
+    width: 85%;
+    height: 90%;
+}
+
+    .header-container img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .header-container .menu {
+        display: flex;
+        gap: 20px;
+    }
+
+.menu > a {
+    position: relative;
+    font-weight: 600;
+    color: #f4eee4;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: normal;
+    text-decoration: none;
+}
+
+    .menu > a:hover::after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        bottom: -2px;
+        height: 2px;
+        width: 80%;
+        background-color: #50d9c9;
+    }
+
+/*header, footer {
+    background: #113223;
+    position: sticky;
+    z-index: -1;
+}*/
+
+header {
+    height: 100px;
+}
+
+.header-container button {
+    font-weight: 600;
+    width: 120px;
+    height: 40px;
+    border-radius: 40px;
+    border: 2px solid;
+    border-color: #50d9c9;
+    background: transparent;
+    color: #f4eee4;
+}
+
+    .header-container button:hover {
+        background: #50d9c955;
+        transition: .5s;
+    }
+
+footer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 75px;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    }
+
+    #footer-text {
+        font-weight: 400;
+        color: #FFFFFF;
+        font-size: 15px;
+        letter-spacing: 0;
+        text-align: center;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+#hr-line {
+    color: #23AD63;
+    height: 2px;
+    width: 85%;
+    opacity: .25;
+    margin: 0;
+}
+
+#logo {
+    width: 150px;
+}
+
+/* SVG */
+
+svg > text {
+    fill: white;
+}
+
+.cls-1 {
+    letter-spacing: 0em;
+}
+
+.cls-2 {
+    letter-spacing: -.07em;
+}
+
+.cls-3 {
+    fill: #010805;
+}
+
+.cls-4 {
+    fill: #3eb077;
+}
+
+.cls-5 {
+    fill: #3db077;
+}
+
+.cls-6 {
+    fill: #23aa68;
+}
+
+.cls-7 {
+    fill: #F4EFE4;
+    font-family: TTRoundsNeueTrial-DmBd, 'TT Rounds Neue Trial';
+    font-size: 148.65px;
+}

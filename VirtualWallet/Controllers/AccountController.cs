@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VirtualWallet.Models;
 using VirtualWallet.Models.DTO;
 using VirtualWallet.Services;
 
@@ -100,20 +101,20 @@ public class AccountController : ControllerBase
     // POST api/accounts/Deposit/{id}
     [HttpPost]
     [Route("Deposit/{id}")]
-    [Authorize(Roles = "Regular")]
-    public async Task<IActionResult> Deposit(int id, int amount)
+    [Authorize(Roles = "Admin, Regular")]
+    public async Task<IActionResult> Deposit(Transaction transaction)
     {
        try
        {
            var userId = User.FindFirstValue("Id");
-           var result = await _accountService.Deposit(id, amount, userId);
+           var result = await _accountService.Deposit(transaction, userId);
             
            if (result == null)
            {
                throw new Exception("BAD_REQUEST");
            }
             
-           return CreatedAtAction("Get", new { id, amount }, result);
+           return CreatedAtAction("Get", new { transaction.transactionId, transaction.Amount }, result);
        }
        catch (Exception ex)
        {
@@ -128,20 +129,20 @@ public class AccountController : ControllerBase
     // POST api/accounts/Transfer/{id}
     [HttpPost]
     [Route("Transfer/{id}")]
-    [Authorize(Roles = "Regular")]
-    public async Task<IActionResult> Transfer(int id, int toAccount, int amount)
+    [Authorize(Roles = "Admin, Regular")]
+    public async Task<IActionResult> Transfer(Transaction transaction)
     {
         try
         {
            var userId = User.FindFirstValue("Id");
-           var result = await _accountService.Deposit(id, amount, userId);
+           var result = await _accountService.Transfer(transaction, userId);
             
            if (result == null)
            {
                throw new Exception("BAD_REQUEST");
            }
             
-           return CreatedAtAction("Get", new { id, amount }, result); 
+           return CreatedAtAction("Get", new { transaction.transactionId, transaction.Amount }, result); 
         }
         catch (Exception ex)
         {
