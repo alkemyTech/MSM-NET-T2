@@ -1,0 +1,51 @@
+﻿#form-container {
+    color: white;
+    transform: translateY(100%)
+}
+
+.form-group {
+    width: 150px;
+    text-align: center;
+}
+
+#subform {
+    display: flex;
+    color: white;
+    border-radius: 30px;
+    padding: 20px;
+    justify-content: space-between;
+    background-color: rgba(159, 163, 246, 0.5);
+}
+
+.buttons-form {
+    margin-top: 25px;
+    gap: 15px;
+    border-top: 0;
+    display: flex;
+    justify-content: center;
+}
+
+    .buttons-form > button, .buttons-form > a > button {
+        border-radius: 40px;
+        width: 120px;
+        border: 1px solid #9FA3F6;
+        background: transparent;
+    }
+
+
+.form-group > input, .form-control:disabled, .form-control[readonly] {
+    background: none;
+    color: white;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid white;
+}
+.form-group > input:active{
+    
+}
+    .form-group > input:focus {
+        background: none;
+        color: white;
+        border-bottom: 1px solid white;
+        box-shadow: none;
+    }

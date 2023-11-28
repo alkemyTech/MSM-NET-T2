@@ -1,9 +1,11 @@
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Clover.Pages.Transactions
 {
+    //[Authorize(Roles = "Admin")]
     public class EditarTransactionModel : PageModel
     {
         [BindProperty]
