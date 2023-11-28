@@ -1,0 +1,64 @@
+﻿@page "/Catalogue"
+@model Clover.Pages.Catalogue.CatalogueModel
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        *{
+        font-family: 'Poppins';
+        }
+        #products-container{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            gap: 10px 5px;
+            justify-items: center;
+        }
+        .card {
+            background-color: rgba(35, 173, 99, 0.5);
+            width: 300px;
+            max-height: 300px;
+            padding: 20px;
+            color: white;
+            font-family: Arial, sans-serif;
+            border-radius: 15px;
+        }
+
+        .rectangle {
+            height: 200px;
+            margin-bottom: 20px;
+        }
+
+            .rectangle img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 15px;
+            }
+
+        .product-name, .points {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="products-container">
+        @foreach (var Product in Model.CatalogueList)
+        {
+            <div class="card">
+                <div class="rectangle">
+                    <img src="https://th.bing.com/th/id/OIP.ZcSNf-JOOSvykdhsoXQ4VAHaHa?rs=1&pid=ImgDetMain" alt="Descripción de la imagen">
+                </div>
+                <p class="product-name">@Product.productDescription</p>
+                <p class="points">Puntos: @Product.points</p>
+            </div>
+        }
+    </div>
+
+</body>
+</html>
+
