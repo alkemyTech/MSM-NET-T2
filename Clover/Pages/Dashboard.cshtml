@@ -6,6 +6,7 @@
 
 </heas>
 <body>
+    <div>
     <table class="table" style="text-align: center;">
         <thead>
             <tr>
@@ -31,4 +32,36 @@
             }
         </tbody>
     </table>
+ @*    <div>
+        <form method="post" asp-action="OnPostAsync">
+
+            <div class="form-group">
+                <label for="First_name">Nombre</label>
+                <input type="text" class="form-control" id="Fisrt_name" name="Usuario.First_name" required>
+            </div>
+            <div class="form-group">
+                <label for="Last_name">Apellido</label>
+                <input type="text" class="form-control" id="Last_name" name="Usuario.Last_name" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="text" class="form-control" id="Email" name="Usuario.Email" required>
+            </div>
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" class="form-control" id="Password" name="Usuario.Password" required>
+            </div>
+            <div class="form-group toaccount">
+                <label for="Points">Puntos</label>
+                <input type="number" class="form-control" id="Points" name="Usuarios.Points">
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <input id="User" type="submit" asp-page-handler="User" class="btn btn-success" value="Guardar"></input>
+            </div>
+        </form>
+    </div> *@
 </body>

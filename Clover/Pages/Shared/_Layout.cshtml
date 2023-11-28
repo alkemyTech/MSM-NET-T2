@@ -1,5 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+@{
+    var token = ViewData["Token"] as string;
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,7 +19,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-custom border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="tittle navbar-brand" asp-area="" asp-page="/Index">Clover</a>
+                <a class="tittle navbar-brand" asp-area="" asp-page="/Index">&#127808 Clover</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -27,12 +30,15 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/FixedTermDeposit">Plazos Fijos</a>
                         </li>
                     </ul>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/login">Iniciar Sesion</a>
+                    <button id="boton-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesion</button>
                 </div>
             </div>
-            <div class="ml-auto">
+            @*  <button id="boton-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar Sesion</button>
+                <div class="ml-auto">
                 <!-- Utiliza ml-auto para mover el contenido del div a la derecha -->
                 <a class="nav-link text-dark" asp-area="" asp-page="/login">Iniciar Sesion</a>
-            </div>
+            </div> *@
 
         </nav>
     </header>
@@ -51,7 +57,23 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @* <script>
+        $(document).ready(function () {
+            var token = localStorage.getItem("token");
+
+            // if (!token) {
+            //     window.location.href = '/login';
+            // }
+        });
+    </script> *@
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        document.getElementById('boton-logout').addEventListener('click', function () {
+            localStorage.removeItem('token');
+            window.location.href = "/";
+        });
+    </script>
 </body>
 </html>

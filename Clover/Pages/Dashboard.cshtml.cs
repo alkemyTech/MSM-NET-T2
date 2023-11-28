@@ -1,12 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace Clover.Pages
 {
     public class DashboardModel : PageModel
     {
-        public List<User> ListUsers { get; set; }
+        [BindProperty]
+        public Usuario Usuario { get; set; } = new Usuario();
+        public List<Usuario> ListUsers { get; set; }
+        public object PrevPage { get; private set; }
+        public object NextPage { get; private set; }
 
         public async Task OnGetAsync()
         {
@@ -15,29 +23,80 @@ namespace Clover.Pages
                 string token = HttpContext.Session.GetString("BearerToken");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
+                var userResponse = await httpClient.GetAsync("http://localhost:7120/api/User");
 
-                var response = await httpClient.GetAsync("http://localhost:7120/api/User?pageNumber=1&pageSize=10");
-                Console.WriteLine(response);
-                if (response.IsSuccessStatusCode)
+                if (userResponse.IsSuccessStatusCode)
                 {
-                    ListUsers = await response.Content.ReadFromJsonAsync<List<User>>();
-                    Console.WriteLine(ListUsers);
+                    var users = await userResponse.Content.ReadFromJsonAsync<UserResponse>();
+
+                    if (users != null)
+                    {
+                        ListUsers = users.Users;
+                        PrevPage = users.PrevPage;
+                        NextPage = users.NextPage;
+                    }
+                    else
+                    {
+                        ListUsers = new List<Usuario>();
+                    }
                 }
                 else
                 {
-                    ListUsers = new List<User>();
+                    ListUsers = new List<Usuario>();
                 }
             }
         }
+        //public async Task<IActionResult> OnPostUser()
+        //{
+        //    using (var httpClient = new HttpClient())
+        //    {
+        //        string token = HttpContext.Session.GetString("BearerToken");
+        //        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        //        var content = new StringContent(JsonConvert.SerializeObject(Usuario), Encoding.UTF8, "application/json");
+        //        var response = await httpClient.PostAsync($"http://localhost:7120/api/User", content);
+
+        //        var userResponse = await httpClient.GetAsync("http://localhost:7120/api/User");
+
+        //        if (userResponse.IsSuccessStatusCode)
+        //        {
+        //            var apiResponse = await userResponse.Content.ReadFromJsonAsync<UserResponse>();
+
+        //            if (apiResponse != null)
+        //            {
+        //                ListUsers = apiResponse.Users;
+        //                PrevPage = apiResponse.PrevPage;
+        //                NextPage = apiResponse.NextPage;
+        //            }
+        //            else
+        //            {
+        //                ListUsers = new List<Usuario>();
+        //            }
+        //        }
+
+        //    }
+        //    return RedirectToPage("/dashboard");
+
+
+        //}
     }
 }
-public class User
+public class Usuario
 {
-
+    public int Id { get; set; }
     public string First_name { get; set; }
     public string Last_name { get; set; }
     public string Email { get; set; }
+    public string Password { get; set; }
     public int Points { get; set; }
     public int Role_Id { get; set; }
-
+    public object Role { get; set; }
+    public object FixedTermDeposits { get; set; }
+    public object  Transactions { get; set; }
+}
+public class UserResponse
+{
+    public List<Usuario> Users { get; set; }
+    public object PrevPage { get; set; }
+    public object NextPage { get; set; }
 }

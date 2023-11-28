@@ -59,7 +59,7 @@ namespace VirtualWallet.Services
 
             var result = new
             {
-                Transactions = pagesUsers,
+                Users = pagesUsers,
                 PrevPage = prevPage,
                 NextPage = nextPage
             };
