@@ -1,4 +1,4 @@
-﻿/*body {
+﻿body {
     background-color: #11322E;
     color: #F4EFE4;
     font-family: "Poppins";
@@ -16,11 +16,11 @@ button {
     background-color: #51DAC980;
     border-color: #51DAC980;
     font-family: "Poppins";
-}*/
+}
 
 /*NUEVO PLAZO FIJO FORMULARIO*/
 
-/*.fixedTermIntro {
+.fixedTermIntro {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -61,7 +61,7 @@ input.form-control:not(:placeholder-shown) {
     color: #F4EFE4
 }
 
-.formularios {
+.plazofijo formularios {
     justify-content: space-between;
     align-items: center;
 }
@@ -81,11 +81,11 @@ a {
 a:hover {
     color: #F4EFE4; 
     text-decoration: none;
-    }*/
+    }*/*/
 
 /*PLAZO FIJO INICIO*/
 
-/*th {
+th {
     color: #F4EFE4;
     font-size: 15px;
     font-style: normal;
@@ -99,11 +99,10 @@ table {
     background: rgba(35, 173, 99, 0.50);
     color: #F4EFE4;
     font-family: "Poppins";
-}*/
-
+}
 /*EDITAR PLAZO FIJO*/
 
-/*.EditButtons {
+.EditButtons {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,5 +161,4 @@ table {
     outline: none;
     background-color: rgba(35, 173, 99, 0.50); 
     color: #F4EFE4;
-    transition: background 0.3s, color 0.3s;
-}*/
+    transition: background 0.3s, color 0.3s;*/
