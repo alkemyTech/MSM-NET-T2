@@ -43,8 +43,9 @@ namespace Clover.Pages
                 var responseObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseContent);
                 Console.WriteLine(responseObject);
                 var token = responseObject["token"];
-
+                
                 HttpContext.Session.SetString("BearerToken", token);
+                
 
                 TempData["Token"] = token;
                 TempData.Keep("Token");
