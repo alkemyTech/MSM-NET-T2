@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Clover.Pages
+namespace Clover.Pages.Usuarios
 {
-    public class DashboardModel : PageModel
+    public class ListaUsuariosModel : PageModel
     {
         [BindProperty]
         public Usuario Usuario { get; set; } = new Usuario();
@@ -92,7 +92,7 @@ public class Usuario
     public int Role_Id { get; set; }
     public object Role { get; set; }
     public object FixedTermDeposits { get; set; }
-    public object  Transactions { get; set; }
+    public object Transactions { get; set; }
 }
 public class UserResponse
 {

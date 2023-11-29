@@ -79,11 +79,11 @@ public class AccountService : IAccountService
         return account;
     }
 
-    public async Task<Account> Deposit(int id, int amount, string userId)
+    public async Task<Account> Deposit(Transaction transaction, string userId)
     { 
         // Endpoint -> Realizar depósito
-        var account = await _unitOfWork.AccountRepo.GetById(id);
-        var user = await _unitOfWork.UserRepo.GetById(id);
+        var account = await _unitOfWork.AccountRepo.GetById(int.Parse(userId));
+        var user = await _unitOfWork.UserRepo.GetById(int.Parse(userId));
         
         // Verificar la cuenta
         if (account == null)
@@ -94,15 +94,15 @@ public class AccountService : IAccountService
         if (userId.Equals(account.Id.ToString()))
         {
             // Realizar el depósito
-            var deposit = account.Money += amount;
+            var deposit = account.Money += transaction.Amount;
             
             // Registrar la transacción
             var newTransaction = new Transaction
             { 
-                Amount = deposit,
-                Concept = "Depósito", 
-                Date = DateTime.Now, 
-                Type = "topup", 
+                Amount = transaction.Amount,
+                Concept = transaction.Concept, 
+                Date = transaction.Date, 
+                Type = transaction.Type, 
                 AccountId = int.Parse(userId), 
                 UserId = int.Parse(userId)
                 
@@ -110,7 +110,7 @@ public class AccountService : IAccountService
             await _unitOfWork.TransactionRepo.Insert(newTransaction);
             
             // Calcular los puntos
-            var points = (int)Math.Round(amount * 0.02);
+            var points = (int)Math.Round((int)transaction.Amount * 0.02);
             user.Points += points;
             
           await _unitOfWork.SaveChangesAsync();
@@ -119,12 +119,13 @@ public class AccountService : IAccountService
         return account;
     }
 
-    public async Task<Account> Transfer(int id, int toAccount, int amount, string userId)
+    public async Task<Account> Transfer(Transaction transaction, string userId)
     {
+
         // Endpoint -> Realizar transferencia
-        var account = await _unitOfWork.AccountRepo.GetById(id);
-        var transferId = await _unitOfWork.AccountRepo.GetById(toAccount);
-        var user = await _unitOfWork.UserRepo.GetById(id);
+        var account = await _unitOfWork.AccountRepo.GetById(transaction.AccountId);
+        var transferId = await _unitOfWork.AccountRepo.GetById((int)transaction.ToAccountId);
+        var user = await _unitOfWork.UserRepo.GetById(transaction.UserId);
         
         // Verificar ambas cuentas
         if (account == null || transferId == null)
@@ -132,7 +133,7 @@ public class AccountService : IAccountService
             return null;
         }
         // Verificar que la cuenta origen tenga saldo suficiente
-        if (account.Money < amount)
+        if (account.Money < transaction.Amount)
         {
             return null;
         }
@@ -141,39 +142,26 @@ public class AccountService : IAccountService
         if (userId.Equals(account.Id.ToString()))
         {
             // Realizar la transferencia
-            var transfer = account.Money -= amount;
-            account.Money -= transfer;
-            
-            var receive = transferId.Money += amount;
-            transferId.Money += amount;
-                
-            // Registrar la transacción de la cuenta emisora
-            var newTransaction = new Transaction
-            { 
-                Amount = transfer,
-                Concept = "Transferencia a cuenta de terceros", 
-                Date = DateTime.Now, 
-                Type = "payment", 
-                AccountId = int.Parse(userId), 
-                UserId = int.Parse(userId),
-                ToAccountId = transferId.Id
-            };
-            await _unitOfWork.TransactionRepo.Insert(newTransaction);
+            var transfer = account.Money -= transaction.Amount;
+
+            var receive = transferId.Money += transaction.Amount;
+
+            await _unitOfWork.TransactionRepo.Insert(transaction);
             
             // Registrar la transacción en la cuenta destino
             var toAccountTransaction = new Transaction
             {
-                Amount = receive,
-                Concept = "Transferencia de terceros",
-                Date = DateTime.Now,
-                Type = "payment",
+                Amount = transaction.Amount,
+                Concept = transaction.Concept,
+                Date = transaction.Date,
+                Type = transaction.Type,
                 AccountId = transferId.Id,
                 UserId = transferId.UserId
             };
             await _unitOfWork.TransactionRepo.Insert(toAccountTransaction);
             
             // Calcular los puntos de la cuenta emisora
-            var points = (int)Math.Round(amount * 0.03);
+            var points = (int)Math.Round((int)transaction.Amount * 0.03);
             user.Points += points;
 
             await _unitOfWork.AccountRepo.Update(account);

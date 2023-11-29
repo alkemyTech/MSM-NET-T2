@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Clover.Pages
 {
-    public class UserModel : PageModel
+    public class FormEditFixedTermModel : PageModel
     {
         public void OnGet()
         {

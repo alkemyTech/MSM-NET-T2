@@ -1,0 +1,23 @@
+﻿@page "/User"
+@model UserModel
+@{
+}
+<div>
+    <div class="card">
+        <div class="card bg-success text-white">
+            <div class="card-body">@Model.Encontrado.First_name </div>
+        </div>
+        <div class="card bg-success text-white">
+            <div class="card-body">@Model.Encontrado.Last_name</div>
+        </div>
+        <div class="card bg-success text-white">
+            <div class="card-body">@Model.Encontrado.Email</div>
+        </div>
+        <div class="card bg-success text-white">
+            <div class="card-body">@Model.Encontrado.Points</div>
+        </div>
+        <div class="card bg-success text-white">
+            <div class="card-body">@Model.Encontrado.Role_Id</div>
+        </div>
+    </div>
+</div>

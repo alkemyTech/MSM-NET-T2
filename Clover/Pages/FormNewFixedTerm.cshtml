@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Nuevo plazo fijo";
 }
-<div class="Form mx-auto my-4">
+<div class="CreateForm mx-auto my-4">
 <form asp-action="updatedFixedTerm" class="formularios"  method="post">
     <div class="row">
         <div class="col-md-6">
@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="botonera">
+    <div class="CreateButton">
         <button class="back float-right mt-2"><a asp-page="/Index">Volver</a></button>
         <button asp-page-handler="CreateFixedTerm" type="submit" class="createButton @* float-right mt-2 *@">Crear Plazo Fijo</button>
     </div>
