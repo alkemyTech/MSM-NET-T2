@@ -1,20 +1,23 @@
-﻿* {
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+* {
     font-family: 'Poppins';
 }
 
+.container{
+    margin-bottom: 30px;
+}
 #products-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 1fr ;
     gap: 10px 5px;
     justify-items: center;
     padding: 20px;
 }
 
-footer {
-    display: none;
+.catalogue{
+    margin-bottom: 75px;
 }
-
 .card {
     background-color: rgba(35, 173, 99, 0.5);
     width: 300px;
