@@ -2,11 +2,12 @@
 @model Clover.Pages.FIxedTermDepositModel
 @{
     ViewData["Title"] = "Plazos Fijos";
+    Layout = "_Layout-Logeado";
 }
 <div class=" = fixedTermIntro">
 <h1>@ViewData["Title"]</h1>
 
- <button><a href="~/FormNewFixedTerm" class="button">Nuevo plazo fijo</a></button>
+ <button><a href="/FixedTerms/FormNewFixedTerm" class="button">Nuevo plazo fijo</a></button>
  </div>
 
 

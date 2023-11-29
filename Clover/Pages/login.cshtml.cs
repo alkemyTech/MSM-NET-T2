@@ -49,7 +49,7 @@ namespace Clover.Pages
 
                 TempData["Token"] = token;
                 TempData.Keep("Token");
-                return LocalRedirect(Url.Content("/Index"));
+                return LocalRedirect(Url.Content("/User"));
             }
             else
             {
