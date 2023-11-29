@@ -56,9 +56,6 @@ body .box .circle2 {
     transform: translateY(10px);
   }
 }
-/*body .box .text {
-  padding: 30px;
-}*/
 
 body .box .text .title {
   font-size: 40px;
@@ -284,6 +281,7 @@ body section.box-bottom {
 
 /* BANNER */
 body img.banner {
+  
   width: 100%;
   margin: 100px 0;
 }
