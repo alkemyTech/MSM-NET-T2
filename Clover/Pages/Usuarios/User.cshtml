@@ -6,6 +6,7 @@
 <style>
     .User {
         display: flex;
+        justify-content: space-around
     }
 
     .userButtons {
@@ -13,14 +14,29 @@
         flex-direction: column; /* Establece la dirección del diseño a columna */
         align-items: flex-start;
         justify-content: space-between
+
     }
 
     .buttonUserLink {
         margin: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 40px;
+        background: transparent;
+        color: #f4eee4;
+        width: 140px;
+        height: 50px;
+        transition: .5s;
     }
 
+        .buttonUserLink:hover {
+            background: rgba(81, 218, 201, 0.50);
+            scale: 1.1;
+            transition: .5s;
+        }
+
     .dataUserDiv {
-        margin: auto; /* Centra el contenedor horizontalmente */
+       
         background: rgba(81, 218, 201, 0.50); /* Establece el color de fondo */
         border-radius: 20px;
         width: 420px;
