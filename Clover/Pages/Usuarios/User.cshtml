@@ -2,22 +2,76 @@
 @model UserModel
 @{
 }
-<div>
-    <div class="card">
-        <div class="card bg-success text-white">
-            <div class="card-body">@Model.Encontrado.First_name </div>
+
+<style>
+    .User {
+        display: flex;
+    }
+
+    .userButtons {
+        display: flex;
+        flex-direction: column; /* Establece la dirección del diseño a columna */
+        align-items: flex-start;
+        justify-content: space-between
+    }
+
+    .buttonUserLink {
+        margin: 5px;
+    }
+
+    .dataUserDiv {
+        margin: auto; /* Centra el contenedor horizontalmente */
+        background: rgba(81, 218, 201, 0.50); /* Establece el color de fondo */
+        border-radius: 30px;
+        width: 420px;
+        height: 350px;
+        border: 30px;
+    }
+
+    p{
+
+    }
+
+    .card {
+        background: rgba(81, 218, 201, 0.10);
+        border-radius: 8px; /* Bordes redondeados para las tarjetas individuales */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para resaltar las tarjetas */
+        height: 70px;
+    }
+
+
+</style>
+
+<div class="User">
+
+    <div class="dataUserDiv">
+
+        <div class="card">
+            <div class="card-body" >@Model.Encontrado.First_name </div>
         </div>
-        <div class="card bg-success text-white">
+        <div class="card">
             <div class="card-body">@Model.Encontrado.Last_name</div>
         </div>
-        <div class="card bg-success text-white">
+        <div class="card">
             <div class="card-body">@Model.Encontrado.Email</div>
         </div>
-        <div class="card bg-success text-white">
+        <div class="card">
             <div class="card-body">@Model.Encontrado.Points</div>
         </div>
-        <div class="card bg-success text-white">
+        <div class="card">
             <div class="card-body">@Model.Encontrado.Role_Id</div>
         </div>
     </div>
+
+
+<div class="userButtons">
+        <button class="buttonUserLink"><a href="/FixedTerms/FixedTermDeposit" class="button">Plazos Fijos</a></button>
+        <button class="buttonUserLink"><a href="/Transactions/Transaction" class="button">Transacciones</a></button>
+        <button class="buttonUserLink"><a href="/Accounts/Account" class="button">Cuenta</a></button>
+        <button class="buttonUserLink"><a href="/Catalogue/Catalogue" class="button">Catalogo</a></button>
+
 </div>
+
+</div>
+
+

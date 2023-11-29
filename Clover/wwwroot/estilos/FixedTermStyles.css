@@ -61,7 +61,7 @@ input.form-control:not(:placeholder-shown) {
     color: #F4EFE4
 }
 
-.formularios {
+.plazofijo formularios {
     justify-content: space-between;
     align-items: center;
 }
@@ -81,7 +81,7 @@ a {
 a:hover {
     color: #F4EFE4; 
     text-decoration: none;
-    }
+    }*/*/
 
 /*PLAZO FIJO INICIO*/
 
@@ -100,7 +100,6 @@ table {
     color: #F4EFE4;
     font-family: "Poppins";
 }
-
 /*EDITAR PLAZO FIJO*/
 
 .EditButtons {
@@ -162,5 +161,4 @@ table {
     outline: none;
     background-color: rgba(35, 173, 99, 0.50); 
     color: #F4EFE4;
-    transition: background 0.3s, color 0.3s;
-}
+    transition: background 0.3s, color 0.3s;*/

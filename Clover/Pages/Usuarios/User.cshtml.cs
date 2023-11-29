@@ -41,15 +41,15 @@ namespace Clover.Pages
     }
 }
 public class UsuarioEncontrado
-    {
-        public int Id { get; set; }
-        public string First_name { get; set; }
-        public string Last_name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public int Points { get; set; }
-        public int Role_Id { get; set; }
-        public object Role { get; set; }
-        public object FixedTermDeposits { get; set; }
-        public object Transactions { get; set; }
-    }
+{
+    public int Id { get; set; }
+    public string First_name { get; set; }
+    public string Last_name { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public int Points { get; set; }
+    public int Role_Id { get; set; }
+    public object Role { get; set; }
+    public object FixedTermDeposits { get; set; }
+    public object Transactions { get; set; }
+}
