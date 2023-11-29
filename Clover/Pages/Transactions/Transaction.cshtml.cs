@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Clover.Pages.Transactions
 {
-    public class IndexModel : PageModel
+    public class TransactionModel : PageModel
     {
         [BindProperty]
         public Transaction Transaction { get; set; } = new Transaction();

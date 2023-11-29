@@ -1,5 +1,5 @@
 ﻿@page "/Transactions"
-@model Clover.Pages.Transactions.IndexModel
+@model Clover.Pages.Transactions.TransactionModel
 @{
     Layout = "_Layout-Logeado";
 }
@@ -10,8 +10,11 @@
         
         body{
             background: #11322E;
-            display: flex;
-            justify-content: center;
+           
+        }
+
+        .transaction{
+            margin-bottom: 90px;
         }
 
         #table-container{
@@ -86,65 +89,67 @@
 </head>
 <body>
 
-    <div id="table-container">
-        <table class="table" style="text-align: center">
-            <thead>
-                <tr>
-                    <th scope="col">Trans n°</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Concepto</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Cuenta n°</th>
-                    <th scope="col">Usuario n°</th>
-                    <th scope="col">Cuenta Destino</th>
-                    @* <th id="row-admin" scope="col">Detalle</th> *@
+    <div class="transaction">
+        <div id="table-container">
+            <table class="table" style="text-align: center">
+                <thead>
+                    <tr>
+                        <th scope="col">Trans n°</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Concepto</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Cuenta n°</th>
+                        <th scope="col">Usuario n°</th>
+                        <th scope="col">Cuenta Destino</th>
+                        @* <th id="row-admin" scope="col">Detalle</th> *@
 
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var Transaction in Model.TransactionsList)
-                {
-                    <tr class="align-middle">
-                        <a href="#">
-                        <th scope="row">@Transaction.TransactionId</th></a>
-                        <td>$@Transaction.Amount</td>
-                        <td>@Transaction.Concept</td>
-                        <td>@Transaction.Date</td>
-                        <td>@Transaction.Type</td>
-
-                        <td>@Transaction.AccountId</td>
-                        <td>@Transaction.UserId</td>
-                        <td>@Transaction.ToAccountId</td>
-                        
                     </tr>
-                   
+                </thead>
+                <tbody>
+                    @foreach (var Transaction in Model.TransactionsList)
+                    {
+                        <tr class="align-middle">
+                            <a href="#">
+                            <th scope="row">@Transaction.TransactionId</th></a>
+                            <td>$@Transaction.Amount</td>
+                            <td>@Transaction.Concept</td>
+                            <td>@Transaction.Date</td>
+                            <td>@Transaction.Type</td>
 
+                            <td>@Transaction.AccountId</td>
+                            <td>@Transaction.UserId</td>
+                            <td>@Transaction.ToAccountId</td>
+
+                        </tr>
+
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <nav>
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li id="item-page" class="page-item @(i == Model.PageNumber ? "active" : "")">
+                        <a class="page-link" href="?pageNumber=@i">@i</a>
+                    </li>
                 }
 
-            </tbody>
-        </table>
-    </div>
-    <nav>
-        <ul class="pagination">
-            @for (int i = 1; i <= Model.TotalPages; i++)
-            {
-                <li id="item-page" class="page-item @(i == Model.PageNumber ? "active" : "")">
-                    <a class="page-link" href="?pageNumber=@i">@i</a>
-                </li>
-            }
+            </ul>
+        </nav>
 
-        </ul>
-    </nav>
-
-    <!-- Botón que activa el modal -->
-    <div class="botones-crear" style="display: flex; justify-content:center; gap: 15px;">
-        <button type="button" >
-            <a href="/Index">Volver</a>
-        </button>
-        <button type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <i class="fa-solid fa-plus"></i> Agregar
-        </button>
+        <!-- Botón que activa el modal -->
+        <div class="botones-crear" style="display: flex; justify-content:center; gap: 15px;">
+            <button type="button">
+                <a href="/Index">Volver</a>
+            </button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa-solid fa-plus"></i> Agregar
+            </button>
+        </div>
     </div>
     
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 9999">
@@ -243,4 +248,8 @@
             });
         });
     </script>
+    
+    
+
+    
 </body>

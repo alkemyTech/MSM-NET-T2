@@ -81,7 +81,7 @@ public class AccountService : IAccountService
     public async Task<Account> Deposit(Transaction transaction, string userId)
     { 
         // Endpoint -> Realizar depósito
-        var account = await _unitOfWork.AccountRepo.GetById(int.Parse(userId));
+        var account = await _unitOfWork.AccountRepo.GetById(transaction.AccountId);
         var user = await _unitOfWork.UserRepo.GetById(int.Parse(userId));
         
         // Verificar la cuenta
@@ -90,7 +90,7 @@ public class AccountService : IAccountService
             return null;
         }
         // Comparación del UserId que llega con el UserId de la Account
-        if (userId.Equals(account.Id.ToString()))
+        if (userId.Equals(user.Id.ToString()))
         {
             // Realizar el depósito
             var deposit = account.Money += transaction.Amount;
@@ -102,7 +102,7 @@ public class AccountService : IAccountService
                 Concept = transaction.Concept, 
                 Date = transaction.Date, 
                 Type = transaction.Type, 
-                AccountId = int.Parse(userId), 
+                AccountId = transaction.AccountId, 
                 UserId = int.Parse(userId)
                 
             };
@@ -138,7 +138,7 @@ public class AccountService : IAccountService
         }
         
         // Comparación del UserId que llega con el UserId de la Account
-        if (userId.Equals(account.Id.ToString()))
+        if (userId.Equals(user.Id.ToString()))
         {
             // Realizar la transferencia
             var transfer = account.Money -= transaction.Amount;

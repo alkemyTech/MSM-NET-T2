@@ -1,0 +1,43 @@
+﻿@page "/Catalogue"
+@model Clover.Pages.Catalogue.CatalogueModel
+@{
+    Layout = "_Layout-Logeado";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/estilos/listcatalogue.css" />
+</head>
+<body>
+    <div class="catalogue">
+        <div id="products-container">
+            @foreach (var Product in Model.CatalogueList)
+            {
+                <div class="card">
+                    <div class="id" hidden>@Product.id</div>
+                    <div class="rectangle">
+                        <img src="https://th.bing.com/th/id/OIP.ZcSNf-JOOSvykdhsoXQ4VAHaHa?rs=1&pid=ImgDetMain" alt="Descripción de la imagen">
+                    </div>
+                    <p class="product-name">@Product.productDescription</p>
+                    <p class="points">Puntos: @Product.points</p>
+                </div>
+            }
+        </div>
+        <div id="back-button">
+            <a href="/Index"><button>Volver</button></a>
+        </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#products-container .card").click(function () {
+                var id = $(this).find('.id').text();
+                window.location.href = "/Catalogue/detail/" + id;
+            });
+        });
+    </script>
+</body>
+</html>
+

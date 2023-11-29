@@ -3,45 +3,49 @@
 @{
     ViewData["Title"] = "Iniciar sesión";
 }
-@{
-    Layout = null;
-}
+
 
 @{
     var token = ViewData["Token"] as string;
 }
 <head>
-    <link rel="stylesheet" href="~/css/ui_login.css" />
+    <link rel="stylesheet" href="~/estilos/login.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 </head>
 <body>
 
- <div class="container">
-        <div class="row" id="formulario">
-            <div class="col-md-9 col-sm12">
-                <div id="form-logocontainer">
-                    <h2>TechOil Data Manager</h2>
-                </div>
+ <div id="login-container" class="container">
+
                 <form id="login-form" method="post">
                   
-                    <div class="form-group">
-                        <label asp-for="Input.Email">Email</label>
-                        <input asp-for="Input.Email" class="form-control" />
-                        <span asp-validation-for="Input.Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Input.Password">Contraseña</label>
-                        <input type="password" asp-for="Input.Password" class="form-control" />
-                        <span asp-validation-for="Input.Password" class="text-danger"></span>
-                    </div>
-                    <span style="color: #E74C3C"> @Html.ValidationMessage("Error")</span>
+                    <div id="login-fields">
+                        <div class="form-group">
+                            <label asp-for="Input.Email">Ingrese su email</label>
+                            <input asp-for="Input.Email" class="form-control input" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Input.Password">Ingrese su contraseña</label>
+                            <input type="password" asp-for="Input.Password" class="form-control input" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        <span style="color: #E74C3C"> @Html.ValidationMessage("Error")</span>
 
-                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                    </div>
+
+                    <div id="back-login">
+                <a href="/">
+                    <button type="button" class="btn btn-primary">Atrás</button></a>
+
+                    <button id="submit" type="submit" class="btn btn-primary">Ingresar</button>
+                    </div>
+
+                    <a href="/Register"><button type="button" class="btn btn-primary">Crear Usuario</button></a>
 
                 </form>
-            </div>
-        </div>
+
  </div>
 </body>
 
