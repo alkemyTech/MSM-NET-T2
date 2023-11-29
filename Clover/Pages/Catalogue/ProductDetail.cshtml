@@ -1,42 +1,11 @@
 ﻿@page "/Catalogue/detail/{id}"
 @model Clover.Pages.Catalogue.ProductDetailModel
 @{
+    Layout = "_Layout-Logeado";
+
 }
 <head>
-    <style>
-        * {
-            font-family: 'Poppins';
-        }
-        #product-container{
-            display: flex;
-            justify-content: center;
-        }
-
-        .card-product {
-            background-color: rgba(35, 173, 99, 0.5);
-            width: 450px;
-            height: 450px;
-            padding: 20px;
-            color: white;
-            border-radius: 30px;
-        }
-
-        .image-container {
-            height: 300px;
-            margin-bottom: 20px;
-        }
-
-            .image-container img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 15px;
-            }
-
-        .product-name, .points, .product-id {
-            margin: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="~/estilos/productdetail.css" />
 </head>
 
 <div id="product-container">
@@ -48,4 +17,8 @@
         <p class="product-name">@Model.catalogue.productDescription</p>
         <p class="points">@Model.catalogue.points</p>
     </div>
+</div>
+
+<div id="back-button">
+    <a href="/Catalogue"><button>Volver</button></a>
 </div>

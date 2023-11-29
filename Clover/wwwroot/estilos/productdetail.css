@@ -1,0 +1,52 @@
+﻿* {
+    font-family: 'Poppins';
+}
+
+#product-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.card-product {
+    background-color: rgba(35, 173, 99, 0.5);
+    width: 450px;
+    height: 450px;
+    padding: 20px;
+    color: white;
+    border-radius: 30px;
+}
+
+.image-container {
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+    .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 15px;
+    }
+
+.product-name, .points, .product-id {
+    margin: 0;
+}
+
+#back-button {
+    display: flex;
+    justify-content: center;
+}
+
+    #back-button > a > button {
+        background: transparent;
+        border-radius: 40px;
+        border: 1px solid #51DAC9;
+        width: 100px;
+        padding: 5px;
+        color: white;
+    }
+
+        #back-button > a > button:hover {
+            background: #51DAC955;
+        }
