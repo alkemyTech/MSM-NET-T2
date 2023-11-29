@@ -69,11 +69,7 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPost]
-<<<<<<< HEAD
         [Authorize(Roles = "Admin,Regular")]
-=======
-        //[Authorize(Roles = "Admin, Regular")]
->>>>>>> f77ca2b9092da5903eb1796653a945c79f6a1352
         public async Task<IActionResult> Post(UserDTO user)
         {
             try
