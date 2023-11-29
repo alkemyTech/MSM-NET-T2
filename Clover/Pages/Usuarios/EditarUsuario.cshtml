@@ -4,52 +4,52 @@
     Layout = "_Layout-Logeado";
 }
 <head>
-    <style>
-        #form-container{
-            color:white;
-        }
-    </style>
+    <link rel="stylesheet" href="~/estilos/EditarEntidad.css" />
 </head>
 <body>
     <!-- Formulario con los campos de edición del usuario-->
     <form method="post" id="form-container">
-        <div class="form-group">
-            <label>Código de Usuario</label>
-            <input type="number" class="form-control" asp-for="user.Id" readonly>
+        <div id="subform">
+            <div class="form-group">
+                <label>Cód. de Usuario</label>
+                <input type="number" class="form-control" asp-for="user.Id" readonly>
+            </div>
+            <div class="form-group">
+                <label asp-for="user.First_name">Nombre</label>
+                <input type="text" class="form-control" asp-for="user.First_name" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="user.Last_name">Apellido</label>
+                <input type="text" class="form-control" asp-for="user.Last_name" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="user.Email">Email</label>
+                <input type="text" class="form-control" asp-for="user.Email" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="user.Password">Contraseña</label>
+                <input type="password" class="form-control" asp-for="user.Password" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="user.Points">Puntos</label>
+                <input type="number" class="form-control" asp-for="user.Points" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="user.Role_Id">Rol</label>
+                <input type="number" class="form-control" asp-for="user.Role_Id" required>
+            </div>
         </div>
-        <div class="form-group">
-            <label asp-for="user.First_name">Nombre</label>
-            <input type="text" class="form-control" asp-for="user.First_name" required>
-        </div>
-        <div class="form-group">
-            <label asp-for="user.Last_name">Apellido</label>
-            <input type="text" class="form-control" asp-for="user.Last_name" required>
-        </div>
-        <div class="form-group">
-            <label asp-for="user.Email">Email</label>
-            <input type="text" class="form-control" asp-for="user.Email" required>
-        </div>        
-        <div class="form-group">
-            <label asp-for="user.Password">Contraseña</label>
-            <input type="password" class="form-control" asp-for="user.Password" required>
-        </div>
-        <div class="form-group">
-            <label asp-for="user.Points">Puntos</label>
-            <input type="number" class="form-control" asp-for="user.Points" required>
-        </div>
-        <div class="form-group">
-            <label asp-for="user.Role_Id">Rol</label>
-            <input type="number" class="form-control" asp-for="user.Role_Id" required>
-        </div>
-
-        <!-- Botones de edición -->
-        <div class="modal-footer">
-            <a href="/Usuarios"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></a>
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                Eliminar
-            </button>
-        </div>
+            
+      
+            <!-- Botones de edición -->
+            <div class="buttons-form">
+                <a href="/Usuarios"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></a>
+                <button type="submit" class="btn btn-success">Guardar</button>
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    Eliminar
+                </button>
+            </div>
+        
     </form>
 
 

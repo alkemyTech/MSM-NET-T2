@@ -7,8 +7,12 @@
 </head>
 
 @* @{
-    var token = TempData["Token"] as string;
+    Layout = "_Layout-Logeado";
 } *@
+
+@{
+    var token = TempData["Token"] as string;
+}
 
 @* <div class="text-center">
     <a href="/Transactions">
@@ -25,11 +29,11 @@
     </a>
 </div> *@
 
-@* <script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         var token = '@TempData["Token"]'; // Obtengo el token desde TempData
         if (token) {
             localStorage.setItem("token", token); // Establezco el token en localStorage
         }
     });
-</script> *@
+</script>
