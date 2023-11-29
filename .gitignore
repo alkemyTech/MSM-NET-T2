@@ -8,4 +8,6 @@ VirtualWallet/bin/
 VirtualWallet/obj/
 Clover/bin/
 Clover/obj/
-
+VirtualWallet/appsettings.json
+/VirtualWallet/VirtualWallet.csproj
+/VirtualWallet/appsettings.json

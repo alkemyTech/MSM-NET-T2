@@ -7,7 +7,6 @@ using VirtualWallet.DataAccess;
 using VirtualWallet.Repository;
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services;
-using VirtualWallet.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

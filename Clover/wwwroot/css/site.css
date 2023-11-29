@@ -1,18 +1,344 @@
 html {
-  font-size: 14px;
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  line-height: normal;
+  color: #F4EFE4;
+  background: #11322E;
+  margin-bottom: 60px;
+}
+
+body section.box {
+  display: flex;
+  border-radius: 8px;
+  background: rgba(255,255,255,.05);
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  margin: 25px 0;
+  transition: all 0.2s;
+  position: relative;
+}
+
+body .box .circle1 {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(#b0e633, #53ef7d);
+  border-radius: 50%;
+  position: absolute;
+  animation: move-up6 1s ease-in infinite alternate-reverse;
+  top: -25px;
+  left: -25px;
+}
+
+body .box .circle2 {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(#b0e633, #53ef7d);
+  border-radius: 50%;
+  position: absolute;
+  animation: move-up6 1s ease-in infinite alternate-reverse;
+  bottom: -25px;
+  right: -25px;
+  animation-name: move-down1;
+}
+
+@keyframes move-up6 {
+  to {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes move-down1 {
+  to {
+    transform: translateY(10px);
+  }
+}
+
+body .box .text .title {
+  font-size: 40px;
+  font-weight: 600;
+  color: #3db077;
+  margin: 30px 0 0 40px;
+}
+
+body .box .text .sub {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 50px 0 30px 40px;  
+}
+
+body .box .text .sub i {
+  font-size: 18px;
+  margin-right: 20px;
+  color: #3db077;
+}
+
+/* Card Mastercard */
+body .box div.mastercard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 50px;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 240px;
+  height: 154px;
+  perspective: 1000px;
+  color: white;
+}
+
+.heading_8264 {
+  position: absolute;
+  letter-spacing: .2em;
+  font-size: 0.5em;
+  top: 2em;
+  left: 18.6em;
+}
+
+.logo {
+  position: absolute;
+  top: 6.8em;
+  left: 11.7em;
+}
+
+.chip {
+  position: absolute;
+  top: 2.3em;
+  left: 1.5em;
+}
+
+.contactless {
+  position: absolute;
+  top: 3.5em;
+  left: 12.4em;
+}
+
+.number {
+  position: absolute;
+  font-weight: bold;
+  font-size: .6em;
+  top: 8.3em;
+  left: 1.6em;
+}
+
+.valid_thru {
+  position: absolute;
+  font-weight: bold;
+  top: 635.8em;
+  font-size: .01em;
+  left: 140.3em;
+}
+
+.date_8264 {
+  position: absolute;
+  font-weight: bold;
+  font-size: 0.5em;
+  top: 13.6em;
+  left: 3.2em;
+}
+
+.name {
+  position: absolute;
+  font-weight: bold;
+  font-size: 0.5em;
+  top: 16.1em;
+  left: 2em;
+}
+
+.strip {
+  position: absolute;
+  background-color: black;
+  width: 14.7em;
+  height: 1.5em;
+  top: 2.4em;
+  background: repeating-linear-gradient(
+          45deg,
+          #303030,
+          #303030 10px,
+          #202020 10px,
+          #202020 20px
+  );
+}
+
+.mstrip {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  width: 8em;
+  height: 0.8em;
+  top: 5em;
+  left: .8em;
+  border-radius: 2.5px;
+}
+
+.sstrip {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  width: 4.1em;
+  height: 0.8em;
+  top: 5em;
+  left: 10em;
+  border-radius: 2.5px;
+}
+
+.code {
+  font-weight: bold;
+  text-align: center;
+  margin: .2em;
+  color: black;
+}
+
+.flip-card-inner {
+  text-align: center;
+  border: 2px solid #50d9c9;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px #f4efe4; 
+  position: relative;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  width: 100%;
+  height: 100%;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+  border: 2px solid #53ef7d;
+  box-shadow: 0 0 10px #b0e633;
+  border-radius: 1rem;
+}
+
+.flip-card-front, .flip-card-back {
+  box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+}
+
+.flip-card-front {
+  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 2px, rgba(0, 0, 0, 0.3) 0 7px 13px -3px, rgba(0, 0, 0, 0.2) 0 -1px 0 inset;
+  background-color: #171717;
+}
+
+.flip-card-back {
+  box-shadow: rgba(0, 0, 0, 0.4) 0 2px 2px, rgba(0, 0, 0, 0.3) 0 7px 13px -3px, rgba(0, 0, 0, 0.2) 0 -1px 0 inset;
+  background-color: #171717;
+  transform: rotateY(180deg);
+}
+
+body section.box-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-bottom div.box-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 40px;
+  background: rgba(255,255,255,.05);
+  box-shadow: 0 0 10px rgba(80, 217, 201);
+  padding: 20px;
+  width: 650px;
+}
+
+.box-bottom .box-body p {
+  font-size: 20px;
+  color: #f4eee4;
+  margin-bottom: 0;
+}
+
+.box-bottom .box-body button {
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 40px;
+  background: transparent;
+  border: 2px solid #50d9c9;
+  box-shadow: 0 0 10px #f4efe4;
+  color: #f4eee4;
+  width: 140px;
+  height: 50px;
+  transition: .5s;
+}
+
+.box-bottom .box-body button:hover {
+  border: 2px solid #53ef7d;
+  box-shadow: 0 0 10px #b0e633;
+  scale: 1.1;
+  transition: .5s;
+}
+
+/* BANNER */
+body img.banner {
+  
+  width: 100%;
+  margin: 100px 0;
+}
+
+/* ABOUT */
+body section.about {
+  display: flex;
+  border-radius: 8px;
+  background: rgba(255,255,255,.05);
+  box-shadow: 0 0 10px rgba(0,0,0,0.25);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  margin: 25px 0;
+}
+
+body section.about .main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+body .about .main .title {
+  font-size: 40px;
+  font-weight: 600;
+  color: #3db077;
+  width: 50%;
+}
+
+body .about .main .sub {
+  font-size: 20px;
+  font-weight: 400;
+  margin: 50px 30px;  
+  width: 100%;
+}
+
+body .about .main .sub i {
+  font-size: 18px;
+  margin-right: 20px;
+  color: #3db077;
+}
+
+body .about .main .box-photo {
+  border: 2px solid #50d9c9;
+  box-shadow: 0 0 10px #f4efe4;
+  border-radius: 30px;
+  margin-top: 40px;
+  overflow: hidden;
+  width: 35%;
+}
+
+body .about .main .box-photo img {
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
   html {
     font-size: 16px;
   }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
 }

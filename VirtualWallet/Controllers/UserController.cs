@@ -24,7 +24,7 @@ namespace VirtualWallet.Controllers
         {
             try
             {
-            var users = await _userService.GetAllUsersAsync(pageNumber, pageSize);
+                var users = await _userService.GetAllUsersAsync(pageNumber, pageSize);
 
                 if (users == null)
                 {

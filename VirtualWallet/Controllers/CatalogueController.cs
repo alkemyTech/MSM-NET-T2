@@ -10,8 +10,6 @@ namespace VirtualWallet.Controllers
     [Route("api/[controller]")]
     public class CatalogueController : Controller
     {
-
-
         private readonly CatalogueService _catalogueService;
 
         public CatalogueController(CatalogueService catalogueService)
@@ -47,7 +45,6 @@ namespace VirtualWallet.Controllers
 
         [HttpGet]
         [Route("{id}")]
-
         [Authorize(Roles = "Admin,Regular")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -72,7 +69,6 @@ namespace VirtualWallet.Controllers
         }
 
         [HttpPost]
-
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(Catalogue catalogue)
         {
@@ -90,7 +86,6 @@ namespace VirtualWallet.Controllers
 
         [HttpPut]
         [Route("{id}")]
-
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(int id, Catalogue catalogue)
         {
