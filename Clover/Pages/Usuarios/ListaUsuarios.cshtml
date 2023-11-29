@@ -11,6 +11,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">Puntos</th>
                 <th scope="col">Rol</th>
+                <th scope="col">acción</th>
                 <th id="fila-administrar" scope="col"></th>
 
             </tr>
@@ -24,6 +25,7 @@
                     <td>@Trabajo.Email</td>
                     <td>@Trabajo.Points</td>
                     <td>@Trabajo.Role_Id</td>
+                    <td><a href="/Usuarios/Editar/@Trabajo.Id"><button type="button" class="btn btn-success">Editar/Eliminar</button></a></td>
                 </tr>
             }
         </tbody>
