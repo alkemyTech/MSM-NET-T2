@@ -69,7 +69,7 @@ a {
     margin-bottom: 10px;
 }
 
-#back-login > a > button, #login-form > a > button {
+#back-login > a > button ,#login-form > a > button {
     width: 140px;
     border-radius: 40px;
     background: transparent;
