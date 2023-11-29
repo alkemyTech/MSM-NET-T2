@@ -6,7 +6,7 @@
 <div class=" = fixedTermIntro">
 <h1>@ViewData["Title"]</h1>
 
- <button><a href="~/FormNewFixedTerm" class="button">Nuevo plazo fijo</a></button>
+ <button><a href="/FixedTerms/FormNewFixedTerm" class="button">Nuevo plazo fijo</a></button>
  </div>
 
 
@@ -36,7 +36,12 @@
                 <td>@fixedTerm.ClosingDate</td>
                 <td>@fixedTerm.NominalRate</td>
                 <td>@fixedTerm.State</td>
-
+                <td>
+                    <a asp-page="FixedTerms/FormEditFixedTerm" asp-route-id="@fixedTerm.Id" class="btn btn-primary">Editar</a>
+                    <form asp-page-handler="Delete" asp-route-id="@fixedTerm.Id" method="post">
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
