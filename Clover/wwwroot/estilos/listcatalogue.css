@@ -21,7 +21,7 @@
 .card {
     background-color: rgba(35, 173, 99, 0.5);
     width: 300px;
-    max-height: 300px;
+    max-height: 400px;
     padding: 20px;
     color: white;
     border-radius: 15px;
@@ -29,7 +29,7 @@
 }
 
 .rectangle {
-    height: 200px;
+    height: 256px;
     margin-bottom: 20px;
 }
 
