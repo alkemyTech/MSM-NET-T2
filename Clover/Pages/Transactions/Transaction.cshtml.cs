@@ -86,7 +86,7 @@ namespace Clover.Pages.Transactions
                         TransactionsList = new List<Transaction>();
                     }
                 }
-
+                return Redirect("/Transactions");
             }
             return Page();
 

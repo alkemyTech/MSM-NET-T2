@@ -27,7 +27,9 @@ public class AccountService : IAccountService
         {
             return null;
         }
-        
+
+        var totalPages = (int)Math.Ceiling((double)pagedAccounts.Count() / pageSize);
+
         var prevPage = pageNumber > 1 ? "Get?pageNumber=" + (pageNumber - 1) + "&pageSize=" + pageSize : null;
             
         var nextPage = pageNumber < (int)Math.Ceiling((double)pagedAccounts.Count() / pageSize) ? "Get?pageNumber=" + (pageNumber + 1) + "&pageSize=" + pageSize : null;
@@ -36,7 +38,8 @@ public class AccountService : IAccountService
         {
             Accounts = pagedAccounts,
             prevPage = prevPage,
-            nextPage = nextPage
+            nextPage = nextPage,
+            TotalPages = totalPages
         };
         
         return result;
