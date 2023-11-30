@@ -1,13 +1,15 @@
 ﻿@page "/User"
 @model UserModel
 @{
-    Layout = "_Layout-Logeado";
+    ViewData["Title"] = "User";
+    // Layout = "_Layout-Logeado";
 }
 
 <style>
     .User {
         display: flex;
-        justify-content: space-around
+        justify-content: space-around;
+        transform: translateY(20%);
     }
 
     .userButtons {
@@ -28,6 +30,7 @@
         width: 140px;
         height: 50px;
         transition: .5s;
+        border: 1px solid #51DAC9;
     }
 
         .buttonUserLink:hover {
@@ -36,9 +39,12 @@
             transition: .5s;
         }
 
+    .buttonUserLink> a{
+        color : white;
+        text-decoration: none;   }
+
     .dataUserDiv {
-       
-        background: rgba(81, 218, 201, 0.50); /* Establece el color de fondo */
+        background: rgba(35, 173, 99, 0.5); /* Establece el color de fondo */
         border-radius: 20px;
         width: 420px;
         height: 350px;
@@ -52,10 +58,11 @@
     }
 
 </style>
+<body>
 
-<div class="User">
+    <div class="User">
 
-    <div class="dataUserDiv">
+        <div class="dataUserDiv">
 
         <div class="card">
             <div class="card-body" >Nombre: @Model.Encontrado.First_name </div>
@@ -78,10 +85,11 @@
 <div class="userButtons">
         <a href="/FixedTerms/FixedTermDeposit" class="button"><button class="buttonUserLink">Plazo Fijo</button></a>
         <a href="/Transaction" class="button"><button class="buttonUserLink">Transacciones</button></a>
-        <a href="/Accounts/Account" class="button"><button class="buttonUserLink">Cuenta</button></a>
-        <a href="/Catalogue/Catalogue" class="button"><button class="buttonUserLink">Catalogo</button></a>
+        <a href="/Accounts" class="button"><button class="buttonUserLink">Cuenta</button></a>
+        <a href="/Catalogue" class="button"><button class="buttonUserLink">Catalogo</button></a>
 </div>
 
-</div>
+    </div>
+</body>
 
 

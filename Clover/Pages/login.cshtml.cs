@@ -45,6 +45,15 @@ namespace Clover.Pages
                 var token = responseObject["token"];
                 var id = responseObject["id"];
 
+                if(id.Equals("1") || id.Equals("2") || id.Equals("3") || id.Equals("4"))
+                {
+                    HttpContext.Session.SetString("Role", "Admin");
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Role", "Regular");
+                }
+
                 HttpContext.Session.SetString("BearerToken", token);
                 HttpContext.Session.SetString("UserId", id);
 
@@ -52,6 +61,7 @@ namespace Clover.Pages
                 TempData.Keep("Id");
                 TempData["Token"] = token;
                 TempData.Keep("Token");
+
                 return LocalRedirect(Url.Content("/User"));
             }
             else
