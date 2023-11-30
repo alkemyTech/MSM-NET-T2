@@ -47,7 +47,7 @@ public class AccountController : ControllerBase
     // GET: api/accounts/{id}
     [HttpGet]
     [Route("{id}")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Regular")]
     public async Task<IActionResult> GetById(int id)
     {
         try
