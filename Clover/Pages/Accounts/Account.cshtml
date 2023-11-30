@@ -2,25 +2,24 @@
 @model AccountModel
 
 @{
-    Layout = "Shared/_Layout";
+    Layout = "_Layout-Logeado";
     ViewData["Title"] = "Cuenta";
 
     var token = ViewData["Token"] as string;
 }
 
 <head>
-    <link rel="stylesheet" href="/css/ui_account.css">
+    <link rel="stylesheet" href="/estilos/account.css">
     <title>@ViewData["Title"]</title>
 </head>
 
 <body>
 <div class="title">
-    <h1>Cuentas</h1>
-    <h2>Toda la información que necesitás</h2>
+    <p id="title">Cuentas</p>
+    <p>Toda la información que necesitás</p>
 </div>
 <div class="box">
-    <!-- GetAll Admin GetById User -->
-    <div class="table">
+    <div id="table-container">
         <table class="table">
             <thead>
             <tr>
@@ -29,52 +28,45 @@
                 <th scope="col">Dinero</th>
                 <th scope="col">Cuenta bloqueada</th>
                 <th scope="col">Usuario n°</th>
-                <th id="fila-administrar" scope="col"></th>
             </tr>
             </thead>
             
             <tbody>
             @foreach (var account in Model.AccountList)
             {
-                <tr>
-                    <td>@account.Id</td>
+                <tr class="align-middle">
+                    <a href="#"></a>
+                    <th>@account.Id</th>
                     <td>@account.CreationDate</td>
-                    <td>@account.Money</td>
+                    <td>$ @account.Money</td>
                     <td>@account.IsBlocked</td>
                     <td>@account.UserId</td>
-                    <td>
-                        <a href="/Account/edit/@account.Id" class="btn btn-primary">
-                            <button 
-                                type="button" 
-                                id="boton-administrar" 
-                                class="btn btn-primary">
-                                Administrar 
-                                <i class="fa-solid fa-gear"></i>
-                            </button>
-                        </a>
-                    </td>
                 </tr>
             }
             </tbody>
         </table>
     </div>
     
-    <div class="buttons">
-        <!-- Botón volver a perfil user -->
-        <a href="/User/Profile">
-            <button
-                type="button"
-                class="btn-user">
-                <i class="fa-solid fa-arrow-left-long"></i>
-                Volver
-            </button>
-         </a>
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li id="item-page" class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+    
+    <div class="buttons botones-crear">
+        <button type="button" class="btn-user">
+            <a href="/Index">
+                <i class="fa-solid fa-arrow-left-long"></i> Volver
+            </a>
+        </button>
+        
         <!-- Botón que activa el modal -->
-        <button
-            type="button"
-            class="btn-admin"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal">
+        <button type="button" class="btn-admin" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Agregar
             <i class="fa-solid fa-plus"></i>
         </button>
@@ -96,21 +88,11 @@
                         <!-- Formulario -->
                         <form method="post" asp-action="">
                             <div class="form-group">
-                                <label for="Id">Cuenta n°</label>
+                                <label for="UserId">Usuario n°</label>
                                 <input
                                     type="number"
-                                    id="Id"
-                                    name="Account.Id"
-                                    class="form-control"
-                                    placeholder="Cuenta n°"
-                                    required/>
-                            </div>
-                            <div class="form-group">
-                                <label for="CreationDate">Fecha de creación</label>
-                                <input
-                                    type="date"
-                                    id="CreationDate"
-                                    name="Account.CreationDate"
+                                    id="UserId"
+                                    name="Account.UserId"
                                     class="form-control"
                                     required/>
                             </div>
@@ -125,24 +107,27 @@
                             </div>
                             <div class="form-group">
                                 <p>Estado</p>
-                                <label for="IsBlocked">
+                                <div class="form-check form-check-inline">
                                     <input
                                         type="radio"
-                                        id="IsBlocked"
+                                        id="IsBlockedTrue"
                                         name="Account.IsBlocked"
-                                        class="form-control"
+                                        class="form-check-input"
+                                        value="true"
+                                        checked
+                                        required/>
+                                    <label for="IsBlockedTrue">Cuenta bloqueada</label>
+                                </div>    
+                                <div class="form-check form-check-inline">
+                                    <input
+                                        type="radio"
+                                        id="IsBlockedFalse"
+                                        name="Account.IsBlocked"
+                                        class="form-check-input"
                                         value="false"
-                                        required/>Cuenta bloqueada
-                                </label>
-                                <label for="IsBlocked">
-                                    <input
-                                        type="radio"
-                                        id="IsBlocked"
-                                        name="Account.IsBlocked"
-                                        class="form-control"
-                                        value="true" checked
-                                        required/>Cuenta no bloqueada
-                                </label>
+                                        required />
+                                    <label for="IsBlockedFalse">Cuenta no bloqueada</label>
+                                </div>
                             </div>
 
                             <div class="modal-footer">
@@ -165,4 +150,16 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+
+            $("tbody tr").click(function () {
+
+                var id = $(this).find('th').text();
+                window.location.href = "/account/editar/" + id;
+            });
+        });
+</script>
 </body>

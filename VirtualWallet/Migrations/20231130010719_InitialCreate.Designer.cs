@@ -12,7 +12,7 @@ using VirtualWallet.DataAccess;
 namespace VirtualWallet.Migrations
 {
     [DbContext(typeof(VirtualWalletDbContext))]
-    [Migration("20231130001744_InitialCreate")]
+    [Migration("20231130010719_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

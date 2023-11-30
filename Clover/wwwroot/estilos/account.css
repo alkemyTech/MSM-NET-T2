@@ -5,6 +5,58 @@ html {
     min-height: 100%;    
 }
 
+.transaction {
+    margin-bottom: 90px;
+}
+
+.botones-crear {
+    padding: 10px;
+    display: flex; justify-content:center; gap: 15px;
+}
+
+.botones-crear button {
+    border-radius: 40px;
+    background: transparent;
+    border: 2px solid #51DAC9;
+    width: 120px;
+    color: #F4EFE4;
+}
+
+.botones-crear button a {
+    text-decoration: none;
+    color: #F4EFE4;
+}
+
+
+.modal-content {
+    border-radius: 25px !important;
+    background: #11322E;
+    color: white;
+}
+
+.modal-footer {
+    border-top: 0;
+}
+
+.form-group > label {
+    margin: 5px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pagination .page-item.active .page-link {
+    background: transparent;
+    border: 1px solid green;
+}
+
+.page-link {
+    color: green;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -17,12 +69,18 @@ body {
 
 body div.title {
     text-align: center;
-    margin: 70px 0;
+    margin: 15px 0;
 }
 
-body div.title h1 {
+body div.title p #title {
+    font-weight: 600;
+    font-size: 40px;
+    color: #3db077;
+}
+
+body div.title p {
+    font-size: 20px; 
     font-weight: bold;
-    font-size: 60px;
 }
 
 body div.box {
@@ -32,21 +90,35 @@ body div.box {
     justify-content: center;
 }
 
-body div.table {
-    background: rgba(35, 173, 99, 0.50);
-    border-radius: 30px;
-    margin: 40px;
-    padding: 10px; 
+#table-container {
+    box-shadow: 0 0 10px rgb(61, 176, 119);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+    overflow: hidden;
+    margin: 10px;
+    padding: 30px;
 }
 
-body div.table table {
-    font-size: 22px;
+#table-container table {
+    font-size: 20px;
     text-align: center;
     color: #F4EFE4;
 }
 
+#table-container table thead {
+    color: #3db077;
+}
+
+#table-container td {
+    cursor: pointer;
+}
+
 body div.table table thead tr th {
     font-weight: normal;
+}
+
+#table-container th, #table-container td {
+    border-bottom: 2px solid #51DAC9;
 }
 
 .table > :not(:last-child) > :last-child > * {
@@ -71,6 +143,7 @@ body div.buttons button.btn-user {
     width: 150px;
     height: 50px;
 }
+
 body div.buttons a {
 text-decoration: none;
 }
@@ -111,4 +184,67 @@ body div.form {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+/* EDITAR */
+
+#form-container {
+    color: white;
+    transform: translateY(100%)
+}
+
+.form-group {
+    width: 150px;
+    text-align: center;
+}
+
+#subform {
+    display: flex;
+    color: white;
+    border-radius: 30px;
+    padding: 20px;
+    justify-content: space-evenly;
+    background-color: rgba(159, 163, 246, 0.5);
+}
+
+.buttons-form {
+    margin-top: 25px;
+    gap: 15px;
+    border-top: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.buttons-form > button, .buttons-form > a > button {
+    border-radius: 40px;
+    width: 120px;
+    border: 1px solid #9FA3F6;
+    background: transparent;
+}
+
+
+.form-group > input, .form-control:disabled, .form-control[readonly] {
+    background: none;
+    color: white;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid white;
+}
+
+.form-group > input:active {
+}
+
+.form-group > input:focus {
+    background: none;
+    color: white;
+    border-bottom: 1px solid white;
+    box-shadow: none;
+}
+
+#subform .form-group:nth-child(2n){
+    width: 200px;
+}
+
+.modal-dialog{
+    color: #000;
 }

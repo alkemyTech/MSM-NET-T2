@@ -1,88 +1,56 @@
-﻿@page "/User"
+﻿@page "/user"
 @model UserModel
+
 @{
+    ViewData["Title"] = "Perfil";
+    Layout = "_Layout-Logeado";
 }
 
-<style>
-    .User {
-        display: flex;
-        justify-content: space-around
-    }
-
-    .userButtons {
-        display: flex;
-        flex-direction: column; /* Establece la dirección del diseño a columna */
-        align-items: flex-start;
-        justify-content: space-between
-
-    }
-
-    .buttonUserLink {
-        margin: 5px;
-        font-size: 14px;
-        font-weight: 500;
-        border-radius: 40px;
-        background: transparent;
-        color: #f4eee4;
-        width: 140px;
-        height: 50px;
-        transition: .5s;
-    }
-
-        .buttonUserLink:hover {
-            background: rgba(81, 218, 201, 0.50);
-            scale: 1.1;
-            transition: .5s;
-        }
-
-    .dataUserDiv {
-       
-        background: rgba(81, 218, 201, 0.50); /* Establece el color de fondo */
-        border-radius: 20px;
-        width: 420px;
-        height: 350px;
-    }
-
-    .card {
-        background: rgba(81, 218, 201, 0.10);
-        border-radius: 20px; /* Bordes redondeados para las tarjetas individuales */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para resaltar las tarjetas */
-        height: 70px;
-    }
-
-
-</style>
+<head>
+    <link rel="stylesheet" href="~/estilos/User.css" />
+</head>
+<body>
 
 <div class="User">
-
-    <div class="dataUserDiv">
-
-        <div class="card">
-            <div class="card-body" >@Model.Encontrado.First_name </div>
+    <div class="dataUser">
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Nombre</p>
+                <p class="data-model">@Model.Encontrado.First_name</p>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-body">@Model.Encontrado.Last_name</div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Apellido</p>
+                <p class="data-model">@Model.Encontrado.Last_name</p>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-body">@Model.Encontrado.Email</div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Email</p>
+                <p class="data-model">@Model.Encontrado.Email</p>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-body">@Model.Encontrado.Points</div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Puntos Acumulados</p>
+                <p class="data-model">@Model.Encontrado.Points</p>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-body">@Model.Encontrado.Role_Id</div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Rol del Usuario</p>
+                <p class="data-model">@Model.Encontrado.Role_Id</p>
+            </div>
         </div>
     </div>
 
-
-<div class="userButtons">
+    <div class="userButtons">
         <button class="buttonUserLink"><a href="/FixedTerms/FixedTermDeposit" class="button">Plazos Fijos</a></button>
-        <button class="buttonUserLink"><a href="/Transactions/Transaction" class="button">Transacciones</a></button>
-        <button class="buttonUserLink"><a href="/Accounts/Account" class="button">Cuenta</a></button>
-        <button class="buttonUserLink"><a href="/Catalogue/Catalogue" class="button">Catalogo</a></button>
-
+        <button class="buttonUserLink"><a href="/Transactions" class="button">Transacciones</a></button>
+        <button class="buttonUserLink"><a href="/Account" class="button">Cuenta</a></button>
+        <button class="buttonUserLink"><a href="/Catalogue" class="button">Catalogo</a></button>
+    </div>
 </div>
-
-</div>
-
+</body>
 

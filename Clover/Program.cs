@@ -17,7 +17,7 @@ namespace Clover
 
             builder.Services.AddSession(options =>
             {
-                // Tiempo de duración de la sesión que utilizo para que todos los metodos tengan el valor del bearer token
+                // Tiempo de duraciï¿½n de la sesiï¿½n que utilizo para que todos los metodos tengan el valor del bearer token
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;

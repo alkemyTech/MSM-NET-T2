@@ -56,12 +56,9 @@ namespace Clover.Pages
             }
             else
             {
-                ModelState.AddModelError("Error", "Verifique su email y/o contraseña.");
+                ModelState.AddModelError("Error", "Verifique su email y/o contraseÃ±a.");
                 return Page();
             }
-
-
         }
     }
-
 }

@@ -1,0 +1,83 @@
+page "/account/editar/{id}"
+@model Clover.Pages.Accounts.EditarAccountModel
+@{
+    Layout = "_Layout-Logeado";
+    ViewData["Title"] = "Editar Cuenta";
+}
+
+<body>
+    <!-- Formulario con los campos de edición del usuario-->
+    <form method="post" id="form-container">
+        <div id="subform">
+            <div class="form-group">
+                <label>Id</label>
+                <input type="number" class="form-control" asp-for="Account.Id" readonly>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.CreationDate">Fecha</label>
+                <input type="datetime" class="form-control" asp-for="Account.CreationDate" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Money">Dinero</label>
+                <input type="text" class="form-control" asp-for="Account.Money" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.IsBlocked">Cuenta Bloqueada</label>
+                <input type="text" class="form-control" name="Account.IsBlocked" asp-for="Account.IsBlocked">
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.UserId">User Id</label>
+                <input type="number" class="form-control" asp-for="Account.UserId" required>
+            </div>
+        </div>
+
+        <!-- Botones de edición -->
+        <div class="buttons-form">
+            <a href="/account"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></a>
+            <button type="submit" class="btn btn-success">Guardar</button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                Eliminar
+            </button>
+        </div>
+    </form>
+
+
+    <!-- Modal para confirmar la eliminación del Usuario -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que quieres eliminar este elemento?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <form method="post"><input id="delete" type="submit" asp-page-handler="Delete" class="btn btn-danger" value="Eliminar"></input></form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Oculta el campo ToAccountId al cargar la página
+            $('#ToAccount').hide();
+
+            // Agrega un evento change a los radio buttons con name "Transaction.Type"
+            $('input[name="Transaction.Type"]').change(function () {
+                // Verifica si el valor seleccionado es "topup"
+                if ($(this).val() === 'topup') {
+
+                    // Oculta el campo ToAccountId si es "topup"
+                    $('#ToAccount').hide();
+                } else {
+                    // Muestra el campo ToAccountId para otros tipos
+                    $('#ToAccount').show();
+                }
+            });
+        });
+    </script>
+</body>
