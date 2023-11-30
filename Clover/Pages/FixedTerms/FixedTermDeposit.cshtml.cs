@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace Clover.Pages
 {
@@ -30,22 +31,55 @@ namespace Clover.Pages
 
             public int TotalPages { get; set; }
 
+        //public async Task OnGetAsync()
+        //{
+        //    using (var httpClient = new HttpClient())
+        //    {
+        //        string token = HttpContext.Session.GetString("BearerToken");
+        //        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        //        var fixedTermResponse = await httpClient.GetAsync($"http://localhost:7120/api/FixedTerm/GetAllMyFixedTerms?pageNumber={PageNumber}&pageSize={PageSize}");
+
+        //        if (fixedTermResponse.IsSuccessStatusCode)
+        //        {
+        //            var jsonResponse = await fixedTermResponse.Content.ReadAsStringAsync();
+
+        //            if (!string.IsNullOrWhiteSpace(jsonResponse))
+        //            {
+        //                FixedTermDeposit = await fixedTermResponse.Content.ReadFromJsonAsync<List<FixedTermDeposit>>();
+        //            }
+        //            else
+        //            {
+        //                FixedTermDeposit = new List<FixedTermDeposit>();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            FixedTermDeposit = new List<FixedTermDeposit>();
+        //        }
+        //    }
+        //}
+
         public async Task OnGetAsync()
         {
             using (var httpClient = new HttpClient())
             {
                 string token = HttpContext.Session.GetString("BearerToken");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                
-                var fixedTermResponse = await httpClient.GetAsync($"http://localhost:7120/api/FixedTerm/GetAll?pageNumber={PageNumber}&pageSize={PageSize}");
+
+                var fixedTermResponse = await httpClient.GetAsync($"http://localhost:7120/api/FixedTerm/GetAllMyFixedTerms?pageNumber={PageNumber}&pageSize={PageSize}");
+                var jsonResponse = await fixedTermResponse.Content.ReadAsStringAsync();
 
                 if (fixedTermResponse.IsSuccessStatusCode)
                 {
-                    var jsonResponse = await fixedTermResponse.Content.ReadAsStringAsync();
+                    var apiResponse = JsonConvert.DeserializeObject<FixedTermResponse>(jsonResponse);
 
-                    if (!string.IsNullOrWhiteSpace(jsonResponse))
+                    if (apiResponse != null)
                     {
-                        FixedTermDeposit = await fixedTermResponse.Content.ReadFromJsonAsync<List<FixedTermDeposit>>();
+                        FixedTermDeposit = apiResponse.FixedTermDeposits;
+                        PrevPage = apiResponse.PrevPage;
+                        NextPage = apiResponse.NextPage;
+                        TotalPages = apiResponse.TotalPages;
                     }
                     else
                     {
@@ -58,7 +92,6 @@ namespace Clover.Pages
                 }
             }
         }
-
         //public async Task<IActionResult> OnPostCreateFixedTerm()
         //{
         //    using (var httpClient = new HttpClient())
@@ -119,9 +152,6 @@ namespace Clover.Pages
 
 public class FixedTermDeposit
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [BindNever]
     public int Id { get; set; }
 
     [BindNever]
@@ -138,10 +168,8 @@ public class FixedTermDeposit
 
     public DateTime ClosingDate { get; set; }
 
-    [Column(TypeName = "decimal(10, 2)")]
     public decimal NominalRate { get; set; }
 
-    [MaxLength(255)]
     public string State { get; set; }
 }
 
