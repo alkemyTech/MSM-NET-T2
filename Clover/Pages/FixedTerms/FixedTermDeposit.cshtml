@@ -38,8 +38,6 @@
                 <td>@fixedTerm.State</td>
                 <td>
                     <a asp-page="FixedTerms/FormEditFixedTerm" asp-route-id="@fixedTerm.Id" class="btn btn-primary">Editar</a>
-
-                    <a asp-page="./Edit" asp-route-id="@fixedTerm.Id" class="btn btn-primary">Editar</a>
                     <form asp-page-handler="Delete" asp-route-id="@fixedTerm.Id" method="post">
                         <button type="submit" class="btn btn-danger">Borrar</button>
                     </form>

@@ -12,11 +12,24 @@ button {
     width: 170px;
     height: 50px;
     border-radius: 70px;
-    color: #F4EFE4;
-    background-color: #51DAC980;
     border-color: #51DAC980;
     font-family: "Poppins";
+    margin: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 40px;
+    background: transparent;
+    color: #f4eee4;
+    width: 140px;
+    height: 50px;
+    transition: .5s;
 }
+
+    button:hover {
+        background: rgba(81, 218, 201, 0.50);
+        scale: 1.1;
+        transition: .5s;
+    }
 
 /*NUEVO PLAZO FIJO FORMULARIO*/
 
