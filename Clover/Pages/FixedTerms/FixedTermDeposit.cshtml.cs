@@ -37,19 +37,18 @@ namespace Clover.Pages
                 string token = HttpContext.Session.GetString("BearerToken");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 
-                var fixedTermResponse = await httpClient.GetAsync($"http://localhost:7120/api/FixedTerm/GetAll?pageNumber={PageNumber}&pageSize={PageSize}");
-
+                var fixedTermResponse = await httpClient.GetAsync($"http://localhost:7120/api/FixedTerm/GetAllMyFixedTerms?pageNumber={PageNumber}&pageSize={PageSize}");
+                
                 if (fixedTermResponse.IsSuccessStatusCode)
                 {
-                    var jsonResponse = await fixedTermResponse.Content.ReadAsStringAsync();
+                    var jsonResponse = await fixedTermResponse.Content.ReadFromJsonAsync<FixedTermResponse>();
 
-                    if (!string.IsNullOrWhiteSpace(jsonResponse))
+                    if (jsonResponse != null)
                     {
-                        FixedTermDeposit = await fixedTermResponse.Content.ReadFromJsonAsync<List<FixedTermDeposit>>();
-                    }
-                    else
-                    {
-                        FixedTermDeposit = new List<FixedTermDeposit>();
+                        FixedTermDeposit = jsonResponse.FixedTerm;
+                        PrevPage = jsonResponse.PrevPage;
+                        NextPage = jsonResponse.NextPage;
+                        TotalPages = jsonResponse.TotalPages;
                     }
                 }
                 else
@@ -141,13 +140,13 @@ public class FixedTermDeposit
     [Column(TypeName = "decimal(10, 2)")]
     public decimal NominalRate { get; set; }
 
-    [MaxLength(255)]
+
     public string State { get; set; }
 }
 
 public class FixedTermResponse
 {
-    public List<FixedTermDeposit> FixedTermDeposits { get; set; }
+    public List<FixedTermDeposit> FixedTerm { get; set; }
     public object PrevPage { get; set; }
     public object NextPage { get; set; }
 

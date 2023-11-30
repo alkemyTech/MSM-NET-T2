@@ -1,9 +1,13 @@
-page "/account/editar/{id}"
+﻿@page "/account/editar/{id}"
 @model Clover.Pages.Accounts.EditarAccountModel
 @{
     Layout = "_Layout-Logeado";
     ViewData["Title"] = "Editar Cuenta";
 }
+<head>
+    <link rel="stylesheet" href="/estilos/account.css">
+    <title>@ViewData["Title"]</title>
+</head>
 
 <body>
     <!-- Formulario con los campos de edición del usuario-->

@@ -47,7 +47,7 @@ public class AccountController : ControllerBase
     // GET: api/accounts/{id}
     [HttpGet]
     [Route("{id}")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Regular")]
     public async Task<IActionResult> GetById(int id)
     {
         try
@@ -73,7 +73,7 @@ public class AccountController : ControllerBase
 
     // POST: api/accounts
     [HttpPost]
-    [Authorize(Roles = "Regular")]
+    [Authorize(Roles = "Admin, Regular")]
     public async Task<IActionResult> Post(AccountDTO accountDto)
     {
         try

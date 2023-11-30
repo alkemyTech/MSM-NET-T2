@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -73,13 +73,17 @@
     @await RenderSectionAsync("Scripts", required: false)
 
      <script>
-        $(document).ready(function () {
-            var token = localStorage.getItem("token");
+       $(document).ready(function () {
+    // Agrega un retraso antes de verificar el token
+    setTimeout(function() {
+        var token = localStorage.getItem('token');
+        if (!token) {
+            // Redirige al usuario al inicio de sesión
+            window.location.href = '/login';
+        }
+    }, 1000); // Retraso de 1000 milisegundos (1 segundo)
+});
 
-            if (!token) {
-                window.location.href = '/login';
-            }
-        });
     </script>
 
      <script>

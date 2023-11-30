@@ -13,6 +13,10 @@ namespace Clover.Pages
         {
             using (var httpClient = new HttpClient())
             {
+
+                var role = HttpContext.Session.GetString("Role");
+                ViewData["Role"] = role;
+
                 string id = HttpContext.Session.GetString("UserId");
                 string token = HttpContext.Session.GetString("BearerToken");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
