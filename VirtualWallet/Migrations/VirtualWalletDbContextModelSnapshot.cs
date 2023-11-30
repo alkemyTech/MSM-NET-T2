@@ -159,31 +159,31 @@ namespace VirtualWallet.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 3,
-                            Image = "Image3.jpg",
-                            Points = 32000,
+                            Id = 1,
+                            Image = "https://th.bing.com/th/id/OIP.ZcSNf-JOOSvykdhsoXQ4VAHaHa?rs=1&pid=ImgDetMain",
+                            Points = 18000,
                             ProductDescription = "Auriculares inalámbricos"
                         },
                         new
                         {
-                            Id = 4,
-                            Image = "Image4.jpg",
-                            Points = 5000,
+                            Id = 2,
+                            Image = "https://www.officenter.com.uy/imgs/productos/productos31_92137.jpg",
+                            Points = 32000,
+                            ProductDescription = "Cafetera"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Image = "https://facevital.com/cdn/shop/products/FV_giftcard50.jpg?v=1607884832&width=256",
+                            Points = 40000,
                             ProductDescription = "Tarjeta de regalo de $50"
                         },
                         new
                         {
-                            Id = 5,
-                            Image = "Image5.jpg",
-                            Points = 12000,
-                            ProductDescription = "Camiseta de edición limitada"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Image = "Image6.jpg",
-                            Points = 15000,
-                            ProductDescription = "Botella de vino premium"
+                            Id = 4,
+                            Image = "https://www.condorinformatica.uy/imgs/productos/productos31_12405.jpg",
+                            Points = 55000,
+                            ProductDescription = "SmartWatch"
                         });
                 });
 

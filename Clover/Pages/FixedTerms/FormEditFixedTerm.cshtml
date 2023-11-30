@@ -2,7 +2,15 @@
 @model Clover.Pages.FixedTerms.FormEditFixedTermModel
 @{
     ViewData["Title"] = "Editar plazo fijo";
+    Layout = "_Layout-Logeado";
 }
+
+<head>
+    <link rel="stylesheet" href="/estilos/FixedTermStyles.css">
+    <title>@ViewData["Title"]</title>
+</head>
+
+
 <div class="EditForm mx-auto my-4">
     <form asp-action="updatedFixedTerm" class="formularios" method="post">
         <div class="row">
