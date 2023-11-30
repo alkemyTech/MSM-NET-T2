@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/Edit"
 @model Clover.Pages.FixedTerms.FormEditFixedTermModel
 @{
     ViewData["Title"] = "Editar plazo fijo";
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="EditButtons">
-            <button class="EditBack float-right mt-2"><a asp-page="/Index">Volver</a></button>
+            <button class="back float-right mt-2"><a asp-page="/FixedTerms/FixedTermDeposit">Volver</a></button>
             <button asp-page-handler="CreateFixedTerm" type="submit" class="editButton @* float-right mt-2 *@">Modificar</button>
         </div>
     </form>
