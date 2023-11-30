@@ -2,10 +2,18 @@
     background-color: #11322E;
     color: #F4EFE4;
     font-family: "Poppins";
+    display: flex;
 }
 
 .bg-custom {
     background-color: #11322E; 
+}
+
+.table {
+    color: #F4EFE4;
+    border-radius: 20px;
+    background: rgba(35, 173, 99, 0.5);
+    padding: 3px;
 }
 
 button {
@@ -25,11 +33,26 @@ button {
     transition: .5s;
 }
 
-    button:hover {
-        background: rgba(81, 218, 201, 0.50);
-        scale: 1.1;
-        transition: .5s;
-    }
+.tableButtons {
+    width: 60px;
+    height: 34px;
+    border-radius: 70px;
+    border-color: #51DAC980;
+    font-family: "Poppins";
+    margin: 1px;
+    font-size: 13px;
+    font-weight: 100;
+    border-radius: 40px;
+    background: transparent;
+    color: #f4eee4;
+    transition: .5s;
+}
+
+button:hover {
+    background: rgba(81, 218, 201, 0.50);
+    scale: 1.1;
+    transition: .5s;
+}
 
 /*NUEVO PLAZO FIJO FORMULARIO*/
 
@@ -44,11 +67,11 @@ button {
 
 .CreateForm {
     background: rgba(81, 218, 201, 0.50);
-    padding: 50px;
-    border-radius: 70px;
+    padding: 20px;
+    border-radius: 20px;
     width: 980px;
     height: 500px;
-    border: 70px;
+    border: 20px;
 }
 
 .form-group {
@@ -107,11 +130,14 @@ th {
     font-family: "Poppins";
 }
 
-table {
-    border-radius: 70px;
-    background: rgba(35, 173, 99, 0.50);
+td {
     color: #F4EFE4;
-    font-family: "Poppins";
+    padding: 20px;
+}
+
+
+.page-link {
+    color: green;
 }
 /*EDITAR PLAZO FIJO*/
 
@@ -169,9 +195,10 @@ table {
     transition: background 0.3s, color 0.3s;
     }
 
-.edit input.form-control:focus {
-    box-shadow: none;
-    outline: none;
-    background-color: rgba(35, 173, 99, 0.50); 
-    color: #F4EFE4;
-    transition: background 0.3s, color 0.3s;*/
+    .edit input.form-control:focus {
+        box-shadow: none;
+        outline: none;
+        background-color: rgba(35, 173, 99, 0.50);
+        color: #F4EFE4;
+        transition: background 0.3s, color 0.3s;
+    }
