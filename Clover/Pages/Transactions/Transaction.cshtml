@@ -148,7 +148,24 @@
                     var id = $(this).find('th').text();
                     window.location.href = "/Transaction/editar/" + id;
                 });
+                var style = document.createElement('style');
+                style.innerHTML = `
+                    #table-container{
+                    background: rgba(159, 163, 246, 0.5) !important;
+                }
+                        #table-container th, #table-container td {
+                    border-bottom: 2px solid rgba(159, 163, 246, 1) !important;
+                }
 
+                        .botones-crear button {
+                        border: 2px solid #9FA3F6 !important;
+            }
+                    .pagination .page-item.active .page-link {
+            background: transparent;
+                    border: 1px solid #9FA3F6 !important;
+        }
+`;
+                document.head.appendChild(style); 
             }
 
         });
@@ -160,7 +177,8 @@
                 style.innerHTML = `
                 #table-container td {
                     cursor: auto !important;
-                }`;
+                }
+                `;
                 document.head.appendChild(style);
             }
         });
