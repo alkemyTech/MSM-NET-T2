@@ -32,7 +32,7 @@
                 <td>@fixedTerm.State</td>
                 <td>
 
-                    <button class="tableButtons"><a href="FixedTerms/FormEditFixedTerm">Editar</a></button>
+                    <button class="tableButtons"><a href="/Edit">Editar</a></button>
                     <form asp-page-handler="Delete" asp-route-id="@fixedTerm.Id" method="post">
                         <button class="tableButtons" type="submit">Borrar</button>
                     </form>
@@ -41,3 +41,5 @@
         }
     </tbody>
 </table>
+
+<button class="back float-right mt-2"><a asp-page="/Usuarios/User">Volver</a></button>
