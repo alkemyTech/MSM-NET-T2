@@ -43,10 +43,13 @@ namespace Clover.Pages
                 var responseObject = JsonConvert.DeserializeObject<Dictionary<string, string>>(responseContent);
                 Console.WriteLine(responseObject);
                 var token = responseObject["token"];
-                
-                HttpContext.Session.SetString("BearerToken", token);
-                
+                var id = responseObject["id"];
 
+                HttpContext.Session.SetString("BearerToken", token);
+                HttpContext.Session.SetString("UserId", id);
+
+                TempData["Id"] = id;
+                TempData.Keep("Id");
                 TempData["Token"] = token;
                 TempData.Keep("Token");
                 return LocalRedirect(Url.Content("/User"));
