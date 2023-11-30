@@ -90,10 +90,10 @@ public class VirtualWalletDbContext : DbContext
         
          // Seed Catalogue
         modelBuilder.Entity<Catalogue>().HasData(
-            new Catalogue { Id = 3, ProductDescription = "Auriculares inalámbricos", Image = "Image3.jpg", Points = 32000 },
-            new Catalogue { Id = 4, ProductDescription = "Tarjeta de regalo de $50", Image = "Image4.jpg", Points = 5000 },
-            new Catalogue { Id = 5, ProductDescription = "Camiseta de edición limitada", Image = "Image5.jpg", Points = 12000 },
-            new Catalogue { Id = 6, ProductDescription = "Botella de vino premium", Image = "Image6.jpg", Points = 15000 }
+            new Catalogue { Id = 1, ProductDescription = "Auriculares inalámbricos", Image = "https://th.bing.com/th/id/OIP.ZcSNf-JOOSvykdhsoXQ4VAHaHa?rs=1&pid=ImgDetMain", Points = 18000 },
+            new Catalogue { Id = 2, ProductDescription = "Cafetera", Image = "https://www.officenter.com.uy/imgs/productos/productos31_92137.jpg", Points = 32000 },
+            new Catalogue { Id = 3, ProductDescription = "Tarjeta de regalo de $50", Image = "https://facevital.com/cdn/shop/products/FV_giftcard50.jpg?v=1607884832&width=256", Points = 40000 },
+            new Catalogue { Id = 4, ProductDescription = "SmartWatch", Image = "https://www.condorinformatica.uy/imgs/productos/productos31_12405.jpg", Points = 55000 }
         );    
         
         // Seed FixedTermDeposit
