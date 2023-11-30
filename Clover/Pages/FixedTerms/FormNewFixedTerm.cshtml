@@ -1,5 +1,5 @@
 ﻿@page
-@model Clover.Pages.FormNewFixedTermModel
+@model Clover.Pages.FixedTerms.FormNewFixedTermModel
 @{
     ViewData["Title"] = "Nuevo plazo fijo";
 }
@@ -36,8 +36,8 @@
         </div>
     </div>
     <div class="CreateButton">
-        <button class="back float-right mt-2"><a asp-page="/Index">Volver</a></button>
-        <button asp-page-handler="CreateFixedTerm" type="submit" class="createButton @* float-right mt-2 *@">Crear Plazo Fijo</button>
+        <button class="back float-right mt-2"><a asp-page="/Usuarios/User">Volver</a></button>
+            <button asp-page-handler="CreateFixedTerm" type="submit" class="createButton @* float-right mt-2 *@">Crear Plazo Fijo</button>
     </div>
 </form>
 </div>

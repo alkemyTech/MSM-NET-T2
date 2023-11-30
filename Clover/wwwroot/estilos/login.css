@@ -1,4 +1,4 @@
-﻿* {
+﻿﻿* {
     font-family: 'Poppins';
 }
 
@@ -9,6 +9,7 @@ body {
 
 #login-container {
     background: rgba(35, 173, 99, 0.5);
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
     border-radius: 40px;
     height: 60vh;
     max-width: 500px;
