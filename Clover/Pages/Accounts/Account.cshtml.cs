@@ -24,6 +24,9 @@ public class AccountModel : PageModel
     {
         using (var httpClient = new HttpClient())
         {
+            var role = HttpContext.Session.GetString("Role");
+            ViewData["Role"] = role;
+
             string token = HttpContext.Session.GetString("BearerToken");
 
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

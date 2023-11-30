@@ -148,8 +148,7 @@
     </div>
 </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script>
+    <script>
         $(document).ready(function () {
 
             $("tbody tr").click(function () {
@@ -167,6 +166,23 @@
                     window.location.href = "/account/editar/" + id;
                 });
 
+                var style = document.createElement('style');
+                style.innerHTML = `
+                #table-container {
+                    background: rgba(159, 163, 246, 0.5) !important;
+                }
+                #table-container th, #table-container td {
+                    border-bottom: 2px solid rgba(159, 163, 246, 1) !important;
+                }
+                .botones-crear button {
+                    border: 2px solid #9FA3F6 !important;
+                }
+                .pagination .page-item.active .page-link {
+                    background: transparent;
+                    border: 1px solid #9FA3F6 !important;
+                }
+            `;
+                document.head.appendChild(style);
             }
 
         });
@@ -176,12 +192,12 @@
             if (userRole === "Regular") {
                 var style = document.createElement('style');
                 style.innerHTML = `
-                        #table-container td {
-                            cursor: auto !important;
-                        }`;
+                                #table-container td {
+                                    cursor: auto !important;
+                                }`;
                 document.head.appendChild(style);
             }
         });
 
-</script>
+    </script>
 </body>
