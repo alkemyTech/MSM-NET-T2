@@ -1,5 +1,6 @@
 @{
     var token = TempData["Token"] as string;
+    var id = TempData["Id"] as string;
 }
 
 
@@ -67,13 +68,24 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @* <script>
+        $(document).ready(function () {
+            var token = localStorage.getItem("token");
+
+            // if (!token) {
+            //     window.location.href = '/login';
+            // }
+        });
+    </script> *@
 
     @await RenderSectionAsync("Scripts", required: false)
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         var token = '@TempData["Token"]'; // Obtengo el token desde TempData
+        var id = '@TempData["Id"]';
         if (token) {
             localStorage.setItem("token", token); // Establezco el token en localStorage
+            localStorage.setItem("UserId", id); // Establezco el id del usuario iniciado
         }
     });
 </script>

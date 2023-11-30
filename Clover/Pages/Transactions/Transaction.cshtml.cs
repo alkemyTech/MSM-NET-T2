@@ -152,8 +152,7 @@ public class TransactionResponse
 
     public int TotalPages { get; set; }
 }
-
-public class UserResponse
+public class ResponseUser
 {
     public List<User> Users { get; set; }
     public object PrevPage { get; set; }
