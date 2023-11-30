@@ -73,7 +73,7 @@ public class AccountController : ControllerBase
 
     // POST: api/accounts
     [HttpPost]
-    [Authorize(Roles = "Regular")]
+    [Authorize(Roles = "Admin, Regular")]
     public async Task<IActionResult> Post(AccountDTO accountDto)
     {
         try
