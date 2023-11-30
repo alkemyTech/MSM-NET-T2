@@ -12,13 +12,8 @@ using VirtualWallet.DataAccess;
 namespace VirtualWallet.Migrations
 {
     [DbContext(typeof(VirtualWalletDbContext))]
-<<<<<<<< HEAD:VirtualWallet/Migrations/20231127025156_InitialCreate.Designer.cs
-    [Migration("20231127025156_InitialCreate")]
+    [Migration("20231130001744_InitialCreate")]
     partial class InitialCreate
-========
-    [Migration("20231129184123_MyInitialCreate")]
-    partial class MyInitialCreate
->>>>>>>> 67b687081d9e9bb2c707579117e576e6342238eb:VirtualWallet/Migrations/20231129184123_MyInitialCreate.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -8,11 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtualWallet.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:VirtualWallet/Migrations/20231127025156_InitialCreate.cs
     public partial class InitialCreate : Migration
-========
-    public partial class MyInitialCreate : Migration
->>>>>>>> 67b687081d9e9bb2c707579117e576e6342238eb:VirtualWallet/Migrations/20231129184123_MyInitialCreate.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
