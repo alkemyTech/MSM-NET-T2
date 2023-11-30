@@ -1,9 +1,74 @@
 ﻿@page "/Users"
 @model ListaUsuariosModel
 @{
+    Layout = "_Layout-Logeado";
 }
-    <div>
-    <table class="table" style="text-align: center;">
+<head>
+    <style>
+
+        body {
+            background: #11322E;
+        }
+
+        .transaction {
+            margin-bottom: 90px;
+        }
+
+        #table-container {
+            border-radius: 30px;
+            border: 1px solid #556;
+            background: rgba(35, 173, 99, 0.5);
+            overflow: hidden;
+            padding: 8px;
+        }
+
+        .table {
+            color: #F4EFE4;
+        }
+
+        #table-container th, #table-container td {
+            border-bottom: 2px solid #51DAC9;
+        }
+
+
+        #table-container td {
+            cursor: pointer;
+        }
+
+        .modal-content {
+            border-radius: 25px !important;
+            background: #11322E;
+            color: white;
+        }
+
+        .modal-footer {
+            border-top: 0;
+        }
+
+        .form-group > label {
+            margin: 5px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .pagination .page-item.active .page-link {
+            background: transparent;
+            border: 1px solid green;
+        }
+
+        .page-link {
+            color: green;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="table-container">
+        <table class="table" style="text-align: center">
         <thead>
             <tr>
                 <th scope="col">Nombre</th>
@@ -19,7 +84,7 @@
         <tbody>
             @foreach (var Trabajo in Model.ListUsers)
             {
-                <tr>
+                <tr class="align-middle">
                     <td>@Trabajo.First_name</td>
                     <td>@Trabajo.Last_name</td>
                     <td>@Trabajo.Email</td>
@@ -31,6 +96,18 @@
         </tbody>
     </table>
 </div>
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li id="item-page" class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i">@i</a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+</body>
  @*    <div>
         <form method="post" asp-action="OnPostAsync">
 

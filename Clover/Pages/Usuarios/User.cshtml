@@ -1,6 +1,7 @@
 ﻿@page "/User"
 @model UserModel
 @{
+    Layout = "_Layout-Logeado";
 }
 
 <style>
@@ -50,7 +51,6 @@
         height: 70px;
     }
 
-
 </style>
 
 <div class="User">
@@ -58,29 +58,28 @@
     <div class="dataUserDiv">
 
         <div class="card">
-            <div class="card-body" >@Model.Encontrado.First_name </div>
+            <div class="card-body" >Nombre: @Model.Encontrado.First_name </div>
         </div>
         <div class="card">
-            <div class="card-body">@Model.Encontrado.Last_name</div>
+            <div class="card-body">Apellido: @Model.Encontrado.Last_name</div>
         </div>
         <div class="card">
-            <div class="card-body">@Model.Encontrado.Email</div>
+            <div class="card-body">Email: @Model.Encontrado.Email</div>
         </div>
         <div class="card">
-            <div class="card-body">@Model.Encontrado.Points</div>
+            <div class="card-body">Puntos: @Model.Encontrado.Points</div>
         </div>
         <div class="card">
-            <div class="card-body">@Model.Encontrado.Role_Id</div>
+            <div class="card-body">Rol: @Model.Encontrado.Role_Id</div>
         </div>
     </div>
 
 
 <div class="userButtons">
-        <button class="buttonUserLink"><a href="/FixedTerms/FixedTermDeposit" class="button">Plazos Fijos</a></button>
-        <button class="buttonUserLink"><a href="/Transactions/Transaction" class="button">Transacciones</a></button>
-        <button class="buttonUserLink"><a href="/Accounts/Account" class="button">Cuenta</a></button>
-        <button class="buttonUserLink"><a href="/Catalogue/Catalogue" class="button">Catalogo</a></button>
-
+        <a href="/FixedTerms/FixedTermDeposit" class="button"><button class="buttonUserLink">Plazo Fijo</button></a>
+        <a href="/Transaction" class="button"><button class="buttonUserLink">Transacciones</button></a>
+        <a href="/Accounts/Account" class="button"><button class="buttonUserLink">Cuenta</button></a>
+        <a href="/Catalogue/Catalogue" class="button"><button class="buttonUserLink">Catalogo</button></a>
 </div>
 
 </div>

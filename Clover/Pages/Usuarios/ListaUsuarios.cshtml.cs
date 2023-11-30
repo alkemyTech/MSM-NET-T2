@@ -13,8 +13,15 @@ namespace Clover.Pages.Usuarios
         [BindProperty]
         public Usuario Usuario { get; set; } = new Usuario();
         public List<Usuario> ListUsers { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; } = 1;
+
+        [BindProperty(SupportsGet = true)]
+        public int PageSize { get; set; } = 10;
         public object PrevPage { get; private set; }
         public object NextPage { get; private set; }
+        public int TotalPages { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -23,7 +30,7 @@ namespace Clover.Pages.Usuarios
                 string token = HttpContext.Session.GetString("BearerToken");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var userResponse = await httpClient.GetAsync("http://localhost:7120/api/User");
+                var userResponse = await httpClient.GetAsync($"http://localhost:7120/api/User?pageNumber={PageNumber}&pageSize={PageSize}");
 
                 if (userResponse.IsSuccessStatusCode)
                 {
@@ -34,6 +41,7 @@ namespace Clover.Pages.Usuarios
                         ListUsers = users.Users;
                         PrevPage = users.PrevPage;
                         NextPage = users.NextPage;
+                        TotalPages = users.TotalPages;
                     }
                     else
                     {
@@ -99,4 +107,5 @@ public class UserResponse
     public List<Usuario> Users { get; set; }
     public object PrevPage { get; set; }
     public object NextPage { get; set; }
+    public int TotalPages { get; set; }
 }

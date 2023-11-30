@@ -42,8 +42,9 @@ namespace VirtualWallet.Services
 
         public async Task<Object> GetAllUsersAsync(int pageNumber, int pageSize)
         {
-            var users = await _unitOfWork.UserRepo.GetAll();
-            var pagesUsers = users
+            var filteredUsers = await _unitOfWork.UserRepo.GetAll();
+
+            var pagesUsers = filteredUsers
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -52,16 +53,18 @@ namespace VirtualWallet.Services
             {
                 return null;
             }
+            var totalPages = (int)Math.Ceiling((double)filteredUsers.Count() / pageSize);
 
             var prevPage = pageNumber > 1 ? "Get?pageNumber=" + (pageNumber - 1) + "&pageSize=" + pageSize : null;
 
-            var nextPage = pageNumber < (int)Math.Ceiling((double)users.Count() / pageSize) ? "Get?pageNumber=" + (pageNumber + 1) + "&pageSize=" + pageSize : null;
+            var nextPage = pageNumber < (int)Math.Ceiling((double)filteredUsers.Count() / pageSize) ? "Get?pageNumber=" + (pageNumber + 1) + "&pageSize=" + pageSize : null;
 
             var result = new
             {
                 Users = pagesUsers,
                 PrevPage = prevPage,
-                NextPage = nextPage
+                NextPage = nextPage,
+                TotalPages = totalPages
             };
 
             return result;

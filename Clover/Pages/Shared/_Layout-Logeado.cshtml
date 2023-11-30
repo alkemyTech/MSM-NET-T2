@@ -83,6 +83,7 @@
      <script>
                     document.getElementById('boton-logout').addEventListener('click', function () {
                 localStorage.removeItem('token');
+                localStorage.removeItem('UserId');
                         window.location.href="/login";
             });
         </script>

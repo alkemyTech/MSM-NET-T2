@@ -157,6 +157,7 @@ public class ResponseUser
     public List<User> Users { get; set; }
     public object PrevPage { get; set; }
     public object NextPage { get; set; }
+    public int TotalPages { get; set; }
 
 
 }
