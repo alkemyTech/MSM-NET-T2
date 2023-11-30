@@ -30,10 +30,15 @@ namespace Clover.Pages.Transactions
         {
             using (var httpClient = new HttpClient())
             {
+                var role = HttpContext.Session.GetString("Role");
+                ViewData["Role"] = role;
+
                 string token = HttpContext.Session.GetString("BearerToken");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 var transactionResponse = await httpClient.GetAsync($"http://localhost:7120/api/Transaction?pageNumber={PageNumber}&pageSize={PageSize}");
+
+                
 
                 if (transactionResponse.IsSuccessStatusCode)
                 {
