@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtualWallet.Migrations
 {
     /// <inheritdoc />
-    public partial class MyInitialCreatee : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -174,16 +174,16 @@ namespace VirtualWallet.Migrations
                 columns: new[] { "Id", "Email", "First_name", "Last_name", "Password", "Points", "Role_Id" },
                 values: new object[,]
                 {
-                    { 1, "juan@gmail.com", "Juan", "Diaz", "admin", 50000, 1 },
-                    { 2, "abi@gmail.com", "Abi", "Barroso", "admin", 50000, 1 },
-                    { 3, "emi@gmail.com", "Emi", "Brito", "admin", 50000, 1 },
-                    { 4, "vir@gmail.com", "Vir", "Schmied", "admin", 50000, 1 },
-                    { 5, "pedro@gmail.com", "Pedro", "Gonzalez", "user", 5800, 2 },
-                    { 6, "fede@gmail.com", "Fede", "Perez", "user", 5040, 2 },
-                    { 7, "maca@gmail.com", "Maca", "Pereira", "user", 1560, 2 },
-                    { 8, "sofi@gmail.com", "Sofi", "Gomez", "user", 2300, 2 },
-                    { 9, "manu@gmail.com", "Manu", "Noriega", "user", 1800, 2 },
-                    { 10, "clara@gmail.com", "Clara", "Aguayo", "user", 2590, 2 }
+                    { 1, "juan@gmail.com", "Juan", "Diaz", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 50000, 1 },
+                    { 2, "abi@gmail.com", "Abi", "Barroso", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 50000, 1 },
+                    { 3, "emi@gmail.com", "Emi", "Brito", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 50000, 1 },
+                    { 4, "vir@gmail.com", "Vir", "Schmied", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", 50000, 1 },
+                    { 5, "pedro@gmail.com", "Pedro", "Gonzalez", "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb", 5800, 2 },
+                    { 6, "fede@gmail.com", "Fede", "Perez", "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb", 5040, 2 },
+                    { 7, "maca@gmail.com", "Maca", "Pereira", "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb", 1560, 2 },
+                    { 8, "sofi@gmail.com", "Sofi", "Gomez", "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb", 2300, 2 },
+                    { 9, "manu@gmail.com", "Manu", "Noriega", "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb", 1800, 2 },
+                    { 10, "clara@gmail.com", "Clara", "Aguayo", "04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb", 2590, 2 }
                 });
 
             migrationBuilder.InsertData(
