@@ -8,9 +8,9 @@ using System.Text;
 using System.Net.Http.Headers;
 using Clover.Pages.Accounts;
 
-namespace Clover.Pages
+namespace Clover.Pages.FixedTerms
 {
-    public class FIxedTermDepositModel : PageModel
+    public class AdminFixedTermDepositModel : PageModel
     {
 
         [BindProperty]
@@ -31,19 +31,22 @@ namespace Clover.Pages
 
         public int TotalPages { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAllAsync()
         {
             using (var httpClient = new HttpClient())
             {
+
+                var role = HttpContext.Session.GetString("Role");
+                ViewData["Role"] = role;
+
                 string token = HttpContext.Session.GetString("BearerToken");
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var fixedTermResponseUser = await httpClient.GetAsync($"http://localhost:7120/api/FixedTerm/GetAllMyFixedTerms?pageNumber={PageNumber}&pageSize={PageSize}");
-                var fixedTermResponseAdmin = await httpClient.GetAsync($"http://localhost:7120/api/FixedTerm/GetAll?pageNumber={PageNumber}&pageSize={PageSize}");
+                var fixedTermResponse = await httpClient.GetAsync($"http://localhost:7120/api/FixedTerm/GetAll?pageNumber={PageNumber}&pageSize={PageSize}");
 
-                if (fixedTermResponseAdmin.IsSuccessStatusCode)
+                if (fixedTermResponse.IsSuccessStatusCode)
                 {
-                    var jsonResponse = await fixedTermResponseAdmin.Content.ReadFromJsonAsync<FixedTermResponse>();
+                    var jsonResponse = await fixedTermResponse.Content.ReadFromJsonAsync<FixedTermResponse>();
 
                     if (jsonResponse != null)
                     {
@@ -57,51 +60,32 @@ namespace Clover.Pages
                 {
                     FixedTermDeposit = new List<FixedTermDeposit>();
                 }
-
-                if (fixedTermResponseUser.IsSuccessStatusCode)
-                     {
-                    var jsonResponse = await fixedTermResponseUser.Content.ReadFromJsonAsync<FixedTermResponse>();
-
-                    if (jsonResponse != null)
-                    {
-                        FixedTermDeposit = jsonResponse.FixedTerm;
-                        PrevPage = jsonResponse.PrevPage;
-                        NextPage = jsonResponse.NextPage;
-                        TotalPages = jsonResponse.TotalPages;
-                    }
-                }
-                //else
-                //{
-                //    FixedTermDeposit = new List<FixedTermDeposit>();
-                //}
-
             }
         }
 
 
-        public async Task<IActionResult> OnPostDeleteAsync(int id)
-        {
-            //int? fixedTermId = HttpContext.Session.GetInt32("Id");
+        //public async Task<IActionResult> OnPostDeleteAsync(int id)
+        //{
+        //    //int? fixedTermId = HttpContext.Session.GetInt32("Id");
 
-            using (var httpClient = new HttpClient())
-            {
-                string token = HttpContext.Session.GetString("BearerToken");
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        //    using (var httpClient = new HttpClient())
+        //    {
+        //        string token = HttpContext.Session.GetString("BearerToken");
+        //        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                //httpClient.BaseAddress = new Uri("http://localhost:7120/api/FixedTerm/DeleteMyFixedTerm/{id}");
-                var responseUser = await httpClient.DeleteAsync($"http://localhost:7120/api/FixedTerm/DeleteMyFixedTerm/{id}");
-                var responseAdmin = await httpClient.DeleteAsync($"http://localhost:7120/api/FixedTerm/Delete/{id}");
+        //        //httpClient.BaseAddress = new Uri("http://localhost:7120/api/FixedTerm/DeleteMyFixedTerm/{id}");
+        //        var response = await httpClient.DeleteAsync($"http://localhost:7120/api/FixedTerm/DeleteMyFixedTerm/{id}");
 
-                if (responseUser.IsSuccessStatusCode || (responseAdmin.IsSuccessStatusCode))
-                {
-                    return Redirect("/FixedTerms/FixedTermDeposit");
-                }
-                else
-                {
-                    return Page();
-                }
-            }
-        }
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            return Redirect("/FixedTerms/FixedTermDeposit");
+        //        }
+        //        else
+        //        {
+        //            return Page();
+        //        }
+        //    }
+        //}
 
 
     }
@@ -144,4 +128,3 @@ namespace Clover.Pages
         public int TotalPages { get; set; }
     }
 }
-
