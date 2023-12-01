@@ -22,7 +22,7 @@
 <body id="hf-container">
 <header>
     <div class="header-container">
-        <a id="logo" href="/">
+        <a id="logo" href="/User">
             <?xml version="1.0" encoding="UTF-8"?>
             <svg xmlns="http://www.w3.org/2000/svg" id="Capa_1" data-name="Capa 1" viewBox="0 0 492.01 172.43">
                       
@@ -44,7 +44,7 @@
 
         </a>
         <div class="menu">
-            <a href="/Usuarios/User">Inicio</a>
+            <a href="/User">Inicio</a>
             <a href="#">Más info</a>
         </div>
         <button  id="boton-logout" >Salir</button>
@@ -74,13 +74,13 @@
       <script>
        $(document).ready(function () {
     // Agrega un retraso antes de verificar el token
-    setTimeout(function() {
+
         var token = localStorage.getItem('token');
         if (!token) {
             // Redirige al usuario al inicio de sesión
             window.location.href = '/login';
         }
-    }, 1000); // Retraso de 1000 milisegundos (1 segundo)
+    } 
 });
 
     </script>

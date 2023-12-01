@@ -16,7 +16,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="~/estilos/layout-style.css">
-    <link rel="stylesheet" href="~/estilos/FixedTermStyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
 <body id="hf-container">
@@ -41,7 +40,6 @@
                         <tspan x="351.54" y="0">er</tspan>
                       </text>
                     </svg>
-
             </a>
             <div class="menu">
                 <a href="/User">Inicio</a>
@@ -49,13 +47,13 @@
             </div>
             <a href="/login"><button>Ingresar</button></a>
         </div>
-        
     </header>
-    <div class="container">
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+
     <footer class="footer">
         <div class="container">
             <p id="footer-text">

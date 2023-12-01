@@ -4,6 +4,7 @@
     Layout = "_Layout-Logeado";
     ViewData["Title"] = "Editar Cuenta";
 }
+
 <head>
     <link rel="stylesheet" href="/estilos/account.css">
     <title>@ViewData["Title"]</title>
@@ -11,45 +12,52 @@
 
 <body>
 <div class="title">
-    <p id="title">Cuentas</p>
-    <p>Formulario de Edición - Eliminar</p>
+    <p>Cuentas: Editar - Eliminar</p>
 </div>
 
 <!-- Formulario con los campos de edición del usuario-->
-<form method="post" id="form-container">
-    <div id="subform">
-        <div class="form-group">
-            <label>Id</label>
-            <input type="number" class="form-control" asp-for="Account.Id" readonly>
+<div class="form-box">
+    
+    <form method="post" id="form-container">
+        <div id="subform">
+            <div class="form-group">
+                <label>Id</label>
+                <input type="number" class="form-control" asp-for="Account.Id" readonly>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.CreationDate">Fecha</label>
+                <input type="datetime" class="form-control" asp-for="Account.CreationDate" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.Money">Dinero</label>
+                <input type="text" class="form-control" asp-for="Account.Money" required>
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.IsBlocked">Cuenta Bloqueada</label>
+                <input type="text" class="form-control" name="Account.IsBlocked" asp-for="Account.IsBlocked">
+            </div>
+            <div class="form-group">
+                <label asp-for="Account.UserId">User Id</label>
+                <input type="number" class="form-control" asp-for="Account.UserId" required>
+            </div>
         </div>
-        <div class="form-group">
-            <label asp-for="Account.CreationDate">Fecha</label>
-            <input type="datetime" class="form-control" asp-for="Account.CreationDate" required>
-        </div>
-        <div class="form-group">
-            <label asp-for="Account.Money">Dinero</label>
-            <input type="text" class="form-control" asp-for="Account.Money" required>
-        </div>
-        <div class="form-group">
-            <label asp-for="Account.IsBlocked">Cuenta Bloqueada</label>
-            <input type="text" class="form-control" name="Account.IsBlocked" asp-for="Account.IsBlocked">
-        </div>
-        <div class="form-group">
-            <label asp-for="Account.UserId">User Id</label>
-            <input type="number" class="form-control" asp-for="Account.UserId" required>
-        </div>
-    </div>
 
-    <!-- Botones de edición -->
-    <div class="buttons-form">
-        <a href="/account"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></a>
-        <button type="submit" class="btn btn-success">Guardar</button>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-            Eliminar
-        </button>
-    </div>
-</form>
-
+        <!-- Botones de edición -->
+        <div class="buttons-form">
+            <a href="/Accounts">
+                <button type="button" class="btn-back" data-bs-dismiss="modal">
+                    Volver
+                </button>
+            </a>
+            <button type="submit" class="btn-save">
+                Guardar
+            </button>
+            <button type="button" class="btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                Eliminar
+            </button>
+        </div>
+    </form>
+</div>
 
 <!-- Modal para confirmar la eliminación del Usuario -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
