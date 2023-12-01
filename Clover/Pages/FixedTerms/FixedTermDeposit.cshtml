@@ -1,0 +1,54 @@
+﻿@page
+@model Clover.Pages.FIxedTermDepositModel
+@{
+    ViewData["Title"] = "Plazos Fijos";
+
+    Layout = "_Layout-Logeado";
+}
+<head>
+    <link rel="stylesheet" href="/estilos/FixedTermStyles.css">
+    <title>@ViewData["Title"]</title>
+</head>
+
+<div class=" = fixedTermIntro">
+<h1>@ViewData["Title"]</h1>
+
+ <button><a href="/FixedTerms/FormNewFixedTerm" class="button">Nuevo plazo fijo</a></button>
+ </div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Monto</th>
+            <th>Fecha de Creacion</th>
+            <th>Fecha de Finalizacion</th>
+            <th>Tasa</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var fixedTerm in Model.FixedTermDeposit)
+        {
+            <tr>
+                <td>@fixedTerm.UserId</td>
+                <td>@fixedTerm.Amount</td>
+                <td>@fixedTerm.CreationDate</td>
+                <td>@fixedTerm.ClosingDate</td>
+                <td>@fixedTerm.NominalRate</td>
+                <td>@fixedTerm.State</td>
+                <td>
+
+                    <button class="tableButtons"><a href="/Edit">Editar</a></button>
+                    <form asp-page-handler="Delete" asp-route-id="@fixedTerm.Id" method="post">
+                        <button class="tableButtons" type="submit">Borrar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="back float-right mt-2"><a href="/User">Volver</a></button>

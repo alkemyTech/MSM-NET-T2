@@ -1,0 +1,50 @@
+﻿@page "/Edit"
+@model Clover.Pages.FixedTerms.FormEditFixedTermModel
+@{
+    ViewData["Title"] = "Editar plazo fijo";
+    Layout = "_Layout-Logeado";
+}
+
+<head>
+    <link rel="stylesheet" href="/estilos/FixedTermStyles.css">
+    <title>@ViewData["Title"]</title>
+</head>
+
+<div class="EditForm mx-auto my-4">
+    <form asp-action="updatedFixedTerm" class="formularios" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="edit form-group">
+                    <label for="AccountId">Cuenta</label>
+                    <input type="number" id="AccountId" name="AccountId" class="form-control" @* placeholder="Cuenta" *@ />
+                </div>
+                <div class="edit form-group">
+                    <label for="CreationDate">Fecha de Creacion</label>
+                    <input type="date" id="CreationDate" name="CreationDate" class="form-control" />
+                </div>
+                <div class="edit form-group">
+                    <label for="ClosingDate">Fecha de Finalizacion</label>
+                    <input type="date" id="ClosingDate" name="ClosingDate" class="form-control" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="edit form-group">
+                    <label for="NominalRate">Tasa</label>
+                    <input type="number" id="NominalRate" name="NominalRate" class="form-control" @* placeholder="Tasa" *@ />
+                </div>
+                <div class="edit form-group">
+                    <label for="State">Estado:</label>
+                    <input type="text" id="State" name="State" class="form-control" @* placeholder="Estado" *@ />
+                </div>
+                <div class="edit form-group">
+                    <label for="Amount">Monto</label>
+                    <input type="number" id="Amount" name="Amount" class="form-control" @* placeholder="Monto" *@ />
+                </div>
+            </div>
+        </div>
+        <div class="EditButtons">
+            <button class="back float-right mt-2"><a asp-page="/FixedTerms/FixedTermDeposit">Volver</a></button>
+            <button asp-page-handler="CreateFixedTerm" type="submit" class="editButton @* float-right mt-2 *@">Modificar</button>
+        </div>
+    </form>
+</div>

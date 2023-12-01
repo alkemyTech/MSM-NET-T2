@@ -45,6 +45,7 @@ namespace VirtualWallet.Controllers
                 });
             }
         }
+        
         //REGULAR//
         [HttpGet]
         [Route("GetAllMyFixedTerms")]
@@ -73,8 +74,7 @@ namespace VirtualWallet.Controllers
                 });
             }
         }
-
-
+        
         //ADMIN//
         [HttpGet]
         [Route("GetById/{id}")]
@@ -101,6 +101,7 @@ namespace VirtualWallet.Controllers
                 });
             }
         }
+        
         //REGULAR//
         [HttpGet]
         [Route("GetMyFixedTermById/{id}")]
@@ -127,8 +128,7 @@ namespace VirtualWallet.Controllers
                 });
             }
         }
-
-
+        
         //ADMIN
         [HttpPost]
         [Route("Post")]
@@ -155,6 +155,7 @@ namespace VirtualWallet.Controllers
                 });
             }
         }
+        
         //REGULAR
         [HttpPost]
         [Route("PostMyNewFixedTerm")]
@@ -182,7 +183,6 @@ namespace VirtualWallet.Controllers
                 });
             }
         }
-
 
         //ADMIN//
         [HttpPut]
@@ -265,6 +265,7 @@ namespace VirtualWallet.Controllers
                 });
             }
         }
+        
         //REGULAR//
         [HttpDelete]
         [Route("DeleteMyFixedTerm/{id}")]

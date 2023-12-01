@@ -1,0 +1,77 @@
+﻿
+body {
+    background: #11322E;
+}
+
+.transaction {
+    margin-bottom: 90px;
+}
+
+#table-container {
+    border-radius: 30px;
+    border: 1px solid #556;
+    background: rgba(35, 173, 99, 0.5);
+    overflow: hidden;
+    padding: 8px;
+}
+
+
+.table {
+    color: #F4EFE4;
+}
+
+#table-container th, #table-container td {
+    border-bottom: 2px solid #51DAC9;
+}
+
+
+#table-container td {
+    cursor: pointer;
+}
+
+.botones-crear {
+    padding: 10px;
+}
+
+    .botones-crear button {
+        border-radius: 40px;
+        background: transparent;
+        border: 2px solid #51DAC9;
+        width: 120px;
+        color: #F4EFE4;
+    }
+
+        .botones-crear button a {
+            text-decoration: none;
+            color: #F4EFE4;
+        }
+
+
+.modal-content {
+    border-radius: 25px !important;
+    background: #11322E;
+    color: white;
+}
+
+.modal-footer {
+    border-top: 0;
+}
+
+.form-group > label {
+    margin: 5px 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pagination .page-item.active .page-link {
+    background: transparent;
+    border: 1px solid green;
+}
+
+.page-link {
+    color: green;
+}

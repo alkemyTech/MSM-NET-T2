@@ -17,7 +17,7 @@ namespace VirtualWallet.Services
         public async Task<Object> getAllTransactionsAsync(int pageNumber, int pageSize, string userId)
         {
             var transactions = await _unitOfWork.TransactionRepo.getAll();
-            var filteredTransactions = transactions.Where(t => t.UserId.ToString() == userId).OrderBy(t => t.Date); //Filtro las transacciones realizadas por el usuario logueado
+            var filteredTransactions = transactions.Where(t => t.UserId.ToString() == userId).OrderByDescending(t => t.Date); //Filtro las transacciones realizadas por el usuario logueado
 
             //Implemento la paginación de la consulta
             var pagedTransactions = filteredTransactions
@@ -31,6 +31,8 @@ namespace VirtualWallet.Services
                 return null;
             }
 
+            var totalPages = (int)Math.Ceiling((double)filteredTransactions.Count() / pageSize);
+
             //Links para página Anterior y Siguiente
 
             var prevPage = pageNumber > 1 ? "Get?pageNumber=" + (pageNumber - 1) + "&pageSize=" + pageSize : null;
@@ -42,7 +44,8 @@ namespace VirtualWallet.Services
             {
                 Transactions = pagedTransactions,
                 PrevPage = prevPage,
-                NextPage = nextPage
+                NextPage = nextPage,
+                TotalPages = totalPages,
             };
 
             return result;

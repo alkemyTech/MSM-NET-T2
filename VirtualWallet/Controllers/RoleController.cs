@@ -1,7 +1,8 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using VirtualWallet.DataAccess;
-using VirtualWallet.Models;
+using VirtualWallet.Models.DTO;
+using VirtualWallet.Services;
 
 namespace VirtualWallet.Controllers;
 
@@ -9,23 +10,37 @@ namespace VirtualWallet.Controllers;
 [Route("api/[Controller]")]
 public class RoleController : ControllerBase
 {
-    private readonly UnitOfWork _unitOfWork;
-    public RoleController(UnitOfWork unitOfWork)
+    private readonly RoleService _roleService;
+    
+    public RoleController(RoleService roleService)
     {
-        _unitOfWork = unitOfWork;
+        _roleService = roleService;
     }
 
     // GET: api/roles
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get(int pageNumber=1, int pageSize= 10)
     {
-        var roles = await _unitOfWork.RoleRepo.GetAll();
-        if (roles == null)
-        {
-            return NotFound();
+        try
+        { 
+            var userId = User.FindFirstValue("Id"); 
+            var result = await _roleService.GetAll(pageNumber, pageSize, userId);
+            
+            if (result == null)
+            {
+                throw new Exception("NOT_FOUND");
+            }
+            return Ok(result);
         }
-        return Ok(roles);
+        catch (Exception ex)
+        {
+            return StatusCode(404, new
+            {
+                status = 404,
+                errors = new[] { new { error = ex.Message } }
+            });
+        }
     }
 
     // GET: api/roles/{id}
@@ -34,72 +49,103 @@ public class RoleController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Get(int id)
     {
-        var role = await _unitOfWork.RoleRepo.GetById(id);
-        if (role == null)
+        try
         {
-            return NotFound();
+            var userId = User.FindFirstValue("Id");
+            var result = await _roleService.GetById(id, userId);
+            
+            if (result == null)
+            {
+                throw new Exception("NOT_FOUND");
+            }
+            return Ok(result);
         }
-        return Ok(role);
+        catch (Exception ex)
+        {
+            return StatusCode(404, new
+            {
+                status = 404,
+                errors = new[] { new { error = ex.Message } }
+            });
+        }
     }
 
     // POST: api/roles
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Post(Role role)
+    public async Task<IActionResult> Post(RoleDTO roleDto)
     {
-        if (role == null)
+        try
         {
-            return BadRequest("El rol no posee datos v�lidos");
+            var userId = User.FindFirstValue("Id");
+            var result = await _roleService.Insert(roleDto, userId);
+            
+            if (result == null)
+            {
+                throw new Exception("BAD_REQUEST");
+            }
+            
+            return CreatedAtAction("Get", new { id = roleDto. Id }, result);
         }
-
-        if (role.Id == 0 ||
-            role.Name.Equals("Admin") ||
-            role.Name.Equals("Cliente") ||
-            role.Description.Length <= 5
-            )
+        catch (Exception ex)
         {
-            return BadRequest("La cuenta no pudo ser creada: uno o m�s errores encontrados");
-        }
-
-        var _role = new Role
-        {
-            Id = role.Id,
-            Name = role.Name,
-            Description = role.Description
-        };
-
-        await _unitOfWork.RoleRepo.Insert(_role);
-        await _unitOfWork.SaveChangesAsync();
-        return CreatedAtAction("Get", new { id = role.Id }, role);
+            return StatusCode(400, new
+            {
+                status = 400,
+                errors = new[] { new { error = ex.Message } }
+            });
+        } 
     }
 
     // PUT: api/roles/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Role role)
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Update(int id, RoleDTO role)
     {
-        var _role = await _unitOfWork.RoleRepo.GetById(id);
-        if (_role == null)
+        try
         {
-            return NotFound();
+           var result = await _roleService.Update(id, role);
+            
+           if (result == null)
+           {
+               throw new Exception("BAD_REQUEST");
+           }
+            
+           return Ok(); 
         }
-        _role.Name = role.Name;
-        _role.Description = role.Description;
-        await _unitOfWork.RoleRepo.Update(_role);
-        await _unitOfWork.SaveChangesAsync();
-        return Ok();
+        catch (Exception ex)
+        {
+           return StatusCode(400, new
+           {
+               status = 400,
+               errors = new[] { new { error = ex.Message } }
+           });
+        }
     }
 
     // DELETE: api/roles/{id}
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int id)
     {
-        var role = await _unitOfWork.RoleRepo.GetById(id);
-        if (role == null)
+        try
         {
-            return NotFound();
+            var result = await _roleService.Delete(id);
+
+            if (!result)
+            {
+                throw new Exception("NOT_FOUND");
+            }
+
+            return Ok();
         }
-        await _unitOfWork.RoleRepo.Delete(id);
-        await _unitOfWork.SaveChangesAsync();
-        return Ok();
+        catch(Exception ex)
+        {
+            return StatusCode(404, new
+            {
+                status = 404,
+                errors = new[] { new { error = ex.Message } }
+            });
+        }
     }
 }

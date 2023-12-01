@@ -36,19 +36,19 @@ public class VirtualWalletDbContext : DbContext
         
         // Seed User
         modelBuilder.Entity<User>().HasData(
-            new User { Id = 1, First_name = "Juan", Last_name = "Diaz", Email = "juan@gmail.com", Password = "admin", Points = 50000, Role_Id = 1 },
-            new User { Id = 2, First_name = "Abi", Last_name = "Barroso", Email = "abi@gmail.com", Password = "admin", Points = 50000, Role_Id = 1 },
-            new User { Id = 3, First_name = "Emi", Last_name = "Brito", Email = "emi@gmail.com", Password = "admin", Points = 50000, Role_Id = 1 },
-            new User { Id = 4, First_name = "Vir", Last_name = "Schmied", Email = "vir@gmail.com", Password = "admin", Points = 50000, Role_Id = 1 },
+            new User { Id = 1, First_name = "Juan", Last_name = "Diaz", Email = "juan@gmail.com", Password = EncryptPass.GetSHA256("admin"), Points = 50000, Role_Id = 1 },
+            new User { Id = 2, First_name = "Abi", Last_name = "Barroso", Email = "abi@gmail.com", Password = EncryptPass.GetSHA256("admin"), Points = 50000, Role_Id = 1 },
+            new User { Id = 3, First_name = "Emi", Last_name = "Brito", Email = "emi@gmail.com", Password = EncryptPass.GetSHA256("admin"), Points = 50000, Role_Id = 1 },
+            new User { Id = 4, First_name = "Vir", Last_name = "Schmied", Email = "vir@gmail.com", Password = EncryptPass.GetSHA256("admin"), Points = 50000, Role_Id = 1 },
             
-            new User { Id = 5, First_name = "Pedro", Last_name = "Gonzalez", Email = "pedro@gmail.com", Password = "user", Points = 5800, Role_Id = 2 },
-            new User { Id = 6, First_name = "Fede", Last_name = "Perez", Email = "fede@gmail.com", Password = "user", Points = 5040, Role_Id = 2 },
-            new User { Id = 7, First_name = "Maca", Last_name = "Pereira", Email = "maca@gmail.com", Password = "user", Points = 1560, Role_Id = 2 },
-            new User { Id = 8, First_name = "Sofi", Last_name = "Gomez", Email = "sofi@gmail.com", Password = "user", Points = 2300, Role_Id = 2 },
+            new User { Id = 5, First_name = "Pedro", Last_name = "Gonzalez", Email = "pedro@gmail.com", Password = EncryptPass.GetSHA256("user"), Points = 5800, Role_Id = 2 },
+            new User { Id = 6, First_name = "Fede", Last_name = "Perez", Email = "fede@gmail.com", Password = EncryptPass.GetSHA256("user"), Points = 5040, Role_Id = 2 },
+            new User { Id = 7, First_name = "Maca", Last_name = "Pereira", Email = "maca@gmail.com", Password = EncryptPass.GetSHA256("user"), Points = 1560, Role_Id = 2 },
+            new User { Id = 8, First_name = "Sofi", Last_name = "Gomez", Email = "sofi@gmail.com", Password = EncryptPass.GetSHA256("user"), Points = 2300, Role_Id = 2 },
             
             // Users de cuentas bloqueadas
-            new User { Id = 9, First_name = "Manu", Last_name = "Noriega", Email = "manu@gmail.com", Password = "user", Points = 1800, Role_Id = 2 },
-            new User { Id = 10, First_name = "Clara", Last_name = "Aguayo", Email = "clara@gmail.com", Password = "user", Points = 2590, Role_Id = 2 }
+            new User { Id = 9, First_name = "Manu", Last_name = "Noriega", Email = "manu@gmail.com", Password = EncryptPass.GetSHA256("user"), Points = 1800, Role_Id = 2 },
+            new User { Id = 10, First_name = "Clara", Last_name = "Aguayo", Email = "clara@gmail.com", Password = EncryptPass.GetSHA256("user"), Points = 2590, Role_Id = 2 }
         );
         
         // Seed Account
@@ -90,10 +90,10 @@ public class VirtualWalletDbContext : DbContext
         
          // Seed Catalogue
         modelBuilder.Entity<Catalogue>().HasData(
-            new Catalogue { Id = 3, ProductDescription = "Auriculares inalámbricos", Image = "Image3.jpg", Points = 32000 },
-            new Catalogue { Id = 4, ProductDescription = "Tarjeta de regalo de $50", Image = "Image4.jpg", Points = 5000 },
-            new Catalogue { Id = 5, ProductDescription = "Camiseta de edición limitada", Image = "Image5.jpg", Points = 12000 },
-            new Catalogue { Id = 6, ProductDescription = "Botella de vino premium", Image = "Image6.jpg", Points = 15000 }
+            new Catalogue { Id = 1, ProductDescription = "Auriculares inalámbricos", Image = "https://th.bing.com/th/id/OIP.ZcSNf-JOOSvykdhsoXQ4VAHaHa?rs=1&pid=ImgDetMain", Points = 18000 },
+            new Catalogue { Id = 2, ProductDescription = "Cafetera", Image = "https://www.officenter.com.uy/imgs/productos/productos31_92137.jpg", Points = 32000 },
+            new Catalogue { Id = 3, ProductDescription = "Tarjeta de regalo de $50", Image = "https://facevital.com/cdn/shop/products/FV_giftcard50.jpg?v=1607884832&width=256", Points = 40000 },
+            new Catalogue { Id = 4, ProductDescription = "SmartWatch", Image = "https://www.condorinformatica.uy/imgs/productos/productos31_12405.jpg", Points = 55000 }
         );    
         
         // Seed FixedTermDeposit

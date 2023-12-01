@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+html {
+    position: relative;
+    min-height: 100%;    
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 60px;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: #113223;
+    color: #F4EFE4;
+}
+
+body div.title p {
+    margin: 15px 0 10px 60px!important;
+    font-size: 35px!important;
+}
+
+body div.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+#table-container {
+    box-shadow: 0 0 10px rgb(61, 176, 119);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+    overflow: hidden;
+    margin: 10px;
+    padding: 30px;
+}
+
+#table-container table {
+    font-size: 20px;
+    text-align: center;
+    color: #F4EFE4;
+}
+
+#table-container table thead {
+    color: #3db077;
+}
+
+#table-container td {
+    cursor: pointer;
+}
+
+body div.table table thead tr th {
+    font-weight: normal;
+}
+
+#table-container th, #table-container td {
+    border-bottom: 2px solid #51DAC9;
+}
+
+.table > :not(:last-child) > :last-child > * {
+    border-bottom: 2px solid #51DAC9;
+}
+
+body div.buttons {
+    display: flex;
+    justify-content: center;
+    text-align: center; 
+    margin-bottom: 10px;
+    gap: 5%;
+    width: 100%;
+}
+
+body div.buttons button.btn-user {
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 40px;
+    border: 2px solid #51DAC9;
+    background: transparent;
+    box-shadow: 0 0 10px #f4efe4;
+    width: 120px;
+    height: 50px;
+    transition: .5s;    
+}
+
+body div.buttons a {
+    text-decoration: none;
+    color: #f4eee4;
+}
+
+body div.buttons button.btn-user:hover {
+    box-shadow: 0 0 10px #51DAC9;    
+    transition: .5s;
+}
+
+body div.buttons button.btn-admin {
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 40px;
+    border: 2px solid #9FA3F6;
+    box-shadow: 0 0 10px #f4efe4;   
+    background: transparent;
+    color: #f4eee4;;
+    width: 120px;
+    height: 50px;
+    transition: .5s;   
+}
+
+body div.buttons button.btn-admin:hover {
+    box-shadow: 0 0 10px #9FA3F6;
+    background: rgba(159, 163, 246, 0.5);
+    transition: .5s;
+}
+
+/* Modal crear cuenta */
+
+body div.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.modal-dialog{
+    color: #000;
+}
+
+.modal-content {
+    border-radius: 25px !important;
+    background: #11322E;
+    color: #f4eee4;
+}
+
+.modal-header {
+    padding: 20px !important;
+}
+
+.modal-header .btn-close {
+    color: #3db077 !important;
+}
+
+.modal-footer {
+    border-top: 0;
+}
+
+.form-group > label {
+    margin: 5px 0;
+}
+
+/* EDITAR */
+
+body .form-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#form-container {
+    display: flex;
+}
+
+#subform {
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    color: #f4eee4;
+    border-radius: 30px;
+    background: rgba(159, 163, 246, 0.5);
+    box-shadow: 0 0 10px rgb(244, 239, 228);
+    padding: 20px;
+    margin: 20px 20px 80px 0;
+}
+
+label {
+    font-size: 18px !important;
+}
+
+.form-group {
+    padding: 10px;
+}
+
+.buttons-form {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 10px;
+    margin: 20px;
+}
+
+.buttons-form button {
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 40px;
+    background: transparent;
+    color: #f4eee4;
+    width: 140px;
+    height: 50px;
+}
+
+.buttons-form .btn-back {
+    border: 2px solid #9FA3F6;
+    box-shadow: 0 0 10px #f4efe4;
+    transition: .5s;
+}
+
+.buttons-form .btn-back:hover {
+    box-shadow: 0 0 10px #9FA3F6;
+}
+
+.buttons-form .btn-save {
+    border: 2px solid #3db077;
+    box-shadow: 0 0 10px #f4efe4;
+    transition: .5s;
+}
+
+.buttons-form .btn-save:hover {
+    background: rgba(61, 176, 119, 0.5);
+    box-shadow: 0 0 10px #3db077;
+}
+
+.buttons-form .btn-delete {
+    border: 2px solid #c533e6;
+    box-shadow: 0 0 10px #f4efe4;
+    transition: .5s;
+}
+
+.buttons-form .btn-delete:hover {
+    background: rgba(197,51,230,0.5);
+    box-shadow: 0 0 10px #c533e6;
+}
+
+
+.buttons-form > button, .buttons-form > a > button {
+    border-radius: 40px;
+    width: 120px;
+    border: 1px solid #9FA3F6;
+    background: transparent;
+}
+
+.form-group > input, .form-control:disabled, .form-control[readonly] {
+    background: none;
+    color: white;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid white;
+}
+
+.form-group > input:active {
+}
+
+.form-group > input:focus {
+    background: none;
+    color: white;
+    border-bottom: 1px solid white;
+    box-shadow: none;
+}
+
+.transaction {
+    margin-bottom: 90px;
+}
+
+/* Paginación */
+nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pagination .page-item.active .page-link {
+    background: transparent;
+    border: 1px solid green;
+}
+
+.page-link {
+    color: green;
+}

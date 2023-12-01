@@ -1,0 +1,67 @@
+﻿@page "/user"
+@model UserModel
+
+@{
+    ViewData["Title"] = "Perfil";
+    Layout = "_Layout-Logeado";
+}
+
+<head>
+    <link rel="stylesheet" href="~/estilos/User.css" />
+</head>
+<body>
+
+<div class="User">
+    <div class="dataUser">
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Nombre</p>
+                <p class="data-model">@Model.Encontrado.First_name</p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Apellido</p>
+                <p class="data-model">@Model.Encontrado.Last_name</p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Email</p>
+                <p class="data-model">@Model.Encontrado.Email</p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Puntos Acumulados</p>
+                <p class="data-model">@Model.Encontrado.Points</p>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Rol del Usuario</p>
+                <p class="data-model">@Model.Encontrado.Role_Id</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="userButtons">
+        <button class="buttonUserLink"><a href="/FixedTerms/FixedTermDeposit" class="button">Plazos Fijos</a></button>
+        <button class="buttonUserLink"><a href="/Transactions" class="button">Transacciones</a></button>
+        <button class="buttonUserLink"><a href="/Accounts" class="button">Cuenta</a></button>
+        <button class="buttonUserLink"><a href="/Catalogue" class="button">Catalogo</a></button>
+    </div>
+</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            var userRole = '@ViewData["Role"]';
+
+            if (userRole != "Admin") {
+                $(".buttonUserLink:eq(2) a").attr("href", "/MyAccount");
+            }
+        });
+    </script>
+</body>

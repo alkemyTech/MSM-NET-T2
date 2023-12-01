@@ -7,7 +7,6 @@ using VirtualWallet.DataAccess;
 using VirtualWallet.Repository;
 using VirtualWallet.Repository.Interfaces;
 using VirtualWallet.Services;
-using VirtualWallet.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json");
 var secretKey = builder.Configuration.GetSection("settings:secretkey").Value;
 var keyBytes = Encoding.UTF8.GetBytes(secretKey);
+
+
 
 builder.Services.AddAuthentication(config =>
 {

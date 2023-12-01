@@ -1,0 +1,63 @@
+﻿@page "/Register"
+@model Clover.Pages.Index1Model
+@{
+    ViewData["Title"] = "Registrarse";
+}
+@{
+    var token = ViewData["Token"] as string;
+}
+
+<head>
+    <link rel="stylesheet" href="~/estilos/register.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+    <div id="login-container" class="container">
+
+        <form id="login-form" method="post">
+
+            <div id="login-fields">
+                <div class="form-group">
+                    <label asp-for="Usuario.First_name"> Ingrese su Nombre</label>
+                    <input asp-for="Usuario.First_name" class="form-control input" />
+                    <span asp-validation-for="Usuario.First_name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Usuario.Last_name"> Ingrese su Apellido</label>
+                    <input asp-for="Usuario.Last_name" class="form-control input" />
+                    <span asp-validation-for="Usuario.Last_name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Usuario.Email"> Ingrese su correo electrónico</label>
+                    <input asp-for="Usuario.Email" class="form-control input" />
+                    <span asp-validation-for="Usuario.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Usuario.Password">Ingrese su contraseña</label>
+                    <input type="password" asp-for="Usuario.Password" class="form-control input" />
+                    <span asp-validation-for="Usuario.Password" class="text-danger"></span>
+                </div>
+                <span style="color: #E74C3C"> @Html.ValidationMessage("Error")</span>
+
+            </div>
+
+            <div id="register">
+                <a href="/">
+
+                <button id="submit" type="submit" class="btn btn-primary">Crear Usuario</button>
+                </a>
+            </div>
+
+
+        </form>
+
+    </div>
+</body>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
