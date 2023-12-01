@@ -9,65 +9,68 @@
 }
 
 <head>
-    <link rel="stylesheet" href="~/estilos/account.css">
+    <link rel="stylesheet" href="/estilos/account.css">
+    <title>@ViewData["Title"]</title>
 </head>
 
 <body>
 <div class="title">
-    <h1>Cuentas</h1>
-    <h2>Toda la información que necesitás</h2>
+    <p id="title">Cuentas</p>
+    <p>Toda la información que necesitás</p>
 </div>
-
-    <div class="account">
-        <div id="table-container">
-            <table class="table" style="text-align: center">
-                <thead>
-                    <tr>
-                        <th scope="col">Cuenta n°</th>
-                        <th scope="col">Fecha de creación</th>
-                        <th scope="col">Dinero</th>
-                        <th scope="col">Cuenta bloqueada</th>
-                        <th scope="col">Usuario n°</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var account in Model.AccountList)
-                    {
-                        <tr class="align-middle">
-                            <a href="#">
-                            <th>@account.Id</th>
-                            <td>@account.CreationDate</td>
-                            <td>$ @account.Money</td>
-                            <td>@account.IsBlocked</td>
-                            <td>@account.UserId</td>
-                        </tr>
-
-
-                    }
-
-                </tbody>
-            </table>
-        </div>
-        <nav>
-            <ul class="pagination">
-                @for (int i = 1; i <= Model.TotalPages; i++)
-                {
-                    <li id="item-page" class="page-item @(i == Model.PageNumber ? "active" : "")">
-                        <a class="page-link" href="?pageNumber=@i">@i</a>
-                    </li>
-                }
-
-            </ul>
-        </nav>
-
-        <div class="botones-crear" style="display: flex; justify-content:center; gap: 15px;">
-            <button type="button">
-                <a href="/Index">Volver</a>
-            </button>
-            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fa-solid fa-plus"></i> Agregar
-            </button>
-        </div>
+<div class="box">
+    <div id="table-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Cuenta n°</th>
+                <th scope="col">Fecha de creación</th>
+                <th scope="col">Dinero</th>
+                <th scope="col">Cuenta bloqueada</th>
+                <th scope="col">Usuario n°</th>
+            </tr>
+            </thead>
+            
+            <tbody>
+            @foreach (var account in Model.AccountList)
+            {
+                <tr class="align-middle">
+                    <a href="#"></a>
+                    <th>@account.Id</th>
+                    <td>@account.CreationDate</td>
+                    <td>$ @account.Money</td>
+                    <td>@account.IsBlocked</td>
+                    <td>@account.UserId</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li id="item-page" class="page-item @(i == Model.PageNumber ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+    
+    <div class="buttons botones-crear">
+        <button type="button" class="btn-user">
+            <a href="/Index">
+                <i class="fa-solid fa-arrow-left-long"></i> Volver
+            </a>
+        </button>
+        
+        <!-- Botón que activa el modal -->
+        <button type="button" class="btn-admin" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Agregar
+            <i class="fa-solid fa-plus"></i>
+        </button>
+    </div>
     
     <!-- Form Insert Admin -->
     <div class="form">
@@ -84,14 +87,15 @@
                     <div class="modal-body">
                         <!-- Formulario -->
                         <form method="post" asp-action="">
-                                <div class="form-group">
-                                    <label for="UserId">Usuario N°</label>
-                                    <input type="number"
-                                           id="UserId"
-                                           name="Account.UserId"
-                                           class="form-control"
-                                           required />
-                                </div>
+                            <div class="form-group">
+                                <label for="UserId">Usuario n°</label>
+                                <input
+                                    type="number"
+                                    id="UserId"
+                                    name="Account.UserId"
+                                    class="form-control"
+                                    required/>
+                            </div>
                             <div class="form-group">
                                 <label for="Money">Dinero en cuenta</label>
                                 <input
@@ -100,6 +104,30 @@
                                     name="Account.Money"
                                     class="form-control"
                                     required/>
+                            </div>
+                            <div class="form-group">
+                                <p>Estado</p>
+                                <div class="form-check form-check-inline">
+                                    <input
+                                        type="radio"
+                                        id="IsBlockedTrue"
+                                        name="Account.IsBlocked"
+                                        class="form-check-input"
+                                        value="true"
+                                        checked
+                                        required/>
+                                    <label for="IsBlockedTrue">Cuenta bloqueada</label>
+                                </div>    
+                                <div class="form-check form-check-inline">
+                                    <input
+                                        type="radio"
+                                        id="IsBlockedFalse"
+                                        name="Account.IsBlocked"
+                                        class="form-check-input"
+                                        value="false"
+                                        required />
+                                    <label for="IsBlockedFalse">Cuenta no bloqueada</label>
+                                </div>
                             </div>
                                 <div class="form-group">
                                     <p>Estado</p>
@@ -122,11 +150,8 @@
                                                value="false"
                                                required />
                                         <label for="IsBlockedFalse"> Cuenta no bloqueada</label>
-                                    </div>
-                                        
+                                    </div>  
                                 </div>
-
-
                             <div class="modal-footer">
                                 <button
                                     type="button"
@@ -147,8 +172,8 @@
         </div>
     </div>
 </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
         $(document).ready(function () {
 
             $("tbody tr").click(function () {
@@ -157,6 +182,7 @@
                 window.location.href = "/account/editar/" + id;
             });
         });
+
         $(document).ready(function () {
             var userRole = '@ViewData["Role"]';
 
@@ -198,6 +224,6 @@
                 document.head.appendChild(style);
             }
         });
+</script>
 
-    </script>
 </body>

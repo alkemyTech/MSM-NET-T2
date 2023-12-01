@@ -1,16 +1,16 @@
-﻿@page "/Transaction"
+﻿@page "/Transactions"
 @model Clover.Pages.Transactions.TransactionModel
 @{
     Layout = "_Layout-Logeado";
+    ViewData["Title"] = "Transacciones";
 }
-@{
-    
-}
-<head>
-    <link rel="stylesheet" href="~/estilos/transactions.css" />
-</head>
-<body>
 
+<head>
+    <link rel="stylesheet" href="/estilos/transactions.css">
+    <title>@ViewData["Title"]</title>
+</head>
+
+<body>
     <div class="transaction">
         <div id="table-container">
             <table class="table" style="text-align: center">

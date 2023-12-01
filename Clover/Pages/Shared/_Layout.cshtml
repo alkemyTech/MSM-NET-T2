@@ -44,7 +44,7 @@
 
             </a>
             <div class="menu">
-                <a href="#">Inicio</a>
+                <a href="/User">Inicio</a>
                 <a href="#">Más info</a>
             </div>
             <a href="/login"><button>Ingresar</button></a>
@@ -78,16 +78,16 @@
     </script> *@
 
     @await RenderSectionAsync("Scripts", required: false)
-    <script>
+    @* <script>
     document.addEventListener("DOMContentLoaded", function () {
         var token = '@TempData["Token"]'; // Obtengo el token desde TempData
         var id = '@TempData["Id"]';
         if (token) {
             localStorage.setItem("token", token); // Establezco el token en localStorage
-            localStorage.setItem("userId", id); // Establezco el id del usuario iniciado
+           // localStorage.setItem("userId", id); // Establezco el id del usuario iniciado
         }
     });
-</script>
+</script> *@
      
 </body>
 </html>

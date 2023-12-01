@@ -1,95 +1,68 @@
-﻿@page "/User"
+﻿@page "/user"
 @model UserModel
+
 @{
+    ViewData["Title"] = "Perfil";
     Layout = "_Layout-Logeado";
 }
 
-<style>
-    .User {
-        display: flex;
-        justify-content: space-around;
-        transform: translateY(20%);
-    }
-
-    .userButtons {
-        display: flex;
-        flex-direction: column; /* Establece la dirección del diseño a columna */
-        align-items: flex-start;
-        justify-content: space-between
-
-    }
-
-    .buttonUserLink {
-        margin: 5px;
-        font-size: 14px;
-        font-weight: 500;
-        border-radius: 40px;
-        background: transparent;
-        color: #f4eee4;
-        width: 140px;
-        height: 50px;
-        transition: .5s;
-        border: 1px solid #51DAC9;
-    }
-
-        .buttonUserLink:hover {
-            background: rgba(81, 218, 201, 0.50);
-            scale: 1.1;
-            transition: .5s;
-        }
-
-    .buttonUserLink> a{
-        color : white;
-        text-decoration: none;   }
-
-    .dataUserDiv {
-        background: rgba(35, 173, 99, 0.5); /* Establece el color de fondo */
-        border-radius: 20px;
-        width: 420px;
-        height: 350px;
-    }
-
-    .card {
-        background: rgba(81, 218, 201, 0.10);
-        border-radius: 20px; /* Bordes redondeados para las tarjetas individuales */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para resaltar las tarjetas */
-        height: 70px;
-    }
-
-</style>
+<head>
+    <link rel="stylesheet" href="~/estilos/User.css" />
+</head>
 <body>
 
-    <div class="User">
-
-        <div class="dataUserDiv">
-
-        <div class="card">
-            <div class="card-body" >Nombre: @Model.Encontrado.First_name </div>
+<div class="User">
+    <div class="dataUser">
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Nombre</p>
+                <p class="data-model">@Model.Encontrado.First_name</p>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-body">Apellido: @Model.Encontrado.Last_name</div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Apellido</p>
+                <p class="data-model">@Model.Encontrado.Last_name</p>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-body">Email: @Model.Encontrado.Email</div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Email</p>
+                <p class="data-model">@Model.Encontrado.Email</p>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-body">Puntos: @Model.Encontrado.Points</div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Puntos Acumulados</p>
+                <p class="data-model">@Model.Encontrado.Points</p>
+            </div>
         </div>
-        <div class="card">
-            <div class="card-body">Rol: @Model.Encontrado.Role_Id</div>
+        <div class="box">
+            <div class="box-body">
+                <p class="data">Rol del Usuario</p>
+                <p class="data-model">@Model.Encontrado.Role_Id</p>
+            </div>
         </div>
     </div>
 
-
-<div class="userButtons">
-        <a href="/FixedTerms/FixedTermDeposit" class="button"><button class="buttonUserLink">Plazo Fijo</button></a>
-        <a href="/Transaction" class="button"><button class="buttonUserLink">Transacciones</button></a>
-        <a href="/Accounts" class="button"><button class="buttonUserLink">Cuenta</button></a>
-        <a href="/Catalogue" class="button"><button class="buttonUserLink">Catalogo</button></a>
+    <div class="userButtons">
+        <button class="buttonUserLink"><a href="/FixedTerms/FixedTermDeposit" class="button">Plazos Fijos</a></button>
+        <button class="buttonUserLink"><a href="/Transactions" class="button">Transacciones</a></button>
+        <button class="buttonUserLink"><a href="/Accounts" class="button">Cuenta</a></button>
+        <button class="buttonUserLink"><a href="/Catalogue" class="button">Catalogo</a></button>
+    </div>
 </div>
 
-    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var token = '@TempData["Token"]'; // Obtengo el token desde TempData
+        if (token) {
+            localStorage.setItem("token", token); // Establezco el token en localStorage
+        }
+    });
+</script>
 
     <script>
         $(document).ready(function () {
@@ -101,5 +74,3 @@
         });
     </script>
 </body>
-
-
