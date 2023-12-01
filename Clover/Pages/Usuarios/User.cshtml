@@ -91,7 +91,6 @@
         </div>
 
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -99,6 +98,14 @@
 
             if (userRole != "Admin") {
                 $(".buttonUserLink:eq(2) a").attr("href", "/MyAccount");
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var token = '@TempData["Token"]'; // Obtengo el token desde TempData
+            if (token) {
+                localStorage.setItem("token", token); // Establezco el token en localStorage
             }
         });
     </script>
