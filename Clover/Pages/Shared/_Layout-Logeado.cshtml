@@ -44,7 +44,7 @@
 
         </a>
         <div class="menu">
-            <a href="/Usuarios/User">Inicio</a>
+            <a href="/User">Inicio</a>
             <a href="#">Más info</a>
         </div>
         <button  id="boton-logout" >Salir</button>
@@ -74,13 +74,13 @@
      <script>
        $(document).ready(function () {
     // Agrega un retraso antes de verificar el token
-    setTimeout(function() {
+
         var token = localStorage.getItem('token');
         if (!token) {
             // Redirige al usuario al inicio de sesión
             window.location.href = '/login';
         }
-    }, 1000); // Retraso de 1000 milisegundos (1 segundo)
+    } 
 });
 
     </script>
@@ -88,6 +88,7 @@
      <script>
                     document.getElementById('boton-logout').addEventListener('click', function () {
                 localStorage.removeItem('token');
+                localStorage.removeItem('UserId');
                         window.location.href="/login";
             });
         </script>

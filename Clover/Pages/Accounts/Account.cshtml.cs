@@ -85,9 +85,7 @@ public class AccountModel : PageModel
                         AccountList = new List<Account>();
                     }
 
-                return Redirect("/account");
-
-                return Redirect("/Account");
+                return Redirect("/Accounts");
 
             }
             

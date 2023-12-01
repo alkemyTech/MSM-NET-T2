@@ -76,6 +76,11 @@ namespace Clover.Pages.Transactions
 
                 var transactionResponse = await httpClient.GetAsync("http://localhost:7120/api/Transaction");
 
+                if (!response.IsSuccessStatusCode)
+                {
+                    TempData["ErrorMessage"] = "No dispone de suficiente dinero en su cuenta";
+                }
+
                 if (transactionResponse.IsSuccessStatusCode)
                 {
                     var apiResponse = await transactionResponse.Content.ReadFromJsonAsync<TransactionResponse>();
@@ -91,6 +96,8 @@ namespace Clover.Pages.Transactions
                         TransactionsList = new List<Transaction>();
                     }
                 }
+                
+
                 return Redirect("/Transactions");
             }
             return Page();
