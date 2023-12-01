@@ -6,7 +6,9 @@
 
 <head>
     <link rel="stylesheet" href="~/estilos/account.css">
+    <link rel="stylesheet" href="/estilos/FixedTermStyles.css">
 </head>
+
 
 <body>
     <div class="title">
@@ -28,7 +30,7 @@
                 </thead>
                 <tbody>
                         <tr class="align-middle">
-                            <a href="#">
+                            <a href="#"></a>
                             <th>@Model.MyAccount.Id</th>
                             <td>@Model.MyAccount.CreationDate</td>
                             <td>$ @Model.MyAccount.Money</td>
@@ -39,6 +41,7 @@
                 </tbody>
             </table>
         </div>
+    </div>
 
  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -46,4 +49,8 @@
        
 
     </script>
+
+    <button type="button">
+        <a href="/User">Volver</a>
+    </button>
 </body>

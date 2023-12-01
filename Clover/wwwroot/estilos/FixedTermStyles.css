@@ -1,7 +1,10 @@
-﻿body {
+﻿* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
     background-color: #11322E;
     color: #F4EFE4;
-    font-family: "Poppins";
     display: flex;
 }
 
@@ -16,12 +19,18 @@
     padding: 3px;
 }
 
+.Admintable {
+    color: #F4EFE4;
+    border-radius: 20px;
+    background-color: #9FA3F6;
+    padding: 3px;
+}
+
 button {
     width: 170px;
     height: 50px;
     border-radius: 70px;
     border-color: #51DAC980;
-    font-family: "Poppins";
     margin: 5px;
     font-size: 14px;
     font-weight: 500;
@@ -62,7 +71,6 @@ button:hover {
     align-items: center;
     padding-top: 20px;
     padding-bottom: 20px;
-    font-family: "Poppins"
 }
 
 .CreateForm {
@@ -70,7 +78,7 @@ button:hover {
     padding: 20px;
     border-radius: 20px;
     width: 980px;
-    height: 500px;
+    height: 400px;
     border: 20px;
 }
 
@@ -114,10 +122,11 @@ a {
     color: #F4EFE4;
     text-decoration: none;
 }
+
 a:hover {
     color: #F4EFE4; 
     text-decoration: none;
-    }*/*/
+}
 
 /*PLAZO FIJO INICIO*/
 
@@ -127,7 +136,8 @@ th {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    font-family: "Poppins";
+}
+
 }
 
 td {
@@ -135,10 +145,10 @@ td {
     padding: 20px;
 }
 
-
 .page-link {
     color: green;
 }
+
 /*EDITAR PLAZO FIJO*/
 
 .EditButtons {
@@ -156,7 +166,6 @@ td {
     color: #F4EFE4;
     background-color: #51DAC980;
     border-color: #51DAC980;
-    font-family: "Poppins";
 }
 
 .EditForm {
@@ -175,7 +184,6 @@ td {
     color: #F4EFE4;
     background-color: rgba(35, 173, 99, 0.80);
     border-color: #51DAC980;
-    font-family: "Poppins";
 }
 
 .editButton {
@@ -185,7 +193,6 @@ td {
     color: #F4EFE4;
     background-color: rgba(35, 173, 99, 0.80);
     border-color: #51DAC980;
-    font-family: "Poppins";
 }
 
 .edit input.form-control {
@@ -193,12 +200,12 @@ td {
     background-color: rgba(35, 173, 99, 0.30);
     color: #F4EFE4;
     transition: background 0.3s, color 0.3s;
-    }
+}
 
-    .edit input.form-control:focus {
-        box-shadow: none;
-        outline: none;
-        background-color: rgba(35, 173, 99, 0.50);
-        color: #F4EFE4;
-        transition: background 0.3s, color 0.3s;
-    }
+.edit input.form-control:focus {
+    box-shadow: none;
+    outline: none;
+    background-color: rgba(35, 173, 99, 0.50);
+    color: #F4EFE4;
+    transition: background 0.3s, color 0.3s;
+}

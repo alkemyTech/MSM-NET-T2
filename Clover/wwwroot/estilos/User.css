@@ -1,10 +1,61 @@
-﻿body {
+﻿body div.User {
+    display: flex;
+    justify-content: space-around
+}
+
+.User .dataUser {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 10px rgb(81, 218, 201);
+    border-radius: 40px;
+    width: 400px;
+    padding: 20px;
+}
+
+.User .dataUser .box .box-body {
+    padding: 10px;
+}
+
+.User .dataUser .box .box-body p.data {
+    font-size: 18px;
+    margin-bottom: 5px !important;
+}
+
+.User .dataUser .box .box-body p.data-model {
+    font-size: 15px;
+    border-bottom: 1px solid #3db077;
+    margin-left: 10px;
+    margin-bottom: 5px !important;
+}
+
+.User .userButtons {
+    display: flex;
+    flex-direction: column; /* Establece la dirección del diseño a columna */
+    align-items: flex-start;
+    justify-content: space-evenly;
 
 }
 
-.dataUser {
-
+.User .userButtons .buttonUserLink {
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 40px;
+    background: transparent;
+    border: 2px solid #3db077;
+    box-shadow: 0 0 10px #f4efe4;
+    color: #f4eee4;
+    margin: 5px;
+    width: 140px;
+    height: 50px;
+    transition: .5s;
 }
 
+.User .userButtons .buttonUserLink a {
+    color: #f4eee4;
+    text-decoration: none;
+}
 
-
+.User .userButtons .buttonUserLink:hover {
+    box-shadow: 0 0 10px #3db077;
+    scale: 1.1;
+    transition: .5s;
+}

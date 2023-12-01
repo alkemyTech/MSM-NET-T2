@@ -2,7 +2,14 @@
 @model Clover.Pages.FixedTerms.FormNewFixedTermModel
 @{
     ViewData["Title"] = "Nuevo plazo fijo";
+    Layout = "_Layout-Logeado";
 }
+
+<head>
+    <link rel="stylesheet" href="/estilos/FixedTermStyles.css">
+    <title>@ViewData["Title"]</title>
+</head>
+
 <div class="CreateForm mx-auto my-4">
 <form asp-action="updatedFixedTerm" class="formularios"  method="post">
     <div class="row">
@@ -36,7 +43,7 @@
         </div>
     </div>
     <div class="CreateButton">
-        <button class="back float-right mt-2"><a asp-page="/Usuarios/User">Volver</a></button>
+            <button class="back float-right mt-2"><a asp-page="/FixedTerms/FixedTermDeposit">Volver</a></button>
             <button asp-page-handler="CreateFixedTerm" type="submit" class="createButton @* float-right mt-2 *@">Crear Plazo Fijo</button>
     </div>
 </form>

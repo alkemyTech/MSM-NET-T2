@@ -1,8 +1,10 @@
-﻿@page
-@model Clover.Pages.FIxedTermDepositModel
+﻿@page "/AllFixedTerms"
+@model Clover.Pages.FixedTerms.AdminFixedTermDepositModel
+
 @{
     ViewData["Title"] = "Plazos Fijos";
     Layout = "_Layout-Logeado";
+    var token = ViewData["Token"] as string;
 }
 
 <head>
@@ -11,15 +13,16 @@
 </head>
 
 <div class=" = fixedTermIntro">
-<h1>@ViewData["Title"]</h1>
+    <h1>@ViewData["Title"]</h1>
 
- <button><a href="/FixedTerms/FormNewFixedTerm" class="button">Nuevo plazo fijo</a></button>
- </div>
+    <button><a href="/FixedTerms/FormNewFixedTerm" class="button">Nuevo plazo fijo</a></button>
+</div>
 
 
-<table class="table">
+<table class="table" id="table-container">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Usuario</th>
             <th>Monto</th>
             <th>Fecha de Creacion</th>
@@ -33,6 +36,7 @@
         @foreach (var fixedTerm in Model.FixedTermDeposit)
         {
             <tr>
+                <td>@fixedTerm.Id</td>
                 <td>@fixedTerm.UserId</td>
                 <td>@fixedTerm.Amount</td>
                 <td>@fixedTerm.CreationDate</td>

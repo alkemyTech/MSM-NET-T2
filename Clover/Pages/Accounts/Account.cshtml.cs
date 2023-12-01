@@ -24,6 +24,7 @@ public class AccountModel : PageModel
     {
         using (var httpClient = new HttpClient())
         {
+
             var role = HttpContext.Session.GetString("Role");
             ViewData["Role"] = role;
 
@@ -83,7 +84,11 @@ public class AccountModel : PageModel
                     {
                         AccountList = new List<Account>();
                     }
+
+                return Redirect("/account");
+
                 return Redirect("/Account");
+
             }
             
         }

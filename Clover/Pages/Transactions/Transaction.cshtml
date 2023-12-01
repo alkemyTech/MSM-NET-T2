@@ -2,15 +2,15 @@
 @model Clover.Pages.Transactions.TransactionModel
 @{
     Layout = "_Layout-Logeado";
+    ViewData["Title"] = "Transacciones";
 }
-@{
-    
-}
-<head>
-    <link rel="stylesheet" href="~/estilos/transactions.css" />
-</head>
-<body>
 
+<head>
+    <link rel="stylesheet" href="/estilos/transactions.css">
+    <title>@ViewData["Title"]</title>
+</head>
+
+<body>
     <div class="transaction">
         <div id="table-container">
             <table class="table" style="text-align: center">
@@ -66,7 +66,7 @@
         <!-- Botón que activa el modal -->
         <div class="botones-crear" style="display: flex; justify-content:center; gap: 15px;">
             <button type="button">
-                <a href="/Index">Volver</a>
+                <a href="/User">Volver</a>
             </button>
             <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <i class="fa-solid fa-plus"></i> Agregar
