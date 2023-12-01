@@ -2,10 +2,12 @@
 @model Clover.Pages.Accounts.MyAccountModel
 @{
     Layout = "_Layout-Logeado";
+    ViewData["Title"] = "Mi Cuenta";
 }
 
 <head>
     <link rel="stylesheet" href="~/estilos/account.css">
+    <title>@ViewData["Title"]</title>
 </head>
 
 <body>
@@ -14,34 +16,34 @@
         <h2>Toda la información que necesitás</h2>
     </div>
 
-    <div class="account">
-        <div id="table-container">
-            <table class="table" style="text-align: center; background: transparent">
-                <thead>
-                    <tr>
-                        <th scope="col">Cuenta n°</th>
-                        <th scope="col">Fecha de creación</th>
-                        <th scope="col">Dinero</th>
-                        <th scope="col">Cuenta bloqueada</th>
-                        <th scope="col">Usuario n°</th>
-                    </tr>
-                </thead>
-                <tbody>
-                        <tr class="align-middle">
-                            <a href="#"></a>
-                            <th>@Model.MyAccount.Id</th>
-                            <td>@Model.MyAccount.CreationDate</td>
-                            <td>$ @Model.MyAccount.Money</td>
-                            <td>@Model.MyAccount.IsBlocked</td>
-                            <td>@Model.MyAccount.UserId</td>
-                        </tr>
+<div class="account">
+    <div id="table-container">
+        <table class="table" style="text-align: center; background: transparent">
+            <thead>
+            <tr>
+                <th scope="col">Cuenta n°</th>
+                <th scope="col">Fecha de creación</th>
+                <th scope="col">Dinero</th>
+                <th scope="col">Cuenta bloqueada</th>
+                <th scope="col">Usuario n°</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="align-middle">
+                <a href="#"></a>
+                <th>@Model.MyAccount.Id</th>
+                <td>@Model.MyAccount.CreationDate</td>
+                <td>$ @Model.MyAccount.Money</td>
+                <td>@Model.MyAccount.IsBlocked</td>
+                <td>@Model.MyAccount.UserId</td>
+            </tr>
 
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
+</div>
  
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
        
 

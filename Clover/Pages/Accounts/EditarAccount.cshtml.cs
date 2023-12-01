@@ -68,7 +68,7 @@ namespace Clover.Pages.Accounts
 
                 if (response.IsSuccessStatusCode)
                 {
-                    return Redirect("/account");
+                    return Redirect("/Accounts");
                 }
                 else
                 {

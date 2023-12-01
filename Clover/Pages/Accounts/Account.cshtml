@@ -3,7 +3,7 @@
 
 @{
     Layout = "_Layout-Logeado";
-    ViewData["Title"] = "Cuenta";
+    ViewData["Title"] = "Cuentas";
 
     var token = ViewData["Token"] as string;
 }
@@ -15,8 +15,7 @@
 
 <body>
 <div class="title">
-    <p id="title">Cuentas</p>
-    <p>Toda la información que necesitás</p>
+    <p>Cuentas disponibles</p>
 </div>
 <div class="box">
     <div id="table-container">
@@ -58,17 +57,16 @@
         </ul>
     </nav>
     
-    <div class="buttons botones-crear">
+    <div class="buttons">
         <button type="button" class="btn-user">
-            <a href="/Index">
-                <i class="fa-solid fa-arrow-left-long"></i> Volver
+            <a href="/User">
+                Volver
             </a>
         </button>
         
         <!-- Botón que activa el modal -->
         <button type="button" class="btn-admin" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Agregar
-            <i class="fa-solid fa-plus"></i>
         </button>
     </div>
     
@@ -129,29 +127,6 @@
                                     <label for="IsBlockedFalse">Cuenta no bloqueada</label>
                                 </div>
                             </div>
-                                <div class="form-group">
-                                    <p>Estado</p>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio"
-                                               id="IsBlockedTrue"
-                                               name="Account.IsBlocked"
-                                               class="form-check-input"
-                                               value="true"
-                                               checked
-                                               required />
-                                        <label for="IsBlockedTrue">Cuenta bloqueada</label>
-                                    </div>
-                                        
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio"
-                                               id="IsBlockedFalse"
-                                               name="Account.IsBlocked"
-                                               class="form-check-input"
-                                               value="false"
-                                               required />
-                                        <label for="IsBlockedFalse"> Cuenta no bloqueada</label>
-                                    </div>  
-                                </div>
                             <div class="modal-footer">
                                 <button
                                     type="button"
@@ -196,9 +171,13 @@
                 style.innerHTML = `
                 #table-container {
                     background: rgba(159, 163, 246, 0.5) !important;
+                    box-shadow: 0 0 10px rgb(159, 163, 246) !important;
                 }
                 #table-container th, #table-container td {
                     border-bottom: 2px solid rgba(159, 163, 246, 1) !important;
+                }
+                #table-container table thead {
+                    color: #9fa3f6 !important;
                 }
                 .botones-crear button {
                     border: 2px solid #9FA3F6 !important;

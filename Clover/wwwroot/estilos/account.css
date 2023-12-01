@@ -5,57 +5,6 @@ html {
     min-height: 100%;    
 }
 
-.transaction {
-    margin-bottom: 90px;
-}
-
-.botones-crear {
-    padding: 10px;
-    display: flex; justify-content:center; gap: 15px;
-}
-
-.botones-crear button {
-    border-radius: 40px;
-    background: transparent;
-    border: 2px solid #51DAC9;
-    width: 120px;
-    color: #F4EFE4;
-}
-
-.botones-crear button a {
-    text-decoration: none;
-    color: #F4EFE4;
-}
-
-.modal-content {
-    border-radius: 25px !important;
-    background: #11322E;
-    color: white;
-}
-
-.modal-footer {
-    border-top: 0;
-}
-
-.form-group > label {
-    margin: 5px 0;
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.pagination .page-item.active .page-link {
-    background: transparent;
-    border: 1px solid green;
-}
-
-.page-link {
-    color: green;
-}
-
 body {
     display: flex;
     flex-direction: column;
@@ -66,20 +15,9 @@ body {
     color: #F4EFE4;
 }
 
-body div.title {
-    text-align: center;
-    margin: 15px 0;
-}
-
-body div.title p #title {
-    font-weight: 600;
-    font-size: 40px;
-    color: #3db077;
-}
-
 body div.title p {
-    font-size: 20px; 
-    font-weight: bold;
+    margin: 15px 0 10px 60px!important;
+    font-size: 35px!important;
 }
 
 body div.box {
@@ -87,6 +25,7 @@ body div.box {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 50px;
 }
 
 #table-container {
@@ -127,56 +66,54 @@ body div.table table thead tr th {
 body div.buttons {
     display: flex;
     justify-content: center;
+    text-align: center; 
+    margin-bottom: 10px;
     gap: 5%;
     width: 100%;
-    text-align: center; 
 }
 
 body div.buttons button.btn-user {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 500;
     border-radius: 40px;
-    border: 3px solid #51DAC9;
+    border: 2px solid #51DAC9;
     background: transparent;
-    color: #f4eee4;
-    width: 150px;
+    box-shadow: 0 0 10px #f4efe4;
+    width: 120px;
     height: 50px;
+    transition: .5s;    
 }
 
 body div.buttons a {
-text-decoration: none;
-}
-
-body div.buttons button.btn-user i {
-    margin-right: 5px;
-    text-align: center;
+    text-decoration: none;
+    color: #f4eee4;
 }
 
 body div.buttons button.btn-user:hover {
-    background: #50d9c955;
+    box-shadow: 0 0 10px #51DAC9;    
     transition: .5s;
 }
 
 body div.buttons button.btn-admin {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 500;
     border-radius: 40px;
-    border: 3px solid #9FA3F6;;
+    border: 2px solid #9FA3F6;
+    box-shadow: 0 0 10px #f4efe4;   
     background: transparent;
     color: #f4eee4;;
-    width: 150px;
+    width: 120px;
     height: 50px;
-}
-
-body div.buttons button.btn-admin i {
-    margin-left: 5px;
-    text-align: center;
+    transition: .5s;   
 }
 
 body div.buttons button.btn-admin:hover {
-    background: rgba(159, 163, 246, 0.50);
+    box-shadow: 0 0 10px #9FA3F6;
+    background: rgba(159, 163, 246, 0.5);
     transition: .5s;
 }
+
+/* Modal crear cuenta */
 
 body div.form {
     display: flex;
@@ -184,35 +121,114 @@ body div.form {
     align-items: center;
     justify-content: center;
 }
+.modal-dialog{
+    color: #000;
+}
+
+.modal-content {
+    border-radius: 25px !important;
+    background: #11322E;
+    color: #f4eee4;
+}
+
+.modal-header {
+    padding: 20px !important;
+}
+
+.modal-header .btn-close {
+    color: #3db077 !important;
+}
+
+.modal-footer {
+    border-top: 0;
+}
+
+.form-group > label {
+    margin: 5px 0;
+}
 
 /* EDITAR */
 
-#form-container {
-    color: white;
-    transform: translateY(100%)
+body .form-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.form-group {
-    width: 150px;
-    text-align: center;
+#form-container {
+    display: flex;
 }
 
 #subform {
     display: flex;
-    color: white;
+    flex-direction: column;
+    font-size: 15px;
+    color: #f4eee4;
     border-radius: 30px;
+    background: rgba(159, 163, 246, 0.5);
+    box-shadow: 0 0 10px rgb(244, 239, 228);
     padding: 20px;
-    justify-content: space-evenly;
-    background-color: rgba(159, 163, 246, 0.5);
+    margin: 20px 20px 80px 0;
+}
+
+label {
+    font-size: 18px !important;
+}
+
+.form-group {
+    padding: 10px;
 }
 
 .buttons-form {
-    margin-top: 25px;
-    gap: 15px;
-    border-top: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 10px;
+    margin: 20px;
 }
+
+.buttons-form button {
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 40px;
+    background: transparent;
+    color: #f4eee4;
+    width: 140px;
+    height: 50px;
+}
+
+.buttons-form .btn-back {
+    border: 2px solid #9FA3F6;
+    box-shadow: 0 0 10px #f4efe4;
+    transition: .5s;
+}
+
+.buttons-form .btn-back:hover {
+    box-shadow: 0 0 10px #9FA3F6;
+}
+
+.buttons-form .btn-save {
+    border: 2px solid #3db077;
+    box-shadow: 0 0 10px #f4efe4;
+    transition: .5s;
+}
+
+.buttons-form .btn-save:hover {
+    background: rgba(61, 176, 119, 0.5);
+    box-shadow: 0 0 10px #3db077;
+}
+
+.buttons-form .btn-delete {
+    border: 2px solid #c533e6;
+    box-shadow: 0 0 10px #f4efe4;
+    transition: .5s;
+}
+
+.buttons-form .btn-delete:hover {
+    background: rgba(197,51,230,0.5);
+    box-shadow: 0 0 10px #c533e6;
+}
+
 
 .buttons-form > button, .buttons-form > a > button {
     border-radius: 40px;
@@ -220,7 +236,6 @@ body div.form {
     border: 1px solid #9FA3F6;
     background: transparent;
 }
-
 
 .form-group > input, .form-control:disabled, .form-control[readonly] {
     background: none;
@@ -240,10 +255,22 @@ body div.form {
     box-shadow: none;
 }
 
-#subform .form-group:nth-child(2n){
-    width: 200px;
+.transaction {
+    margin-bottom: 90px;
 }
 
-.modal-dialog{
-    color: #000;
+/* Paginación */
+nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.pagination .page-item.active .page-link {
+    background: transparent;
+    border: 1px solid green;
+}
+
+.page-link {
+    color: green;
 }
